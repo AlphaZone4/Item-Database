@@ -67,7 +67,6 @@ buildcss:
 
 # build external JavaScript (jQuery)
 buildextjs:
-	@command -v grunt >/dev/null 2>&1 || npm -g install grunt
-	@(cd modules/jquery && npm install && grunt submodules && grunt selector build:*:* lint min dist:* compare_size)
+	@(cd modules/jquery && npm install && node_modules/grunt/bin/grunt submodules && node_modules/grunt/bin/grunt selector build:*:* lint min dist:* compare_size)
 	@cp modules/jquery/dist/jquery.min.js js/
 	@cp modules/bootstrap/docs/assets/js/bootstrap.min.js js/
