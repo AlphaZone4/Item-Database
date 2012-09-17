@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>AlphaZone4 Item Database Test Space</title>
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<!-- CSS -->
+		<link href="css/style.css" rel="stylesheet">
+		
+		<!-- JS -->
+		<script src="modules/requirejs/require.js"></script>
+		<script type='text/javascript'>
+			// define baseUrl for testing
+			requirejs.config({
+				baseUrl: 'js/'
+			});
+		</script>
+		<script src="js/az4db.js"></script>
+
+		<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<h1>Test Page!</h1>
+		<div id='database' class='az4db'></div>
+	</body>
+</html>
