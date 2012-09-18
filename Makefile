@@ -69,5 +69,6 @@ buildcss:
 # build external JavaScript (jQuery)
 buildextjs:
 	@(cd modules/jquery && npm install && node_modules/grunt/bin/grunt submodules && node_modules/grunt/bin/grunt selector build:*:* lint min dist:* compare_size)
-	@cp modules/jquery/dist/jquery.min.js js/
+    @cat modules/requirejs/require.js modules/jquery/dist/jquery.min.js >> js/require-jquery.js
 	@cp modules/bootstrap/docs/assets/js/bootstrap.min.js js/
+	@cp modules/imagesloaded/jquery.imagesloaded.js js/
