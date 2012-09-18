@@ -32,9 +32,9 @@ clean:
 	@rm -f css/style.css
 	@rm -rf css/img
 	@rm -rf $(BUILDDIR)/
-	@rm -f js/jquery.min.js
+	@rm -f js/require-jquery.js
+	@rm -f js/jquery.imagesloaded.js
 	@rm -f js/bootstrap.min.js
-	@rm -f js/require.js
 
 ##### INTERNAL MAKE FUNCTIONS #####
 # features always employed
