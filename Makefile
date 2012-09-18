@@ -39,7 +39,7 @@ clean:
 ##### INTERNAL MAKE FUNCTIONS #####
 # features always employed
 standard:
-	@command -v npm2 >/dev/null 2>&1 || echo "NPM not found :( NPM is required for install!" >&2 && echo "http://nodejs.org/" >&2 && exit 1;
+	@command -v npm >/dev/null 2>&1 || ( echo "NPM not found :( NPM is required for install! http://nodejs.org/" >&2 && exit 1 );
 	@git submodule init
 	@git submodule update
 
