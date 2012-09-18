@@ -8,7 +8,6 @@ define(function(){
     };
 	
 	exports.init = function(){
-        console.log(":D");
         // register hook on page change (so we can update menu items)
         az4db_when("pageChange", handlePageChange);
 	};

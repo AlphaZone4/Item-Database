@@ -24,7 +24,8 @@ var az4db_do = function(hook, args) {
 require([
     "jquery.imagesloaded",
 	"bootstrap.min",
-	"src/img"
+	"src/img",
+    "src/nav"
 	], function() {
 	// save new modules in an object
 	for(var ii in arguments) {
@@ -37,5 +38,4 @@ require([
 			$m[ arguments[ ii ].module ].init();
 		}
 	}
-    console.log(az4db_hooks);
 });
