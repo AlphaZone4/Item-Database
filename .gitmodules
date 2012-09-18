@@ -13,3 +13,6 @@
 [submodule "modules/almond"]
 	path = modules/almond
 	url = https://github.com/jrburke/almond.git
+[submodule "modules/imagesloaded"]
+	path = modules/imagesloaded
+	url = http://github.com/desandro/imagesloaded
