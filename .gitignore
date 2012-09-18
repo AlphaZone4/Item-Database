@@ -2,4 +2,5 @@ az4db/
 css/img/
 css/style.css
 js/bootstrap.min.js
-js/jquery.min.js
+js/jquery.imagesloaded.js
+js/require-jquery.js
