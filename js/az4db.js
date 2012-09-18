@@ -19,6 +19,10 @@ var az4db_do = function(hook, args) {
         }
     }
 };
+// shortcut function for az4db_when("init", function(){...});
+var az4db_init = function(func){
+    az4db_when("init", func);
+};
 
 // load external resources and code
 require([
@@ -38,4 +42,7 @@ require([
 			$m[ arguments[ ii ].module ].init();
 		}
 	}
+    
+    // trigger init functions
+    az4db_do("init");
 });

@@ -25,6 +25,13 @@
 	</head>
 	<body>
 		<h1>Test Page!</h1>
+        <div id='nav' class='az4db'></div>
 		<div id='database' class='az4db'></div>
+        <script type='text/javascript'>
+            /* define page specific loading here */
+            az4db_init(function(){
+                $("#nav").html($m['nav'].new());
+            });
+        </script>
 	</body>
 </html>
