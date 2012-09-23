@@ -1,0 +1,7 @@
+{
+    "name": "az4db",
+    "version": "0.0.1",
+    "dependencies": {
+        "node-spritesheet": "*"
+    }
+}
