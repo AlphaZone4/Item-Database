@@ -28,12 +28,23 @@ var az4db_init = function(func){
 require([
     "jquery.imagesloaded",
 	"bootstrap.min",
+    "snippets",
+    "src/config",
 	"src/img",
-    "src/nav"
+    "src/nav",
+    "src/lists",
+    "src/stars"
 	], function() {
 	// save new modules in an object
 	for(var ii in arguments) {
-		if (arguments[ ii ]) $m[ arguments[ ii ].module ] = arguments[ ii ];
+		if (arguments[ ii ] && arguments[ ii ].module) {
+            $m[ arguments[ ii ].module ] = arguments[ ii ];
+            
+            // if this is the config object, store it globally too
+            if (arguments[ ii ].module == "configuration") {
+                $s = arguments[ ii ];
+            }
+		}
 	}
 	
 	// initialise each module in turn (init order, NOT alphabetical)

@@ -1,10 +1,38 @@
 define(function() {
     // file header
-    var exports = {};
-	exports.module = "nav";
+    var $t = {};
+	$t.module = "nav";
+    
+    // basic nav structure
+    var nav = {
+        logo: {
+            title: "PlayStation Home Item Database",
+            page: "home"
+        },
+        links: [
+            {
+                name: 'Home',
+                page: 'home',
+                type: 'link'
+            },
+            {
+                name: "About",
+                page: "about",
+                type: "rlink"
+            }
+        ]
+    };
     
     // storage
     var navs = [];
+    
+    // link handler
+    var clicky = function(p){
+        // no page supplied, let's see if we can find a href
+        if (!p) {
+            p = $(this).attr("href");
+        }
+    };
     
     var handlePageChange = function(args) {
         for(var ii=0; ii<navs.length; ii++) {
@@ -12,18 +40,68 @@ define(function() {
         }
     };
     
+    var createMenu = function(opt){
+        if (!opt) opt = nav;
+        
+        // basic navbar structure
+        var h = $('<div class="navbar navbar-inner">');
+        
+        // add logo/brand
+        h.append( $t.link(opt.logo.title, opt.logo.page, {
+            class:["brand"]
+        }) );
+        
+        // create list of nav items
+        var list = $("<ul class='nav'>");
+        for(var ii=0; ii<opt.links.length; ii++) {
+            list.append( $("<li>").html($t.link(opt.links[ii].name, opt.links[ii].page)) );
+        }
+        h.append(list);
+        
+        return h;
+    };
+    
     // returns a jQuery object of a navigation bar
-    exports.new = function(config) {
-        var n = $('<div class="navbar" style="z-index: 5;"><div class="navbar-inner"><div class="container"><a class="brand" href="#home"><img src="blank.gif" class="az4-images-minilogo"> PlayStation Home Database</a><ul class="nav"><li><a href="#home">Home</a></li><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Items <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="#cat1"><img src="blank.gif" class="az4-images-eusml"> Europe</a></li><li><a href="#cat110"><img src="blank.gif" class="az4-images-ussml"> America</a></li><li><a href="#cat383"><img src="blank.gif" class="az4-images-jpsml"> Japan</a></li><li><a href="#cat286"><img src="blank.gif" class="az4-images-hksml"> Asia</a></li><li class="divider"></li><li><a href="#cat97"><img src="blank.gif" class="az4-images-eusml"> EU Rewards</a></li><li><a href="#cat358"><img src="blank.gif" class="az4-images-ussml"> US Rewards</a></li></ul></li><li><a href="#space">Spaces</a></li></ul><ul class="nav secondary-nav"><li><a href="#about">About</a></li></ul></div></div></div>');
+    $t.new = function(config) {
+        //var n = $('<div class="navbar-inner"><div class="container"><a class="brand" href="#home"><img src="blank.gif" class="az4-images-minilogo"> PlayStation Home Database</a><ul class="nav"><li><a href="#home">Home</a></li><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Items <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="#cat1"><img src="blank.gif" class="az4-images-eusml"> Europe</a></li><li><a href="#cat110"><img src="blank.gif" class="az4-images-ussml"> America</a></li><li><a href="#cat383"><img src="blank.gif" class="az4-images-jpsml"> Japan</a></li><li><a href="#cat286"><img src="blank.gif" class="az4-images-hksml"> Asia</a></li><li class="divider"></li><li><a href="#cat97"><img src="blank.gif" class="az4-images-eusml"> EU Rewards</a></li><li><a href="#cat358"><img src="blank.gif" class="az4-images-ussml"> US Rewards</a></li></ul></li><li><a href="#space">Spaces</a></li></ul><ul class="nav secondary-nav"><li><a href="#about">About</a></li></ul></div></div></div>');
+        var n = createMenu();
         navs.push(n);
         return n;
     };
+    
+    // returns a jQuery object of a link to an item database page
+    $t.link = function(name, page, config){
+        // setup initial a object with jQuery
+        var a = $("<a>");
+        
+        // set correct URL
+        a.attr("href", $s.baseURL+"/"+page);
+        
+        // set link text
+        a.text(name);
+        
+        // add CSS classes if desired
+        if (config && config.class) {
+            if (typeof config.class === "string") {
+                config.class = [ config.class ];
+            }
+            for(var ii=0; ii<config.class.length; ii++) {
+                a.addClass(config.class[ ii ]);
+            }
+        }
+        
+        a.click(function(){
+            alert(":D"); return false;
+        });
+        
+        return a;
+    };
 	
     // initialise navigation module (set hooks etc.)
-	exports.init = function() {
+	$t.init = function() {
         // register hook on page change (so we can update menu items)
         az4db_when("pageChange", handlePageChange);
 	};
 	
-	return exports;
+	return $t;
 });

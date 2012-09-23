@@ -23,14 +23,15 @@ package:
 	@cp -f css/style.css $(BUILDDIR)/style.css
 	@cp -r css/img $(BUILDDIR)/img
 	@cp -f php/az4db.php $(BUILDDIR)/
-	@(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db excludeShallow=jquery.min out=../$(BUILDDIR)/az4db.js >/dev/null)
-	@(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db out=../$(BUILDDIR)/az4db-jquery.js >/dev/null)
+	@(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db out=../$(BUILDDIR)/az4db.js >/dev/null)
+	@(cd $(BUILDDIR) && cat ../modules/jquery/dist/jquery.min.js az4db.js >> az4db-jquery.js )
 	@cp _test.html $(BUILDDIR)/test.html
 	
 # remove all built files, leaving just source code
 clean:
 	@rm -f css/style.css
 	@rm -rf css/img
+	@rm -rf css/sprite.png
 	@rm -rf $(BUILDDIR)/
 	@rm -f js/require-jquery.js
 	@rm -f js/jquery.imagesloaded.js
@@ -40,6 +41,7 @@ clean:
 # features always employed
 standard:
 	@command -v npm >/dev/null 2>&1 || ( echo "NPM not found :( NPM is required for install! http://nodejs.org/" >&2 && exit 1 );
+	@npm install
 	@git submodule init
 	@git submodule update
 
@@ -57,10 +59,13 @@ buildcss:
 	@cp -r modules/bootstrap/less css/tmp
 	@cat css/variables.less >> css/tmp/variables.less
 	@cat css/bootswatch.less >> css/tmp/bootstrap.less
-	@cat css/custom.less >> css/tmp/bootstrap.less
+	@node spriteBuild.js >/dev/null
+	@cat css/custom.less css/sprite.css >> css/tmp/bootstrap.less
+	@rm -f css/sprite.css
 	@(cd css/tmp/ && echo ".az4db {" > style.css && lessc bootstrap.less >> style.css && echo "}" >> style.css)
 	@(cd css/tmp/ && lessc style.css > ../style.css)
 	@(cd css/ && sed -i 's|.az4db body|.az4db|g' style.css)
+	@(cd css/ && cat force_scrollbars.css style.css > tmp.css && mv tmp.css style.css)
 	@rm -rf css/tmp/
 	@(cd css/ && sed -i 's|/\*.*\*/||g' style.css)
 	@rm -rf css/img

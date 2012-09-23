@@ -1,0 +1,4 @@
+/* Force scrollbars so the page width is always consistant */
+html {
+       overflow-y: scroll;
+}
