@@ -1,6 +1,8 @@
 az4db/
 css/img/
 css/style.css
+css/sprite.png
 js/bootstrap.min.js
 js/jquery.imagesloaded.js
 js/require-jquery.js
+node_modules/
