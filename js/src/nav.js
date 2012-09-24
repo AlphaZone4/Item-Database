@@ -27,11 +27,15 @@ define(function() {
     var navs = [];
     
     // link handler
-    var clicky = function(p){
+    $t.clicky = function(p){
         // no page supplied, let's see if we can find a href
         if (!p) {
             p = $(this).attr("href");
         }
+        
+        console.log(p);
+        
+        return false;
     };
     
     var handlePageChange = function(args) {
@@ -90,9 +94,7 @@ define(function() {
             }
         }
         
-        a.click(function(){
-            alert(":D"); return false;
-        });
+        a.click($t.clicky);
         
         return a;
     };
