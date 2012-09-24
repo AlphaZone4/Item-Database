@@ -3,7 +3,7 @@ define(function() {
     var $t = {};
     $t.module = "lists";
     // define item width, used for calculating number of complete rows
-    var item_width = 144;
+    var item_width = 154;
     
     var lists = [];
     
@@ -36,16 +36,29 @@ define(function() {
         this.body.html("");
         
         var l = this.data;
-        for(var ii=0; ii<l.length; ii++) {
-            var i = $("<li><a href='#' class='thumbnail'><img src='"+l[ii].img+"' /><p>"+l[ii].name+"</p></a></li>");
+        for(var ii=this.page_item; ii<this.page_item+this.page_items; ii++) {
+            var i = $("<li><a href='#' class='thumbnail'><p>"+l[ii].name+"</p></a></li>");
+            
+            var h = i.find("a");
+            
+            // add image (using image loader)
+            if ( $m.img ) {
+                h.prepend($m.img.new(l[ii].img));
+            } else {
+                // no image loader?!
+                h.prepend("<img src='"+l[ii].img+"' />");
+            }
             
             // if we have the stars module loaded and have been given rating data
             if ( l[ii].rating && $m.stars ) {
-                i.find("a").append($("<div>").addClass("footer").append($m.stars.new(l[ii].rating.vote_id, l[ii].rating.rating, l[ii].rating.votes)));
+                h.append($("<div>").addClass("footer").append($m.stars.new(l[ii].rating.vote_id, l[ii].rating.rating, l[ii].rating.votes)));
             }
             
             this.body.append(i);
         }
+        
+        // now we've pushed to DOM, fetch the images sexily
+        if ( $m.img ) $m.img.go();
     };
     
     // create a new list and return the jQuery object

@@ -29,6 +29,7 @@ require([
     "jquery.imagesloaded",
 	"bootstrap.min",
     "snippets",
+    "encrypt",
     "src/config",
 	"src/img",
     "src/nav",
