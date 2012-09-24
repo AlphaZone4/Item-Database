@@ -41,6 +41,9 @@ define(function() {
             
             var h = i.find("a");
             
+            // assign onclick handle
+            if (l[ii].click) h.click(l[ii].click);
+            
             // add image (using image loader)
             if ( $m.img ) {
                 h.prepend($m.img.new(l[ii].img));
@@ -87,6 +90,9 @@ define(function() {
                 rating: 4.5,
                 votes: 3,
                 vote_id: 1
+            },
+            click: function(){
+                return $m.popup.new("cool-beans!", "Test", "yummy!");
             }
         });
         

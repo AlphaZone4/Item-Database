@@ -40,7 +40,9 @@ require([
 	"src/img",
     "src/nav",
     "src/lists",
-    "src/stars"
+    "src/stars",
+    "src/popup",
+    "pages/cat"
 	], function() {
 	// save new modules in an object
 	for(var ii in arguments) {
