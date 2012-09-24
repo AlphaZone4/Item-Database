@@ -1,5 +1,6 @@
 // global module store
 var $m = {};
+var $s = {};
 
 // AZ4 plugin hooks
 //  when, register function for plugin hook
@@ -49,7 +50,7 @@ require([
             if (arguments[ ii ].module == "configuration") {
                 // override any default configurations with user-supplied, if they exist
                 //  (overriding configurations supplied to az4db_init function)
-                $s = $.extend(arguments[ ii ], ($s)?$s:{});
+                $s = $.extend(arguments[ ii ], $s);
             }
 		}
 	}
