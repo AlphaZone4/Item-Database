@@ -26,6 +26,8 @@ package:
 	@(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db out=../$(BUILDDIR)/az4db.js >/dev/null)
 	@(cd $(BUILDDIR) && cat ../modules/jquery/dist/jquery.min.js az4db.js >> az4db-jquery.js )
 	@cp _test.html $(BUILDDIR)/test.html
+	@cp css/loader.gif $(BUILDDIR)
+	@cp css/sprite.png $(BUILDDIR)
 	
 # remove all built files, leaving just source code
 clean:
