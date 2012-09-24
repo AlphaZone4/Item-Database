@@ -28,7 +28,9 @@
 		<div id='database' class='az4db'></div>
         <script type='text/javascript'>
             /* define page specific loading here */
-            az4db_init(function(){
+            az4db_init({
+                baseURL: "http://ide.alphazone4.com/workspace/az4db/"
+            }, function(){
                 $("#nav").html($m['nav'].new());
             });
         </script>

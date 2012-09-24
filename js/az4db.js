@@ -20,7 +20,11 @@ var az4db_do = function(hook, args) {
     }
 };
 // shortcut function for az4db_when("init", function(){...});
-var az4db_init = function(func){
+var az4db_init = function(config, func){
+    // store configuration
+    $s = config;
+    
+    // call init hook
     az4db_when("init", func);
 };
 
@@ -43,7 +47,9 @@ require([
             
             // if this is the config object, store it globally too
             if (arguments[ ii ].module == "configuration") {
-                $s = arguments[ ii ];
+                // override any default configurations with user-supplied, if they exist
+                //  (overriding configurations supplied to az4db_init function)
+                $s = $.extend(arguments[ ii ], ($s)?$s:{});
             }
 		}
 	}
