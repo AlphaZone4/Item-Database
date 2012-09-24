@@ -1,5 +1,6 @@
 // global module store
 var $m = {};
+// global configuration object
 var $s = {};
 
 // AZ4 plugin hooks
