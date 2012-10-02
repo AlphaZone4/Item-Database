@@ -95,6 +95,10 @@ define(function(){
         az4db_do("loudnoise_loaded");
     };
     
+    exports.play = function(){
+        alert("ARRRRRRRRRRRGH");
+    }
+    
     return exports;
 });
 ```
