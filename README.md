@@ -44,7 +44,7 @@ For example, if I make a module called `foo`:
 define(function(){
     var exports = {
         module: "foo",
-        publicFunction: function(){
+        func: function(){
             return "bar";
         }
     };
@@ -55,7 +55,7 @@ define(function(){
 
 This will now be available to all other modules like so:
 ```javascript
-$m.foo.bar();
+alert($m.foo.func());
 ```
 
 Not including the `module` will make the entire module private, which in some cases is ideal.
