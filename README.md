@@ -10,10 +10,10 @@ Building
 
 Ensure you have Node.JS installed before building.
 
-```
-    git clone git@github.com:AlphaZone4/Item-Database.git
-    cd Item-Database
-    make
+```bash
+git clone git@github.com:AlphaZone4/Item-Database.git
+cd Item-Database
+make
 ```
 
 Packaging
@@ -21,7 +21,7 @@ Packaging
 
 You can also package the code into a simple compressed JS file with no extra real effort.
 
-```
+```bash
 make package
 ```
 
@@ -40,22 +40,22 @@ All modules intending to be utilized by other areas of the code (core modules) s
 
 For example, if I make a module called `foo`:
 
-```
-    define(function(){
-        var exports = {
-            module: "foo",
-            publicFunction: function(){
-                return "bar";
-            }
-        };
-        
-        return exports;
-    });
+```javascript
+define(function(){
+    var exports = {
+        module: "foo",
+        publicFunction: function(){
+            return "bar";
+        }
+    };
+    
+    return exports;
+});
 ```
 
 This will now be available to all other modules like so:
-```
-    $m.foo.bar();
+```javascript
+$m.foo.bar();
 ```
 
 Not including the `module` will make the entire module private, which in some cases is ideal.
@@ -74,27 +74,27 @@ Any module can access these functions for event hooks. Use `az4db_when` to regis
 
 (non-functional, purely demonstrative) Example:
 
-```
-    define(function(){
-        var exports = {
-            module: "example"
-        };
-        az4db_when("loudnoise_loaded", function(){
-            $m.loudnoise.play();
-        });
-        
-        return exports;
+```javascript
+define(function(){
+    var exports = {
+        module: "example"
+    };
+    az4db_when("loudnoise_loaded", function(){
+        $m.loudnoise.play();
     });
     
-    define(function(){
-        var exports = {
-            module: "loudnoise"
-        };
-        
-        exports.init = function(){
-            az4db_do("loudnoise_loaded");
-        };
-        
-        return exports;
-    });
+    return exports;
+});
+
+define(function(){
+    var exports = {
+        module: "loudnoise"
+    };
+    
+    exports.init = function(){
+        az4db_do("loudnoise_loaded");
+    };
+    
+    return exports;
+});
 ```
