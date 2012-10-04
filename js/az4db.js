@@ -36,12 +36,14 @@ require([
 	"bootstrap.min",
     "snippets",
     "encrypt",
+    "src/api",
     "src/config",
 	"src/img",
     "src/nav",
     "src/lists",
     "src/stars",
     "src/popup",
+    "src/items",
     "pages/cat"
 	], function() {
 	// save new modules in an object

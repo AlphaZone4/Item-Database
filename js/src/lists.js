@@ -83,18 +83,15 @@ define(function() {
         };
         
         // DEBUG
-        for(var a=0; a<100; a++) l.data.push({
+        for(var a=0; a<100; a++) l.data.push($m.items.list({
             img: "http://cdn.beta.alphazone4.com/i/54c39a6df4c2cda1e44693b7cd241d57.png",
-            name: "Delirious Squid Skate Trainers Pack",
+            name: "Delirious Squid Skate Trainers Pack "+a,
             rating: {
                 rating: 4.5,
                 votes: 3,
                 vote_id: 1
-            },
-            click: function(){
-                return $m.popup.new("cool-beans!", "Test", "yummy!");
             }
-        });
+        }));
         
         lists.push(l);
         
