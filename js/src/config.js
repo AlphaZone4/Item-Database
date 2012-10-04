@@ -4,6 +4,8 @@ define(function(){
         // baseURL, where all URLs are created. No trailing slash please
         baseURL: "http://alphazone4.com/store",
         
+        apiBase: "http://dev.alphazone4.com",
+        
         // module header
         module: "configuration"
     };
