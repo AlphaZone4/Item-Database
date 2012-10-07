@@ -70,7 +70,7 @@ You can assume that all other modules have been loaded, but cannot rely on their
 
 The API offers access to two global functions, `az4db_when` and `az4db_do`.
 
-Any module can access these functions for event hooks. Use `az4db_when` to register and `az4db_when` to perform.
+Any module can access these functions for event hooks. Use `az4db_when` to register and `az4db_do` to perform.
 
 (non-functional, purely demonstrative) Example:
 
