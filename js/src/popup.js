@@ -5,7 +5,7 @@ define(function(){
     // a small div with the az4db class applied to it for loading all popups
     $t.body = $("<div>").addClass("az4db").appendTo("body");
     
-    $t.new = function(content, header, footer) {
+    $t.create = function(content, header, footer) {
         // basic modal framework
         var $h = $("<div>").addClass("modal");
         

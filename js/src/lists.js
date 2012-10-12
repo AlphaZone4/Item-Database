@@ -46,7 +46,7 @@ define(function() {
             
             // add image (using image loader)
             if ( $m.img ) {
-                h.prepend($m.img.new(l[ii].img));
+                h.prepend($m.img.create(l[ii].img));
             } else {
                 // no image loader?!
                 h.prepend("<img src='"+l[ii].img+"' />");
@@ -54,7 +54,7 @@ define(function() {
             
             // if we have the stars module loaded and have been given rating data
             if ( l[ii].rating && $m.stars ) {
-                h.append($("<div>").addClass("footer").append($m.stars.new(l[ii].rating.vote_id, l[ii].rating.rating, l[ii].rating.votes)));
+                h.append($("<div>").addClass("footer").append($m.stars.create(l[ii].rating.vote_id, l[ii].rating.rating, l[ii].rating.votes)));
             }
             
             this.body.append(i);
@@ -65,7 +65,7 @@ define(function() {
     };
     
     // create a new list and return the jQuery object
-    $t.new = function(opts, _items) {
+    $t.create = function(opts, _items) {
         if (!opts) opts = $t.config;
         
         if (!_items) _items = [];
@@ -118,7 +118,7 @@ define(function() {
         on_resize(resizer);
         
         // DEBUG CODE
-        $("#database").append($t.new().body);
+        $("#database").append($t.create().body);
     };
     
     return $t;

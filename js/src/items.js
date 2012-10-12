@@ -5,7 +5,7 @@ define(function() {
     $t.list = function(i) {
         // popup handler!
         i.click = function(){
-            return $m.popup.new("cool-beans!", i.name, "yummy!");
+            return $m.popup.create("cool-beans!", i.name, "yummy!");
         };
         
         return i;
