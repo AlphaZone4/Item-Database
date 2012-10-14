@@ -60,7 +60,7 @@ define(function() {
         
         // create API loading bar
         loader = $('<div class="az4db">'+
-            '<div class="az4_loading progress progress-info progress-striped active">'+
+            '<div class="loader progress progress-info progress-striped active">'+
             '<div class="bar" style="width:100%"></div></div></div>')
         .hide().appendTo($("body"));
     };
