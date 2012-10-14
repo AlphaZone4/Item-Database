@@ -2,6 +2,8 @@ define(function() {
     var $t = {};
     $t.module = "api";
     
+    var loader;
+    
     // API wrapper for making API requests
     $t.call = function(method, args, cb) {
         // use args variable for callback if only two arguments are passed
@@ -12,8 +14,13 @@ define(function() {
         
         // data callback variable, basically just passes to handle but with cb too
         var dd = function(data) {
+            loader.hide();
+            
             handle(data, cb);
         };
+        
+        // show loader
+        loader.show();
         
         // basic AJAX request
         $.ajax({
@@ -50,6 +57,12 @@ define(function() {
     
     $t.init = function() {
         // cache some essential data
+        
+        // create API loading bar
+        loader = $('<div class="az4db">'+
+            '<div class="az4_loading progress progress-info progress-striped active">'+
+            '<div class="bar" style="width:100%"></div></div></div>')
+        .hide().appendTo($("body"));
     };
     
     return $t;
