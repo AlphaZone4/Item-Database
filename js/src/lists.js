@@ -78,6 +78,8 @@ define(function() {
             // store reference to this
             var me = this;
             
+            me.hookDo("loadCat_start");
+            
             // load API call
             $m.api.call("get/cat/"+id, {}, function(data) {
                 // check if we're a leaf node or not
@@ -88,6 +90,8 @@ define(function() {
                     // load items
                     me.setItems(data.items, $s.cdnBase+"/i/", $m.items.itemClick);
                 }
+                
+                me.hookDo("loadCat_complete", data);
                 
                 if (cb) cb();
             });
@@ -121,6 +125,22 @@ define(function() {
         this.redraw();
     };
     
+    // hook handlers
+    var hookDo = function(hook, args) {
+        if (this.hooks[hook]) {
+            for(var ii=0; ii<this.hooks[hook].length; ii++) {
+                this.hooks[hook][ii](args);
+            }
+        }
+    };
+    var hookWhen = function(hook, func) {
+        // add function to hook array
+        if (!this.hooks[ hook ]) {
+            this.hooks[ hook ] = [];
+        }
+        this.hooks[ hook ].push(func);
+    };
+    
     // create a new list and return the jQuery object
     $t.create = function(opts, _items, target) {
         if (!opts) opts = $t.config;
@@ -137,7 +157,10 @@ define(function() {
             page_items: 0,
             body: $("<ul>").addClass("thumbnails").addClass("az4list"), // where list is actually held
             redraw: redrawList,
-            setItems: setItems
+            setItems: setItems,
+            hooks: {},
+            hookDo: hookDo,
+            hookWhen: hookWhen
         };
         
         // add loaders
