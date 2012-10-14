@@ -3,7 +3,7 @@ define(function(){
     $t.module = "stars";
     
     // create new stars object! vote_id compulsory for interactive voting
-    $t.new = function(vote_id, rating, votes){
+    $t.create = function(vote_id, rating, votes){
         var ratingCSS = "";
         var actual = 0;
         if ( votes && votes > 0 ){

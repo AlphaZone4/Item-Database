@@ -28,7 +28,7 @@ define(function(){
         queue = [];
     };
     
-    $t.new = function(url, width, height) {
+    $t.create = function(url, width, height) {
         // make sure we aren't already fetching this image!
         for(var ii=0; ii<queue.length; ii++) {
             if (queue[ ii ].url == url) queue[ ii ].body;
