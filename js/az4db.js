@@ -7,6 +7,8 @@ var $s = {};
 //  when, register function for plugin hook
 var az4db_hooks = {};
 var az4db_when = function(hook, func){
+    if (!func) return;
+    
     // add function to hook array
     if (!az4db_hooks[ hook ]) {
         az4db_hooks[ hook ] = [];
@@ -22,16 +24,18 @@ var az4db_do = function(hook, args) {
     }
 };
 // shortcut function for az4db_when("init", function(){...});
-var az4db_init = function(config, target, cb){
+var az4db_init = function(config, cb){
     // store configuration
     $s = config;
     
-    // if target exists, build basic ItemDB frame
-    if (target) {
-        az4db_when("init", function() {
-            $m.frame.create(target, cb);
-        });
-    }
+    if (cb) az4db_when("init", cb);
+}
+
+var az4db_frame = function(target, cb) {
+    // build basic ItemDB frame
+    az4db_when("init", function() {
+        $m.frame.create(target, cb);
+    });
 };
 
 // load external resources and code
