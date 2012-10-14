@@ -22,12 +22,19 @@ var az4db_do = function(hook, args) {
     }
 };
 // shortcut function for az4db_when("init", function(){...});
-var az4db_init = function(config, func){
+var az4db_init = function(config, target, func){
     // store configuration
     $s = config;
     
     // call init hook
-    az4db_when("init", func);
+    if (func) {
+        az4db_when("init", func);
+    }
+    
+    // if target exists, build basic ItemDB frame
+    if (target) {
+        $m.frame.create(target);
+    }
 };
 
 // load external resources and code
@@ -55,7 +62,11 @@ require([
             if (arguments[ ii ].module == "configuration") {
                 // override any default configurations with user-supplied, if they exist
                 //  (overriding configurations supplied to az4db_init function)
-                $s = $.extend(arguments[ ii ], $s);
+                if ($s) {
+                    $s = $.extend(arguments[ ii ], $s);
+                } else {
+                    $s = arguments[ ii ];
+                }
             }
 		}
 	}
