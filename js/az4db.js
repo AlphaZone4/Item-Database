@@ -22,18 +22,15 @@ var az4db_do = function(hook, args) {
     }
 };
 // shortcut function for az4db_when("init", function(){...});
-var az4db_init = function(config, target, func){
+var az4db_init = function(config, target, cb){
     // store configuration
     $s = config;
     
-    // call init hook
-    if (func) {
-        az4db_when("init", func);
-    }
-    
     // if target exists, build basic ItemDB frame
     if (target) {
-        $m.frame.create(target);
+        az4db_when("init", function() {
+            $m.frame.create(target, cb);
+        });
     }
 };
 

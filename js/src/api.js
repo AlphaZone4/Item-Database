@@ -4,6 +4,12 @@ define(function() {
     
     // API wrapper for making API requests
     $t.call = function(method, args, cb) {
+        // use args variable for callback if only two arguments are passed
+        if (!cb && typeof(args)=="function") {
+            cb = args;
+            args = {};
+        }
+        
         // data callback variable, basically just passes to handle but with cb too
         var dd = function(data) {
             handle(data, cb);
@@ -43,9 +49,7 @@ define(function() {
     };
     
     $t.init = function() {
-        $t.call("get/cat/1", {}, function(data) {
-            console.log(data);
-        });
+        // cache some essential data
     };
     
     return $t;

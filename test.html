@@ -24,14 +24,15 @@
 		<![endif]-->
 	</head>
 	<body>
-        <div id='nav' class='az4db'></div>
 		<div id='database' class='az4db'></div>
         <script type='text/javascript'>
             /* define page specific loading here */
-            az4db_init({
+            az4db_init( {
                 baseURL: "http://ide.alphazone4.com/workspace/az4db/"
-            }, function(){
-                $("#nav").html($m['nav'].create());
+            }, $("#database"),
+            function(frame) {
+                // load a category to start us off
+                frame.list.loadCat(1);
             });
         </script>
 	</body>

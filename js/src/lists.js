@@ -36,7 +36,7 @@ define(function() {
         this.body.html("");
         
         var l = this.data;
-        for(var ii=this.page_item; ii<this.page_item+this.page_items; ii++) {
+        for(var ii=this.page_item; ii<Math.min(this.data.length, this.page_item+this.page_items); ii++) {
             var i = $("<li><a href='#' class='thumbnail'><p>"+l[ii].name+"</p></a></li>");
             
             var h = i.find("a");
@@ -46,7 +46,7 @@ define(function() {
             
             // add image (using image loader)
             if ( $m.img ) {
-                h.prepend($m.img.create(l[ii].img));
+                h.prepend($m.img.create(l[ii].image));
             } else {
                 // no image loader?!
                 h.prepend("<img src='"+l[ii].img+"' />");
@@ -64,8 +64,50 @@ define(function() {
         if ( $m.img ) $m.img.go();
     };
     
+    // define list loaders here
+    var load = {
+        Cat: function(id, cb) {
+            // store reference to this
+            var me = this;
+            
+            // load API call
+            $m.api.call("get/cat/"+id, {}, function(data) {
+                // check if we're a leaf node or not
+                if (data.cats.length > 0) {
+                    // load categories
+                    me.setItems(data.cats, $s.cdnBase+"/c/");
+                } else {
+                    // load items
+                    me.setItems(data.items, $s.cdnBase+"/i/");
+                }
+                
+                if (cb) cb();
+            });
+        }
+    };
+    
+    // provide a list of items to display in "az4Item" format
+    var setItems = function(items, imgpre) {
+        // prepend URL to all images if presented
+        if (imgpre) {
+            for(var ii=0; ii<items.length; ii++) {
+                items[ii].image = imgpre+items[ii].image;
+            }
+        }
+        
+        // save items in object
+        this.data = items;
+        
+        // reset pages
+        this.page = 0;
+        this.page_item = 0;
+        
+        // redraw list
+        this.redraw();
+    };
+    
     // create a new list and return the jQuery object
-    $t.create = function(opts, _items) {
+    $t.create = function(opts, _items, target) {
         if (!opts) opts = $t.config;
         
         if (!_items) _items = [];
@@ -79,19 +121,14 @@ define(function() {
             page_item: 0, // store first item on page, useful for resizing
             page_items: 0,
             body: $("<ul>").addClass("thumbnails").addClass("az4list"), // where list is actually held
-            redraw: redrawList
+            redraw: redrawList,
+            setItems: setItems
         };
         
-        // DEBUG
-        for(var a=0; a<100; a++) l.data.push($m.items.list({
-            img: "http://cdn.beta.alphazone4.com/i/54c39a6df4c2cda1e44693b7cd241d57.png",
-            name: "Delirious Squid Skate Trainers Pack "+a,
-            rating: {
-                rating: 4.5,
-                votes: 3,
-                vote_id: 1
-            }
-        }));
+        // add loaders
+        for(var ii in load) {
+            l['load'+ii] = load[ii];
+        }
         
         lists.push(l);
         
@@ -104,13 +141,12 @@ define(function() {
             l.redraw();
         },100);
         
-        return l;
-    };
-    
-    // provide a list of items to display in "az4Item" format
-    //  must pass in jQuery object of list too
-    $t.set = function(l, _items) {
+        // if target, populate!
+        if (target) {
+            target.html(l.body);
+        }
         
+        return l;
     };
     
     $t.init = function() {
@@ -118,7 +154,7 @@ define(function() {
         on_resize(resizer);
         
         // DEBUG CODE
-        $("#database").append($t.create().body);
+        //$("#database").append($t.create().body);
     };
     
     return $t;
