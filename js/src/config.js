@@ -6,6 +6,8 @@ define(function(){
         
         apiBase: "http://dev.alphazone4.com",
         
+        cdnBase: "http://cdn.beta.alphazone4.com",
+        
         // module header
         module: "configuration"
     };
