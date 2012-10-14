@@ -39,10 +39,18 @@ define(function() {
         for(var ii=this.page_item; ii<Math.min(this.data.length, this.page_item+this.page_items); ii++) {
             var i = $("<li><a href='#' class='thumbnail'><p>"+l[ii].name+"</p></a></li>");
             
-            var h = i.find("a");
+            // add this item's data to the DOM object
+            l[ii].list = this; // also store a reference to the list object
+            i.data("item", l[ii]);
             
             // assign onclick handle
-            if (l[ii].click) h.click(l[ii].click);
+            var h = i.find("a");
+            if (l[ii].click) {
+                h.click(l[ii].click);
+            } else {
+                // default handle to stop any hash triggers
+                h.click(function(){return false;});
+            }
             
             // add image (using image loader)
             if ( $m.img ) {
@@ -75,10 +83,10 @@ define(function() {
                 // check if we're a leaf node or not
                 if (data.cats.length > 0) {
                     // load categories
-                    me.setItems(data.cats, $s.cdnBase+"/c/");
+                    me.setItems(data.cats, $s.cdnBase+"/c/", $m.items.catClick);
                 } else {
                     // load items
-                    me.setItems(data.items, $s.cdnBase+"/i/");
+                    me.setItems(data.items, $s.cdnBase+"/i/", $m.items.itemClick);
                 }
                 
                 if (cb) cb();
@@ -87,11 +95,18 @@ define(function() {
     };
     
     // provide a list of items to display in "az4Item" format
-    var setItems = function(items, imgpre) {
+    var setItems = function(items, imgpre, clickhandle) {
         // prepend URL to all images if presented
         if (imgpre) {
             for(var ii=0; ii<items.length; ii++) {
                 items[ii].image = imgpre+items[ii].image;
+            }
+        }
+        
+        // add click handles
+        if (clickhandle) {
+            for(var ii=0; ii<items.length; ii++) {
+                items[ii].click = clickhandle;
             }
         }
         
