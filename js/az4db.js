@@ -51,6 +51,7 @@ require([
     "src/stars",
     "src/popup",
     "src/items",
+    "src/frame",
     "pages/cat"
 	], function() {
 	// save new modules in an object
