@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+    <head>
 		<meta charset="utf-8">
-		<title>AlphaZone4 Item Database Test Space [BUILT]</title>
+		<title>AlphaZone4 Item Database Test Space</title>
 		<meta name="description" content="">
 		<meta name="author" content="">
 
@@ -17,7 +17,22 @@
 		<![endif]-->
 	</head>
 	<body>
-		<h1>Test Page!</h1>
 		<div id='database' class='az4db'></div>
+        <script type='text/javascript'>
+            /* define page specific loading here */
+            az4db_init({
+                baseURL: window.location.protocol + "://" + window.location.host + "/" + window.location.pathname,
+                apiBase: "//dev.alphazone4.com",
+                cdnBase: "//cdnbeta.alphazone4.com"
+            });
+            // load basic database layout
+            az4db_frame(
+                $("#database"),
+                function(frame) {
+                    // load a category to start us off
+                    frame.list.loadCat(110);
+                }
+            );
+        </script>
 	</body>
 </html>
