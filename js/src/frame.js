@@ -4,9 +4,14 @@ define(function(){
     $t.module = "frame";
     
     $t.create = function(target, cb) {
+        // hook for naviagation plugin
+        var nav_hook = function(href) {
+            // TODO - general href parser
+        };
+        
         // create frame object
         var frame = {
-            nav: $m.nav.create(),
+            nav: $m.nav.create(nav_hook),
             list: $m.lists.create(null, null),
             crumb: $("<ul>").addClass("breadcrumb")
         };
