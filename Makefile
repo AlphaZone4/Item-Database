@@ -23,7 +23,7 @@ package: default
 	@cp -f css/style.css $(BUILDDIR)/style.css
 	@cp -r css/img $(BUILDDIR)/img
 	@cp -f php/az4db.php $(BUILDDIR)/
-	@(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db out=../$(BUILDDIR)/az4db.js >/dev/null)
+	@(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db out=../$(BUILDDIR)/az4db.js optimize=none >/dev/null)
 	@(cd $(BUILDDIR) && cat ../modules/jquery/dist/jquery.min.js az4db.js >> az4db-jquery.js )
 	@cp _test.html $(BUILDDIR)/index.html
 	@cp css/loader.gif $(BUILDDIR)
