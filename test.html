@@ -28,14 +28,16 @@
         <script type='text/javascript'>
             /* define page specific loading here */
             az4db_init({
-                baseURL: "http://ide.alphazone4.com/workspace/az4db/"
+                baseURL: "https://ide.alphazone4.com/workspace/az4db/",
+                apiBase: "//dev.alphazone4.com",
+                cdnBase: "//cdnbeta.alphazone4.com"
             });
             // load basic database layout
             az4db_frame(
                 $("#database"),
                 function(frame) {
                     // load a category to start us off
-                    frame.list.loadCat(1);
+                    frame.list.loadCat(110);
                 }
             );
         </script>
