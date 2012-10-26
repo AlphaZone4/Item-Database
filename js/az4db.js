@@ -1,40 +1,40 @@
 // global module store
-var $m = {};
+window.$m = {};
 // global configuration object
-var $s = {};
+window.$s = {};
 
 // AZ4 plugin hooks
 //  when, register function for plugin hook
-var az4db_hooks = {};
-var az4db_when = function(hook, func){
+window.az4db_hooks = {};
+window.az4db_when = function(hook, func){
     if (!func) return;
     
     // add function to hook array
-    if (!az4db_hooks[ hook ]) {
-        az4db_hooks[ hook ] = [];
+    if (!window.az4db_hooks[ hook ]) {
+        window.az4db_hooks[ hook ] = [];
     }
-    az4db_hooks[ hook ].push(func);
+    window.az4db_hooks[ hook ].push(func);
 };
-var az4db_do = function(hook, args) {
+window.az4db_do = function(hook, args) {
     // if hook exists, trigger all actions with passed arguments
-    if (az4db_hooks[ hook ]) {
-        for(var ii=0; ii<az4db_hooks[ hook ].length; ii++) {
-            az4db_hooks[ hook ][ ii ](args);
+    if (window.az4db_hooks[ hook ]) {
+        for(var ii=0; ii<window.az4db_hooks[ hook ].length; ii++) {
+            window.az4db_hooks[ hook ][ ii ](args);
         }
     }
 };
 // shortcut function for az4db_when("init", function(){...});
-var az4db_init = function(config, cb){
+window.az4db_init = function(config, cb){
     // store configuration
-    $s = config;
+    window.$s = config;
     
-    if (cb) az4db_when("init", cb);
+    if (cb) window.az4db_when("init", cb);
 }
 
-var az4db_frame = function(target, cb) {
+window.az4db_frame = function(target, cb) {
     // build basic ItemDB frame
-    az4db_when("init", function() {
-        $m.frame.create(target, cb);
+    window.az4db_when("init", function() {
+        window.$m.frame.create(target, cb);
     });
 };
 
@@ -58,16 +58,16 @@ require([
 	// save new modules in an object
 	for(var ii in arguments) {
 		if (arguments[ ii ] && arguments[ ii ].module) {
-            $m[ arguments[ ii ].module ] = arguments[ ii ];
+            window.$m[ arguments[ ii ].module ] = arguments[ ii ];
             
             // if this is the config object, store it globally too
             if (arguments[ ii ].module == "configuration") {
                 // override any default configurations with user-supplied, if they exist
                 //  (overriding configurations supplied to az4db_init function)
-                if ($s) {
-                    $s = $.extend(arguments[ ii ], $s);
+                if (window.$s) {
+                    window.$s = $.extend(arguments[ ii ], window.$s);
                 } else {
-                    $s = arguments[ ii ];
+                    window.$s = arguments[ ii ];
                 }
             }
 		}
@@ -75,11 +75,11 @@ require([
 	
 	// initialise each module in turn (init order, NOT alphabetical)
 	for(var ii in arguments) {
-		if (arguments[ ii ] && arguments[ ii ].module && $m[ arguments[ ii ].module ] && $m[ arguments[ ii ].module ].init) {
-			$m[ arguments[ ii ].module ].init();
+		if (arguments[ ii ] && arguments[ ii ].module && window.$m[ arguments[ ii ].module ] && window.$m[ arguments[ ii ].module ].init) {
+			window.$m[ arguments[ ii ].module ].init();
 		}
 	}
     
     // trigger init functions
-    az4db_do("init");
+    window.az4db_do("init");
 });
