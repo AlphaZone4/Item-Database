@@ -70,22 +70,21 @@ define(function() {
     
     // returns a jQuery object of a navigation bar
     $t.create = function(config) {
-        //var n = $('<div class="navbar-inner"><div class="container"><a class="brand" href="#home"><img src="blank.gif" class="az4-images-minilogo"> PlayStation Home Database</a><ul class="nav"><li><a href="#home">Home</a></li><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Items <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="#cat1"><img src="blank.gif" class="az4-images-eusml"> Europe</a></li><li><a href="#cat110"><img src="blank.gif" class="az4-images-ussml"> America</a></li><li><a href="#cat383"><img src="blank.gif" class="az4-images-jpsml"> Japan</a></li><li><a href="#cat286"><img src="blank.gif" class="az4-images-hksml"> Asia</a></li><li class="divider"></li><li><a href="#cat97"><img src="blank.gif" class="az4-images-eusml"> EU Rewards</a></li><li><a href="#cat358"><img src="blank.gif" class="az4-images-ussml"> US Rewards</a></li></ul></li><li><a href="#space">Spaces</a></li></ul><ul class="nav secondary-nav"><li><a href="#about">About</a></li></ul></div></div></div>');
         var n = createMenu();
         navs.push(n);
         return n;
     };
     
     // returns a jQuery object of a link to an item database page
-    $t.link = function(name, page, config){
+    $t.link = function(content, page, config){
         // setup initial a object with jQuery
         var a = $("<a>");
         
         // set correct URL
-        a.attr("href", $s.baseURL+"/"+page);
+        a.attr("href", $s.baseURL+page);
         
         // set link text
-        a.text(name);
+        a.html(content);
         
         // add CSS classes if desired
         if (config && config['class']) {
@@ -97,7 +96,13 @@ define(function() {
             }
         }
         
-        a.click($t.clicky);
+        // add custom click function if specified
+        if (config && config.click) {
+            a.click(config.click);
+        } else {
+            // default click handler
+            a.click($t.clicky);
+        }
         
         return a;
     };

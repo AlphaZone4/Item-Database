@@ -37,20 +37,18 @@ define(function() {
         
         var l = this.data;
         for(var ii=this.page_item; ii<Math.min(this.data.length, this.page_item+this.page_items); ii++) {
-            var i = $("<li><a href='#' class='thumbnail'><p>"+l[ii].name+"</p></a></li>");
+            var i = $("<li></li>");
+            
+            // add link to list element
+            var h = $m.nav.link("<p>"+l[ii].name+"</p>", (l[ii].page) ? l[ii].page : "#", {
+                click: (l[ii].click) ? l[ii].click : function(){return false;}
+            }).addClass("thumbnail");
+            
+            i.append(h);
             
             // add this item's data to the DOM object
             l[ii].list = this; // also store a reference to the list object
             i.data("item", l[ii]);
-            
-            // assign onclick handle
-            var h = i.find("a");
-            if (l[ii].click) {
-                h.click(l[ii].click);
-            } else {
-                // default handle to stop any hash triggers
-                h.click(function(){return false;});
-            }
             
             // add image (using image loader)
             if ( $m.img ) {
@@ -85,10 +83,10 @@ define(function() {
                 // check if we're a leaf node or not
                 if (data.cats.length > 0) {
                     // load categories
-                    me.setItems(data.cats, $s.cdnBase+"/c/", $m.items.catClick);
+                    me.setItems(data.cats, $s.cdnBase+"/c/", "cat", $m.items.catClick);
                 } else {
                     // load items
-                    me.setItems(data.items, $s.cdnBase+"/i/", $m.items.itemClick);
+                    me.setItems(data.items, $s.cdnBase+"/i/", "item", $m.items.itemClick);
                 }
                 
                 me.hookDo("loadCat_complete", data);
@@ -99,7 +97,7 @@ define(function() {
     };
     
     // provide a list of items to display in "az4Item" format
-    var setItems = function(items, imgpre, clickhandle) {
+    var setItems = function(items, imgpre, page, clickhandle) {
         // prepend URL to all images if presented
         if (imgpre) {
             for(var ii=0; ii<items.length; ii++) {
@@ -111,6 +109,12 @@ define(function() {
         if (clickhandle) {
             for(var ii=0; ii<items.length; ii++) {
                 items[ii].click = clickhandle;
+            }
+        }
+        
+        if (page) {
+            for(var ii=0; ii<items.length; ii++) {
+                items[ii].page = page + "/" + items[ii].id;
             }
         }
         
