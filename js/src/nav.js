@@ -56,7 +56,7 @@ define(function() {
         // add logo/brand
         inner.append( $t.link(opt.logo.title, opt.logo.page, {
             'class' :["brand"]
-        }) );
+        }).prepend('<i class="az4im minilogo"></i> ') );
         
         // create list of nav items
         var list = $("<ul class='nav'>");
