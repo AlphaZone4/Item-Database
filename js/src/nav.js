@@ -46,6 +46,11 @@ define(function() {
     // frame hook
     var frame_hook = null;
     
+    // normalises URL back to just the page id
+    $t.normaliseURL = function(page) {
+        return page.replace(/https?:/, "").replace($s.baseURL, "");
+    };
+    
     // link handler
     $t.clicky = function(p){
         // no page supplied, let's see if we can find a href
@@ -63,7 +68,7 @@ define(function() {
             } else {
                 p = p.target.href;
             }
-            p = p.replace(/https?:/, "").replace($s.baseURL, "");
+            p = $t.normaliseURL(p);
         }
         
         if (frame_hook) frame_hook(p);
@@ -111,6 +116,9 @@ define(function() {
     $t.link = function(content, page, config){
         // setup initial a object with jQuery
         var a = $("<a>");
+        
+        // normalise page first
+        page = $t.normaliseURL(page);
         
         // set correct URL
         a.attr("href", $s.baseURL+page);

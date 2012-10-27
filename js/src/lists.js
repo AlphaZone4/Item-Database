@@ -35,6 +35,11 @@ define(function() {
         // clean out list
         this.body.html("");
         
+        // if we have a page, append it
+        if (this.datapage) {
+            this.body.append($("<div style='clear'>").html($t.az4Markup(this.datapage)));
+        }
+        
         var l = this.data;
         for(var ii=this.page_item; ii<Math.min(this.data.length, this.page_item+this.page_items); ii++) {
             var i = $("<li></li>");
@@ -70,6 +75,43 @@ define(function() {
         if ( $m.img ) $m.img.go();
     };
     
+    $t.az4Markup = function(page, navhook) {
+        if (page) {
+            
+        	// render category links
+    		page = page.replace(/\[cat=([^\]]+)\]([0-9]+)\[\/cat\]/g, "<a href='"+$s.baseURL+"cat/$2' class='loader'>$1</a>");
+            
+    		// render recent update links TODO - load from settings file once API is hooked in
+    		/*page = page.replace(/\[updates\]([A-Z]{2})\[\/updates\]/g, function(t, $1){
+    			if (!typeof(self.regions[$1])=="undefined") return "";
+    			var h = "<ul>";
+    			for(var i=0; i<3; i++){
+    				h += "<li>[update="+self.settings[$1.toLowerCase()+"updates"][i].name+"]"+self.settings[$1.toLowerCase()+"updates"][i].id+"[/update]</li>";
+    			}
+    			h += "</ul>";
+    			return h;
+    		});*/
+            
+            // render individual update links
+    		page = page.replace(/\[update=([^\]]+)\]([0-9]+)\[\/update\]/g, "<a href='"+$s.baseURL+"update/$2' class='loader'>$1</a>");
+            
+    		// render freebie links
+    		page = page.replace(/\[free=([^\]]+)\]([A-Z]+)\[\/free\]/g, "<a href='"+$s.baseURL+"freebies/$2' class='loader'>$1</a>");
+            
+            // jQueryify
+            page = $(page);
+            
+            // add category loaders
+            page.find(".loader").replaceWith(function() {
+                return $m.nav.link($(this).html(), $(this).attr("href"));
+            });
+            
+    		return page;
+    	} else {
+    		return "";
+    	}
+    };
+    
     // define list loaders here
     var load = {
         Cat: function(id, cb) {
@@ -80,6 +122,9 @@ define(function() {
             
             // load API call
             $m.api.call("get/cat/"+id, {}, function(data) {
+                // save page (should be bundled with lists)
+                me.datapage = data.page;
+                
                 // check if we're a leaf node or not
                 if (data.cats.length > 0) {
                     // load categories
