@@ -59,8 +59,6 @@ buildext:
 # compile all CSS
 buildcss:
 	@cp -r modules/bootstrap/less css/tmp
-	@cat css/variables.less >> css/tmp/variables.less
-	@cat css/bootswatch.less >> css/tmp/bootstrap.less
 	@node spriteBuild.js >/dev/null
 	@cat css/custom.less css/sprite.css >> css/tmp/bootstrap.less
 	@rm -f css/sprite.css

@@ -48,10 +48,13 @@ define(function() {
         if (!opt) opt = nav;
         
         // basic navbar structure
-        var h = $('<div class="navbar navbar-inner">');
+        var h = $('<div class="navbar navbar-inverse">');
+        
+        var inner = $('<div class="navbar-inner">');
+        h.append(inner);
         
         // add logo/brand
-        h.append( $t.link(opt.logo.title, opt.logo.page, {
+        inner.append( $t.link(opt.logo.title, opt.logo.page, {
             'class' :["brand"]
         }) );
         
@@ -60,7 +63,7 @@ define(function() {
         for(var ii=0; ii<opt.links.length; ii++) {
             list.append( $("<li>").html($t.link(opt.links[ii].name, opt.links[ii].page)) );
         }
-        h.append(list);
+        inner.append(list);
         
         return h;
     };
