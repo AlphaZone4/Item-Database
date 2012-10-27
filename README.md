@@ -16,6 +16,8 @@ cd Item-Database
 make
 ```
 
+The test.html file will now show a basic test environment for the Item Database client.
+
 Packaging
 -
 
@@ -25,7 +27,9 @@ You can also package the code into a simple compressed JS file with no extra rea
 make package
 ```
 
-The minified compiled JS file, CSS etc. will all be in `az4db/`
+The minified compiled JS file, CSS etc. will all be in `build/`
+
+You can test out the built version using the index.html file in the `build/` folder after packaging.
 
 Development
 -
