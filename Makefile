@@ -27,13 +27,14 @@ package: default
 	@(cd $(BUILDDIR) && cat ../modules/jquery/dist/jquery.min.js az4db.js >> az4db-jquery.js )
 	@cp _test.html $(BUILDDIR)/index.html
 	@cp css/loader.gif $(BUILDDIR)
-	@cp css/sprite.png $(BUILDDIR)
+	@cp css/sprite-*.png $(BUILDDIR)
 	
 # remove all built files, leaving just source code
 clean:
 	@rm -f css/style.css
 	@rm -rf css/img
 	@rm -rf css/sprite.png
+	@rm -rf css/sprite-*.png
 	@rm -rf $(BUILDDIR)/
 	@rm -f js/require-jquery.js
 	@rm -f js/jquery.imagesloaded.js

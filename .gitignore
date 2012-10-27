@@ -3,6 +3,7 @@ build/
 css/img/
 css/style.css
 css/sprite.png
+css/sprite-*.png
 js/bootstrap.min.js
 js/jquery.imagesloaded.js
 js/require-jquery.js
