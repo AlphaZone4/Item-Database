@@ -21,7 +21,7 @@
         <script type='text/javascript'>
             /* define page specific loading here */
             az4db_init({
-                baseURL: window.location.protocol + "://" + window.location.host + "/" + window.location.pathname,
+                baseURL: "//" + window.location.host + window.location.pathname.replace(/\\/g,'/').replace(/\/[^\/]*$/, '') + "/",
                 apiBase: "//dev.alphazone4.com",
                 cdnBase: "//cdnbeta.alphazone4.com"
             });

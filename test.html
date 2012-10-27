@@ -28,7 +28,7 @@
         <script type='text/javascript'>
             /* define page specific loading here */
             az4db_init({
-                baseURL: "https://ide.alphazone4.com/workspace/az4db/",
+                baseURL: "//" + window.location.host + window.location.pathname.replace(/\\/g,'/').replace(/\/[^\/]*$/, '') + "/",
                 apiBase: "//dev.alphazone4.com",
                 cdnBase: "//cdnbeta.alphazone4.com"
             });
