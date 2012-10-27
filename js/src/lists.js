@@ -3,7 +3,7 @@ define(function() {
     var $t = {};
     $t.module = "lists";
     // define item width, used for calculating number of complete rows
-    var item_width = 154;
+    var item_width = 138;
     
     var lists = [];
     
@@ -22,9 +22,9 @@ define(function() {
                 
                 // only redraw if the number of colums has changed
                 if (lists[ii].cols != lists[ii].prev_cols) {
-                    lists[ii].redraw();
                     lists[ii].page_items = lists[ii].cols * $t.config.rows;
                     lists[ii].prev_cols = lists[ii].cols;
+                    lists[ii].redraw();
                 }
             }
         }
