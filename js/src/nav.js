@@ -6,7 +6,7 @@ define(function() {
     // basic nav structure
     var nav = {
         logo: {
-            title: "PlayStation Home Item Database",
+            title: "",
             page: "home"
         },
         links: [
