@@ -5,7 +5,7 @@ define(function(){
     
     var pages = [
         {
-            match: /cat\/([0-9]*)/,
+            match: /cat\/([0-9]+)/,
             func : function(m) {
                 $t.list.loadCat(m[1]);
             }
