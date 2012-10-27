@@ -16,6 +16,26 @@ define(function() {
                 type: 'link'
             },
             {
+                name: '<i class="az4im flag_eu"></i> Europe',
+                page: 'cat/1',
+                type: 'link'
+            },
+            {
+                name: '<i class="az4im flag_us"></i> America',
+                page: 'cat/110',
+                type: 'link'
+            },
+            {
+                name: '<i class="az4im flag_jp"></i> Japan',
+                page: 'cat/383',
+                type: 'link'
+            },
+            {
+                name: '<i class="az4im flag_hk"></i> Asia',
+                page: 'cat/286',
+                type: 'link'
+            },
+            {
                 name: "About",
                 page: "about",
                 type: "rlink"
@@ -23,25 +43,38 @@ define(function() {
         ]
     };
     
-    // storage
-    var navs = [];
+    // frame hook
+    var frame_hook = null;
     
     // link handler
     $t.clicky = function(p){
         // no page supplied, let's see if we can find a href
-        if (!p) {
-            p = $(this).attr("href");
+        if ( typeof(p) !== "string") {
+            // stop other objects firing events
+            p.stopPropagation();
+            
+            // ok, let's grab the href from the event object
+            p = p || window.event;
+            
+            // extract absolute database URL from link
+            if (!p.target.href) {
+                // search parents for link if this clicked object doesn't contain one
+                p = $(p.target).parents("a").attr("href");
+            } else {
+                p = p.target.href;
+            }
+            p = p.replace(/https?:/, "").replace($s.baseURL, "");
         }
         
-        console.log(p);
+        if (frame_hook) frame_hook(p);
         
         return false;
     };
     
     var handlePageChange = function(args) {
-        for(var ii=0; ii<navs.length; ii++) {
-            // TODO: update each nav bar if needed
-        }
+        // update frame TODO
+        //  will only be used if have hash URLs still
+        //  configure to maybe handle backwards compatible URLs automatically?
     };
     
     var createMenu = function(opt){
@@ -69,10 +102,9 @@ define(function() {
     };
     
     // returns a jQuery object of a navigation bar
-    $t.create = function(config) {
-        var n = createMenu();
-        navs.push(n);
-        return n;
+    $t.create = function(hook) {
+        frame_hook = hook;
+        return createMenu();
     };
     
     // returns a jQuery object of a link to an item database page
