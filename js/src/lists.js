@@ -37,7 +37,7 @@ define(function() {
         
         // if we have a page, append it
         if (this.datapage) {
-            this.body.append($("<div style='clear'>").html($t.az4Markup(this.datapage)));
+            this.body.append($("<div class='page'>").html($t.az4Markup(this.datapage)));
         }
         
         var l = this.data;
