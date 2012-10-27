@@ -43,7 +43,7 @@ define(function(){
     	// unregister hovers and clicks
     	$(this).parent().find("li").unbind("mouseenter mouseleave click");
     	// register the vote TODO
-    	fetch("vote", {id: Number($(this).parent().attr("name")), vote:Number($(this).attr("name"))}, function(d){console.log(d);});
+    	//fetch("vote", {id: Number($(this).parent().attr("name")), vote:Number($(this).attr("name"))}, function(d){console.log(d);});
     	// return false to stop returning to the main screen
     	return false;
     };

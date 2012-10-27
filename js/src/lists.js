@@ -59,8 +59,8 @@ define(function() {
             }
             
             // if we have the stars module loaded and have been given rating data
-            if ( l[ii].rating && $m.stars ) {
-                h.append($("<div>").addClass("footer").append($m.stars.create(l[ii].rating.vote_id, l[ii].rating.rating, l[ii].rating.votes)));
+            if ( l[ii].rating_id && $m.stars ) {
+                h.append($("<div>").addClass("footer").append($m.stars.create(l[ii].rating_id, l[ii].rating, l[ii].votes)));
             }
             
             this.body.append(i);
