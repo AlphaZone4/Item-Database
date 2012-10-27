@@ -27,9 +27,9 @@ define(function(){
     		v.attr("name", vote_id);
     		var h = "";
     		for(var i=0; i<5; i++){
-    			$("<li name='"+(i+1)+"'>").hover(hoverin, hoverout)
-    			.click(vote)
-    			.appendTo(v);
+    			v.append(
+                    $("<li name='"+(i+1)+"'>").hover(hoverin, hoverout).click(vote)
+                );
     		}
     	}
         return v;
