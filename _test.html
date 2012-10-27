@@ -7,10 +7,15 @@
 		<meta name="author" content="">
 
 		<!-- CSS -->
-		<link href="style.css" rel="stylesheet">
-		
-		<!-- JS -->
-		<script src="az4db-jquery.js"></script>
+        <script>
+            // avoid cache on dev builds
+            
+            // CSS
+            document.write("<link rel='stylesheet' type='text/css' href='style.css?"+(new Date().getTime())+"' />");
+            
+            // JS
+            document.write("<scr"+"ip"+"t src='az4db-jquery.js?"+(new Date().getTime())+"'><\/script>");
+        </script>
 
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
