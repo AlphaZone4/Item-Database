@@ -98,10 +98,17 @@ define(function() {
         
         // create list of nav items
         var list = $("<ul class='nav'>");
+        var list_right = $("<ul class='nav pull-right'>");
         for(var ii=0; ii<opt.links.length; ii++) {
-            list.append( $("<li>").html($t.link(opt.links[ii].name, opt.links[ii].page)) );
+            var l = $("<li>").html($t.link(opt.links[ii].name, opt.links[ii].page));
+            if (opt.links[ii].type == "rlink") {
+                list_right.append( l );
+            } else {
+                list.append( l );
+            }
         }
         inner.append(list);
+        inner.append(list_right);
         
         return h;
     };
