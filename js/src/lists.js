@@ -40,6 +40,9 @@ define(function() {
             this.body.append($("<div class='page'>").html($t.az4Markup(this.datapage)));
         }
         
+        // create list object
+        var list = $("<ul>").addClass("thumbnails").addClass("az4list");
+        
         var l = this.data;
         for(var ii=this.page_item; ii<Math.min(this.data.length, this.page_item+this.page_items); ii++) {
             var i = $("<li></li>");
@@ -68,8 +71,11 @@ define(function() {
                 h.append($("<div>").addClass("footer").append($m.stars.create(l[ii].rating_id, l[ii].rating, l[ii].votes)));
             }
             
-            this.body.append(i);
+            list.append(i);
         }
+        
+        // append list to body
+        this.body.append(list);
         
         // now we've pushed to DOM, fetch the images sexily
         if ( $m.img ) $m.img.go();
@@ -209,7 +215,7 @@ define(function() {
             page: 0,
             page_item: 0, // store first item on page, useful for resizing
             page_items: 0,
-            body: $("<ul>").addClass("thumbnails").addClass("az4list"), // where list is actually held
+            body: $("<div>"), // where list is actually held
             redraw: redrawList,
             setItems: setItems,
             hooks: {},
