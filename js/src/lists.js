@@ -81,16 +81,21 @@ define(function() {
         	// render category links
     		page = page.replace(/\[cat=([^\]]+)\]([0-9]+)\[\/cat\]/g, "<a href='"+$s.baseURL+"cat/$2' class='loader'>$1</a>");
             
-    		// render recent update links TODO - load from settings file once API is hooked in
-    		/*page = page.replace(/\[updates\]([A-Z]{2})\[\/updates\]/g, function(t, $1){
-    			if (!typeof(self.regions[$1])=="undefined") return "";
+    		// render recent update links
+    		page = page.replace(/\[updates\]([A-Z]{2})\[\/updates\]/g, function(t, $1){
+                // check if this region exists
+                var u = $1.toLowerCase() + "updates";
+    			if (!$s.settings[ u ]) return "";
+                
+                // build a single upload list, to be passed again momentarily
     			var h = "<ul>";
-    			for(var i=0; i<3; i++){
-    				h += "<li>[update="+self.settings[$1.toLowerCase()+"updates"][i].name+"]"+self.settings[$1.toLowerCase()+"updates"][i].id+"[/update]</li>";
+    			for(var i=0; i<5; i++){
+    				h += "<li>[update="+$s.settings[ u ][i].name+"]"+$s.settings[ u ][i].id+"[/update]</li>";
     			}
     			h += "</ul>";
+                
     			return h;
-    		});*/
+    		});
             
             // render individual update links
     		page = page.replace(/\[update=([^\]]+)\]([0-9]+)\[\/update\]/g, "<a href='"+$s.baseURL+"update/$2' class='loader'>$1</a>");
