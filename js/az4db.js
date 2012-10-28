@@ -23,6 +23,11 @@ window.az4db_do = function(hook, args) {
         }
     }
 };
+// tests if a given hook has functions attached
+window.az4db_ifhooks = function(hook) {
+    return window.az4db_hooks[ hook ].length;
+};
+
 // shortcut function for az4db_when("init", function(){...});
 window.az4db_init = function(config, cb){
     // store configuration
@@ -80,6 +85,16 @@ require([
 		}
 	}
     
-    // trigger init functions
-    window.az4db_do("init");
+    // trigger init functions if they exist
+    if (window.az4db_ifhooks("init")) {
+        // init hooks have been created, fetch database settings and then load
+        window.$m.api.call("settings", null, function(data) {
+            // store server supplied settings/data
+            window.$s.settings = data;
+            
+            // now actually call init functions to load database
+            window.az4db_do("init");
+        });
+        
+    }
 });
