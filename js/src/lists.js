@@ -149,6 +149,24 @@ define(function() {
                 
                 if (cb) cb();
             });
+        },
+        Update: function(id, cb) {
+            // store reference to this
+            var me = this;
+            
+            me.hookDo("loadUpdate_start");
+            
+            // load API call
+            $m.api.call("get/update/"+id, {}, function(data) {
+                me.datapage = ""; // these never have pages 
+                
+                // load items
+                me.setItems(data.items, $s.cdnBase+"/i/", "item", $m.items.itemClick);
+                
+                me.hookDo("loadUpdate_complete", data);
+                
+                if (cb) cb();
+            });
         }
     };
     

@@ -9,6 +9,12 @@ define(function(){
             func : function(m) {
                 $t.list.loadCat(m[1]);
             }
+        },
+        {
+            match: /update\/([0-9]+)/,
+            func : function(m) {
+                $t.list.loadUpdate(m[1]);
+            }
         }
     ];
     
@@ -32,8 +38,7 @@ define(function(){
         $t.list = $m.lists.create(null, null);
         $t.crumb = $("<ul>").addClass("breadcrumb");
         
-        // setup event hooks
-        $t.list.hookWhen("loadCat_complete", function(data) {
+        var setup_breadcrumb = function(data) {
             // when category has been loaded, we should update the breadcrumb
             $t.crumb.html("");
             if (data.breadcrumb) {
@@ -64,7 +69,11 @@ define(function(){
                 // no breadcrumb, hide!
                 $t.crumb.hide();
             }
-        });
+        };
+        
+        // setup event hooks
+        $t.list.hookWhen("loadCat_complete", setup_breadcrumb);
+        $t.list.hookWhen("loadUpdate_complete", setup_breadcrumb);
         
         // append to target
         target.html("").append($t.nav).append($t.crumb).append($t.list.body);
