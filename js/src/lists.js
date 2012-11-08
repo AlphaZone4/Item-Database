@@ -52,11 +52,6 @@ define(function() {
         // clean out list
         this.body.html("");
         
-        // if we have a page, append it
-        if (this.datapage) {
-            this.body.append($("<div class='page'>").html($t.az4Markup(this.datapage)));
-        }
-        
         // create list object
         var list = $("<ul>").addClass("thumbnails").addClass("az4list");
         
@@ -140,6 +135,11 @@ define(function() {
             
             // prepend pagnation to body
             this.body.prepend(pag);
+        }
+        
+        // if we have a page, prepend it (do this here to render before the page controls)
+        if (this.datapage) {
+            this.body.prepend($("<div class='page'>").html($t.az4Markup(this.datapage)));
         }
         
         // now we've pushed to DOM, fetch the images sexily
