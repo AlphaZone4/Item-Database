@@ -30,6 +30,23 @@ define(function() {
         }
     };
     
+    var makePageLink = function(page) {
+        var that = this;
+        return $("<li>").append(
+            $m.nav.link(page+1, "#", {
+                click: function() {
+                    return that.pageLink(page);
+                }
+            })
+        );
+    };
+    
+    var pageLink = function(page) {
+        this.page_item = page * this.page_items;
+        this.redraw();
+        return false;
+    }
+    
     // this function is included with a list object so it can rebuild itself
     var redrawList = function() {
         // clean out list
@@ -76,6 +93,48 @@ define(function() {
         
         // append list to body
         this.body.append(list);
+        
+        // create pagination controls
+        if (this.page_items > 0 && this.data.length > this.page_items) {
+            // create page numbers
+            var pag = $("<div>").addClass("pagination pagination-centered");
+            var pag_list = $("<ul>");
+            
+            var pages = Math.ceil(this.data.length / this.page_items);
+            
+            var that = this;
+            
+            // add previous page link
+            pag_list.append($("<li>").append(
+                $m.nav.link("«", "#", {
+                    click: function() {
+                        return that.pageLink( Math.max(0, Math.floor( that.page_item / that.page_items ) - 1) );
+                    }
+                })
+            ));
+            
+            for(var ii=0; ii<pages; ii++) {
+                pag_list.append(this.makePageLink(ii));
+            }
+            
+            // add next page link
+            pag_list.append($("<li>").append(
+                $m.nav.link("»", "#", {
+                    click: function() {
+                        if (that.page_item + that.page_items < that.data.length) {
+                            return that.pageLink( Math.floor( that.page_item / that.page_items ) + 1 );
+                        } else {
+                            return false;
+                        }
+                    }
+                })
+            ));
+            
+            pag.append(pag_list);
+            
+            // prepend pagnation to body
+            this.body.prepend(pag);
+        }
         
         // now we've pushed to DOM, fetch the images sexily
         if ( $m.img ) $m.img.go();
@@ -238,7 +297,9 @@ define(function() {
             setItems: setItems,
             hooks: {},
             hookDo: hookDo,
-            hookWhen: hookWhen
+            hookWhen: hookWhen,
+            makePageLink: makePageLink,
+            pageLink: pageLink
         };
         
         // add loaders
