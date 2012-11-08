@@ -9,7 +9,7 @@ define(function() {
     
     // store global list configurations (grab these from config?!)
     $t.config = {
-        rows: 4
+        rows: 5
     };
     
     // handle window resize, work out correct number of items to show
