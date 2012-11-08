@@ -15,6 +15,12 @@ define(function(){
             func : function(m) {
                 $t.list.loadUpdate(m[1]);
             }
+        },
+        {
+            match: /freebies\/([A-Z]{2})/,
+            func : function(m) {
+                $t.list.loadFree(m[1]);
+            }
         }
     ];
     
@@ -74,6 +80,7 @@ define(function(){
         // setup event hooks
         $t.list.hookWhen("loadCat_complete", setup_breadcrumb);
         $t.list.hookWhen("loadUpdate_complete", setup_breadcrumb);
+        $t.list.hookWhen("loadFree_complete", setup_breadcrumb);
         
         // append to target
         target.html("").append($t.nav).append($t.crumb).append($t.list.body);

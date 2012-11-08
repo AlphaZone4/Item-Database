@@ -232,6 +232,24 @@ define(function() {
                 
                 if (cb) cb();
             });
+        },
+        Free: function(id, cb) {
+            // store reference to this
+            var me = this;
+            
+            me.hookDo("loadFree_start");
+            
+            // load API call
+            $m.api.call("get/free/"+id, {}, function(data) {
+                me.datapage = ""; // these never have pages 
+                
+                // load items
+                me.setItems(data.items, $s.cdnBase+"/i/", "item", $m.items.itemClick);
+                
+                me.hookDo("loadFree_complete", data);
+                
+                if (cb) cb();
+            });
         }
     };
     
