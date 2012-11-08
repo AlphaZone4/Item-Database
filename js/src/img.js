@@ -43,6 +43,7 @@ define(function(){
         // create image holder
         var md5 = hex_md5(url);
         var $ih = $("<div>").addClass("iload").addClass("iload_"+md5).css("width", width+"px").css("height", height+"px");
+        if (width == 128) $ih.addClass("imgsml");
         
         // push to queue
         queue.push({
