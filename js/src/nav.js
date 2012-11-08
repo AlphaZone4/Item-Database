@@ -53,6 +53,9 @@ define(function() {
     
     // link handler
     $t.clicky = function(p){
+        // remove popup
+        $m.popup.hide();
+        
         // no page supplied, let's see if we can find a href
         if ( typeof(p) !== "string") {
             // stop other objects firing events

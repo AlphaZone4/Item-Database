@@ -5,6 +5,14 @@ define(function(){
     // a small div with the az4db class applied to it for loading all popups
     $t.body = $("<div>").addClass("az4db").appendTo("body");
     
+    $t.popup = null;
+    
+    $t.hide = function() {
+        if ($t.popup) {
+            $t.popup.modal('hide');
+        }
+    }
+    
     $t.create = function(content, header, footer) {
         // basic modal framework
         var $h = $("<div>").addClass("modal");
@@ -38,6 +46,8 @@ define(function(){
         
         // euch! the backdrop appends to the body, let's move it to our special controlled area
         $(".modal-backdrop").detach().prependTo($t.body);
+        
+        $t.popup = $h;
         
         return false;
     };
