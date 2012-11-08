@@ -105,20 +105,24 @@ define(function() {
             var that = this;
             
             // add previous page link
-            pag_list.append($("<li>").append(
+            var prev = $("<li>").append(
                 $m.nav.link("«", "#", {
                     click: function() {
                         return that.pageLink( Math.max(0, Math.floor( that.page_item / that.page_items ) - 1) );
                     }
                 })
-            ));
+            );
+            if (this.page_item == 0) prev.addClass("disabled");
+            pag_list.append(prev);
             
             for(var ii=0; ii<pages; ii++) {
-                pag_list.append(this.makePageLink(ii));
+                var l = this.makePageLink(ii);
+                if (ii == this.page_item / this.page_items) l.addClass("disabled");
+                pag_list.append(l);
             }
             
             // add next page link
-            pag_list.append($("<li>").append(
+            var next = $("<li>").append(
                 $m.nav.link("»", "#", {
                     click: function() {
                         if (that.page_item + that.page_items < that.data.length) {
@@ -128,7 +132,9 @@ define(function() {
                         }
                     }
                 })
-            ));
+            );
+            if (this.page_item + this.page_items > this.data.length) next.addClass("disabled");
+            pag_list.append(next);
             
             pag.append(pag_list);
             
