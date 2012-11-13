@@ -72,7 +72,7 @@ buildcss:
 	@rm -rf css/img
 	@cp -r modules/bootstrap/img css/img
 
-# build external JavaScript (jQuery) 
+# build external JavaScript (jQuery)
 buildextjs:
 	@(cd modules/jquery && npm install && node_modules/grunt/bin/grunt)
 	@cat modules/requirejs/require.js modules/jquery/dist/jquery.min.js >> js/require-jquery.js
