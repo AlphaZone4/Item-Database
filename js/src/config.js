@@ -4,7 +4,7 @@ define(function(){
         // baseURL, where all URLs are created. No trailing slash please
         baseURL: "http://alphazone4.com/store",
         
-        apiBase: "//dev.alphazone4.com",
+        apiBase: "//api.alphazone4.com",
         
         cdnBase: "//cdn.alphazone4.com",
         
