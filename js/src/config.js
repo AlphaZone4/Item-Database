@@ -6,7 +6,7 @@ define(function(){
         
         apiBase: "//dev.alphazone4.com",
         
-        cdnBase: "//cdnbeta.alphazone4.com",
+        cdnBase: "//cdn.alphazone4.com",
         
         home2Dat: {
             1: {
