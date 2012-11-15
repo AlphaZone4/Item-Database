@@ -29,7 +29,6 @@ define(function() {
             
             // force JSONP transport
             dataType: "JSONP",
-            jsonpCallback: "callback",
             
             // data callbacks
             success: dd,
