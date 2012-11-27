@@ -1,5 +1,5 @@
 // This class defines the basic AZ4 "frame" for building an essential Item DB
-define(function(){
+define(["config", "src/nav", "src/lists"], function(_config, nav, lists){
     var $t = {};
     $t.module = "frame";
     
@@ -40,8 +40,8 @@ define(function(){
         };
         
         // create frame object
-        $t.nav = $m.nav.create(nav_hook);
-        $t.list = $m.lists.create(null, null);
+        $t.nav = nav.create(nav_hook);
+        $t.list = lists.create(null, null);
         $t.crumb = $("<ul>").addClass("breadcrumb");
         
         var setup_breadcrumb = function(data) {
@@ -52,15 +52,15 @@ define(function(){
                 if (data.breadcrumb.length>1) {
                     for(var ii=0; ii<data.breadcrumb.length; ii++) {
                         $t.crumb.append("<li>"+
-                            ((ii == 0)?"<i class='az4im "+$s.home2Dat[ data.breadcrumb[ii].id ].flag+"'></i> ":"")+
+                            ((ii === 0)?"<i class='az4im "+_config.home2Dat[ data.breadcrumb[ii].id ].flag+"'></i> ":"")+
                             ((ii<(data.breadcrumb.length-1))?
-                            "<a class='crumb_click' href='"+$s.baseURL+"cat/"+data.breadcrumb[ii].id+"'>"+
+                            "<a class='crumb_click' href='"+_config.baseURL+"cat/"+data.breadcrumb[ii].id+"'>"+
                                 data.breadcrumb[ii].name+
                             "</a><span class='divider'>/</span>":data.breadcrumb[ii].name)+
                         "</li>");
                     }
                 } else {
-                    $t.crumb.append("<li><i class='az4im "+$s.home2Dat[ data.breadcrumb[0].id ].flag+"'></i> "+data.breadcrumb[0].name+"</li>");
+                    $t.crumb.append("<li><i class='az4im "+_config.home2Dat[ data.breadcrumb[0].id ].flag+"'></i> "+data.breadcrumb[0].name+"</li>");
                 }
                 
                 // assign breadcrumb click handles
@@ -87,7 +87,7 @@ define(function(){
         
         // callback with frame object
         if (cb) cb($t);
-    }
+    };
     
     return $t;
 });

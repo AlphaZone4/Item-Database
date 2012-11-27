@@ -1,4 +1,4 @@
-define(function(){
+define(["encrypt"], function(encrypt){
 	var $t = {};
     $t.module = "img";
     
@@ -8,7 +8,7 @@ define(function(){
         // create basic image 
         var $i = $("<img>").attr("width", img.width).attr("height", img.height).attr("src", img.url);
         
-        var md5 = hex_md5(img.url);
+        var md5 = encrypt.md5(img.url);
         
         // use jQuery imagesloaded plugin for stupid IE
         $i.imagesLoaded(function() {
@@ -41,7 +41,7 @@ define(function(){
         }
         
         // create image holder
-        var md5 = hex_md5(url);
+        var md5 = encrypt.md5(url);
         var $ih = $("<div>").addClass("iload").addClass("iload_"+md5).css("width", width+"px").css("height", height+"px");
         if (width == 128) $ih.addClass("imgsml");
         

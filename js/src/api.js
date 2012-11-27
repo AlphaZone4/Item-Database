@@ -1,4 +1,4 @@
-define(function() {
+define(["config", "snippets"], function(_config, snippets) {
     var $t = {};
     $t.module = "api";
     
@@ -25,7 +25,7 @@ define(function() {
         // basic AJAX request
         $.ajax({
             // build API request URI
-            url: $s.apiBase+"/"+method,
+            url: _config.apiBase+"/"+method,
             
             // force JSONP transport
             dataType: "JSONP",
@@ -47,7 +47,7 @@ define(function() {
             if (typeof data.error == "function") {
                 return cb({error: "AJAX error. Try again later or check you are using an up-to-date and correctly configured browser."});
             }
-            return cb({error: "API returned error: "+htmlEncode(data.error)});
+            return cb({error: "API returned error: "+snippets.htmlEncode(data.error)});
         }
         
         // no errors? let's pass the data through to the callback!

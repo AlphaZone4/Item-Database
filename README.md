@@ -36,42 +36,6 @@ You can test out the built version using the index.html file in the `build/` fol
 Development
 -
 
-### Modules
-
-New features should be implemented as a new module where it's sane to do so. This helps to abstract and separate code without it becoming a mess.
-
-New modules created should be added to the `js/src` folder and a reference added to `js/az4db.js`. This will allow the test.html file to load the module correctly and the compiler will also automatically detect the reference in `js/az4db.js` and add it to the minified packaged script.
-
-All modules intending to be utilized by other areas of the code (core modules) should export a variable called `modules` that gives the module a name.
-
-For example, if I make a module called `foo`:
-
-```javascript
-define(function(){
-    var exports = {
-        module: "foo",
-        func: function(){
-            return "bar";
-        }
-    };
-    
-    return exports;
-});
-```
-
-This will now be available to all other modules like so:
-```javascript
-alert($m.foo.func());
-```
-
-Not including the `module` will make the entire module private, which in some cases is ideal.
-
-### Module Initialisation
-
-After loading all modules, the client will go through each one and try to find a function called `init` to call.
-
-You can assume that all other modules have been loaded, but cannot rely on their `init` functions being called yet.
-
 ### Action Hooks
 
 The API offers access to two global functions, `az4db_when` and `az4db_do`.

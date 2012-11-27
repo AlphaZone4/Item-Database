@@ -1,4 +1,4 @@
-define(function() {
+define(["src/stars", "src/nav", "src/popup"], function(stars, nav, popup) {
     var $t = {};
     $t.module = "items";
     
@@ -28,7 +28,7 @@ define(function() {
         }
         if (data.rating_id) {
             content.append($("<p class='alert'>"+data.rating+" / 5 ("+data.votes+" votes)</p>").append(
-                $m.stars.create(data.rating_id, data.rating, data.votes).css("float", "right")
+                stars.create(data.rating_id, data.rating, data.votes).css("float", "right")
             ));
         }
         if (data.dev) {
@@ -49,12 +49,12 @@ define(function() {
         if (data.categories) {
             var cats = $("<p>").addClass("alert");
             for(var ii=0; ii<data.categories.length; ii++) {
-                cats.append($m.nav.link("<i class='az4im flag_"+data.categories[ii].zone.toLowerCase()+"'></i> "+data.categories[ii].name+"<br />", "cat/"+data.categories[ii].id));
+                cats.append(nav.link("<i class='az4im flag_"+data.categories[ii].zone.toLowerCase()+"'></i> "+data.categories[ii].name+"<br />", "cat/"+data.categories[ii].id));
             }
             content_box.append(cats);
         }
         
-        $m.popup.create(content_box, data.name, ":D");
+        popup.create(content_box, data.name, ":D");
         
         return false;
     };

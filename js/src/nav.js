@@ -1,4 +1,5 @@
-define(function() {
+define(["config", "src/popup"], function(_config, popup) {
+    
     // file header
     var $t = {};
 	$t.module = "nav";
@@ -48,13 +49,13 @@ define(function() {
     
     // normalises URL back to just the page id
     $t.normaliseURL = function(page) {
-        return page.replace(/https?:/, "").replace($s.baseURL, "");
+        return page.replace(/https?:/, "").replace(_config.baseURL, "");
     };
     
     // link handler
     $t.clicky = function(p){
         // remove popup
-        $m.popup.hide();
+        popup.hide();
         
         // no page supplied, let's see if we can find a href
         if ( typeof(p) !== "string") {
@@ -131,7 +132,7 @@ define(function() {
         page = $t.normaliseURL(page);
         
         // set correct URL
-        a.attr("href", $s.baseURL+page);
+        a.attr("href", _config.baseURL+page);
         
         // set link text
         a.html(content);

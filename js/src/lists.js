@@ -1,4 +1,4 @@
-define(function() {
+define(["config", "src/nav", "src/img", "src/stars", "src/api", "src/items", "snippets"], function(_config, nav, img, stars, api, items, snippets) {
     // module header
     var $t = {};
     $t.module = "lists";
@@ -33,7 +33,7 @@ define(function() {
     var makePageLink = function(page) {
         var that = this;
         return $("<li>").append(
-            $m.nav.link(page+1, "#", {
+            nav.link(page+1, "#", {
                 click: function() {
                     return that.pageLink(page);
                 }
@@ -60,7 +60,7 @@ define(function() {
             var i = $("<li></li>");
             
             // add link to list element
-            var h = $m.nav.link("<p>"+l[ii].name+"</p>", (l[ii].page) ? l[ii].page : "#", {
+            var h = nav.link("<p>"+l[ii].name+"</p>", (l[ii].page) ? l[ii].page : "#", {
                 click: (l[ii].click) ? l[ii].click : function(){return false;}
             }).addClass("thumbnail");
             
@@ -71,16 +71,11 @@ define(function() {
             i.data("item", l[ii]);
             
             // add image (using image loader)
-            if ( $m.img ) {
-                h.prepend($m.img.create(l[ii].image));
-            } else {
-                // no image loader?!
-                h.prepend("<img src='"+l[ii].img+"' />");
-            }
+            h.prepend(img.create(l[ii].image));
             
             // if we have the stars module loaded and have been given rating data
-            if ( l[ii].rating_id && $m.stars ) {
-                h.append($("<div>").addClass("footer").append($m.stars.create(l[ii].rating_id, l[ii].rating, l[ii].votes)));
+            if ( l[ii].rating_id ) {
+                h.append($("<div>").addClass("footer").append(stars.create(l[ii].rating_id, l[ii].rating, l[ii].votes)));
             }
             
             list.append(i);
@@ -101,13 +96,13 @@ define(function() {
             
             // add previous page link
             var prev = $("<li>").append(
-                $m.nav.link("«", "#", {
+                nav.link("«", "#", {
                     click: function() {
                         return that.pageLink( Math.max(0, Math.floor( that.page_item / that.page_items ) - 1) );
                     }
                 })
             );
-            if (this.page_item == 0) prev.addClass("disabled");
+            if (this.page_item === 0) prev.addClass("disabled");
             pag_list.append(prev);
             
             for(var ii=0; ii<pages; ii++) {
@@ -118,7 +113,7 @@ define(function() {
             
             // add next page link
             var next = $("<li>").append(
-                $m.nav.link("»", "#", {
+                nav.link("»", "#", {
                     click: function() {
                         if (that.page_item + that.page_items < that.data.length) {
                             return that.pageLink( Math.floor( that.page_item / that.page_items ) + 1 );
@@ -143,25 +138,25 @@ define(function() {
         }
         
         // now we've pushed to DOM, fetch the images sexily
-        if ( $m.img ) $m.img.go();
+        img.go();
     };
     
     $t.az4Markup = function(page, navhook) {
         if (page) {
             
         	// render category links
-    		page = page.replace(/\[cat=([^\]]+)\]([0-9]+)\[\/cat\]/g, "<a href='"+$s.baseURL+"cat/$2' class='loader'>$1</a>");
+    		page = page.replace(/\[cat=([^\]]+)\]([0-9]+)\[\/cat\]/g, "<a href='"+_config.baseURL+"cat/$2' class='loader'>$1</a>");
             
     		// render recent update links
     		page = page.replace(/\[updates\]([A-Z]{2})\[\/updates\]/g, function(t, $1){
                 // check if this region exists
                 var u = $1.toLowerCase() + "updates";
-    			if (!$s.settings[ u ]) return "";
+    			if (!_config.settings[ u ]) return "";
                 
                 // build a single upload list, to be passed again momentarily
     			var h = "<ul>";
     			for(var i=0; i<5; i++){
-    				h += "<li>[update="+$s.settings[ u ][i].name+"]"+$s.settings[ u ][i].id+"[/update]</li>";
+    				h += "<li>[update="+_config.settings[ u ][i].name+"]"+_config.settings[ u ][i].id+"[/update]</li>";
     			}
     			h += "</ul>";
                 
@@ -169,17 +164,17 @@ define(function() {
     		});
             
             // render individual update links
-    		page = page.replace(/\[update=([^\]]+)\]([0-9]+)\[\/update\]/g, "<a href='"+$s.baseURL+"update/$2' class='loader'>$1</a>");
+    		page = page.replace(/\[update=([^\]]+)\]([0-9]+)\[\/update\]/g, "<a href='"+_config.baseURL+"update/$2' class='loader'>$1</a>");
             
     		// render freebie links
-    		page = page.replace(/\[free=([^\]]+)\]([A-Z]+)\[\/free\]/g, "<a href='"+$s.baseURL+"freebies/$2' class='loader'>$1</a>");
+    		page = page.replace(/\[free=([^\]]+)\]([A-Z]+)\[\/free\]/g, "<a href='"+_config.baseURL+"freebies/$2' class='loader'>$1</a>");
             
             // jQueryify
             page = $(page);
             
             // add category loaders
             page.find(".loader").replaceWith(function() {
-                return $m.nav.link($(this).html(), $(this).attr("href"));
+                return nav.link($(this).html(), $(this).attr("href"));
             });
             
     		return page;
@@ -197,17 +192,17 @@ define(function() {
             me.hookDo("loadCat_start");
             
             // load API call
-            $m.api.call("get/cat/"+id, {}, function(data) {
+            api.call("get/cat/"+id, {}, function(data) {
                 // save page (should be bundled with lists)
                 me.datapage = data.page;
                 
                 // check if we're a leaf node or not
                 if (data.cats.length > 0) {
                     // load categories
-                    me.setItems(data.cats, $s.cdnBase+"/c/", "cat", $m.items.catClick);
+                    me.setItems(data.cats, _config.cdnBase+"/c/", "cat", items.catClick);
                 } else {
                     // load items
-                    me.setItems(data.items, $s.cdnBase+"/i/", "item", $m.items.itemClick);
+                    me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick);
                 }
                 
                 me.hookDo("loadCat_complete", data);
@@ -222,11 +217,11 @@ define(function() {
             me.hookDo("loadUpdate_start");
             
             // load API call
-            $m.api.call("get/update/"+id, {}, function(data) {
+            api.call("get/update/"+id, {}, function(data) {
                 me.datapage = ""; // these never have pages 
                 
                 // load items
-                me.setItems(data.items, $s.cdnBase+"/i/", "item", $m.items.itemClick);
+                me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick);
                 
                 me.hookDo("loadUpdate_complete", data);
                 
@@ -240,11 +235,11 @@ define(function() {
             me.hookDo("loadFree_start");
             
             // load API call
-            $m.api.call("get/free/"+id, {}, function(data) {
+            api.call("get/free/"+id, {}, function(data) {
                 me.datapage = ""; // these never have pages 
                 
                 // load items
-                me.setItems(data.items, $s.cdnBase+"/i/", "item", $m.items.itemClick);
+                me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick);
                 
                 me.hookDo("loadFree_complete", data);
                 
@@ -352,7 +347,7 @@ define(function() {
     
     $t.init = function() {
         // bind resizer to on_resize event
-        on_resize(resizer);
+        snippets.on_resize(resizer);
         
         // DEBUG CODE
         //$("#database").append($t.create().body);
