@@ -1,4 +1,4 @@
-define(["src/stars", "src/nav", "src/popup"], function(stars, nav, popup) {
+define(["config", "src/stars", "src/nav", "src/popup"], function(_config, stars, nav, popup) {
     var $t = {};
     $t.module = "items";
     
@@ -32,8 +32,9 @@ define(["src/stars", "src/nav", "src/popup"], function(stars, nav, popup) {
             ));
         }
         if (data.dev) {
-            // TODO - fetch nicenames from settings data
-            content.append("<p class='alert'>Developer: "+data.dev+"</p>");
+            for(var ii in _config.settings.devs) {
+                if (ii == data.dev) content.append("<p class='alert'>Developer: "+_config.settings.devs[ii]+"</p>");
+            }
         }
         
         // add description/categories etc.
