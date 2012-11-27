@@ -26,8 +26,5 @@ define(function(){
                 "flag"  : "flag_hk"
             }
         },
-        
-        // module header
-        module: "configuration"
     };
 });

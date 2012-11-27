@@ -24,9 +24,11 @@ window.az4db_ifhooks = function(hook) {
 };
 
 // shortcut function for az4db_when("init", function(){...});
+var user_config
 window.az4db_init = function(config, cb){
+    user_config = config;
     if (cb) window.az4db_when("init", cb);
-}
+};
 
 window.az4db_frame = function(target, cb) {
     // build basic ItemDB frame
@@ -44,6 +46,10 @@ require([
     "src/nav",
     "src/frame",
 ], function() {
+    var _config = require("config");
+    for(var ii in user_config) {
+        _config[ ii ] = user_config[ ii ];
+    }
 	
 	// initialise each module in turn (init order, NOT alphabetical)
 	for(var ii in arguments) {
@@ -53,7 +59,6 @@ require([
     // trigger init functions if they exist
     if (window.az4db_ifhooks("init")) {
         var api = require("src/api");
-        var _config = require("config");
         // init hooks have been created, fetch database settings and then load
         api.call("settings", null, function(data) {
             // store server supplied settings/data
