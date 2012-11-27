@@ -50,7 +50,13 @@ define(["config", "src/stars", "src/nav", "src/popup"], function(_config, stars,
         if (data.categories) {
             var cats = $("<p>").addClass("alert");
             for(var ii=0; ii<data.categories.length; ii++) {
-                cats.append(nav.link("<i class='az4im flag_"+data.categories[ii].zone.toLowerCase()+"'></i> "+data.categories[ii].name+"<br />", "cat/"+data.categories[ii].id));
+                if (!_config.regionLock || _config.regionLock == data.categories[ii].zone) {
+                    var cat = "<i class='az4im flag_"+data.categories[ii].zone.toLowerCase()+"'></i> "+data.categories[ii].name+"<br />";
+                    if (_config.categoryLinks) {
+                        cat = nav.link(cat, "cat/"+data.categories[ii].id);
+                    }
+                    cats.append(cat);
+                }
             }
             content_box.append(cats);
         }

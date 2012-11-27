@@ -26,5 +26,11 @@ define(function(){
                 "flag"  : "flag_hk"
             }
         },
+        
+        regionLock: false, // only show specified region
+        
+        categoryLinks: true, // don't enable cat links
+        
+        maxRows: 5, // number of rows of items to show
     };
 });

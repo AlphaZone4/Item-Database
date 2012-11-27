@@ -7,22 +7,17 @@ define(["config", "src/nav", "src/img", "src/stars", "src/api", "src/items", "sn
     
     var lists = [];
     
-    // store global list configurations (grab these from config?!)
-    $t.config = {
-        rows: 5
-    };
-    
     // handle window resize, work out correct number of items to show
     var resizer = function() {
         for(var ii=0; ii<lists.length; ii++) {
             // if we have zero or less rows (i.e, disabled) then skip this
-            if ($t.config.rows >= 1) {
+            if (_config.maxRows >= 1) {
                 // find width of list
                 lists[ii].cols = Math.floor( lists[ ii ].body.innerWidth() / item_width );
                 
                 // only redraw if the number of colums has changed
                 if (lists[ii].cols != lists[ii].prev_cols) {
-                    lists[ii].page_items = lists[ii].cols * $t.config.rows;
+                    lists[ii].page_items = lists[ii].cols * _config.maxRows;
                     lists[ii].prev_cols = lists[ii].cols;
                     lists[ii].redraw();
                 }

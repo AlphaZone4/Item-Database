@@ -65,7 +65,14 @@ require([
             _config.settings = data;
             
             // now actually call init functions to load database
-            window.az4db_do("init");
+            // if we have any modules to load, ensure they're fetched and returned
+            if (_config.loadModules) {
+                require(_config.loadModules, function(libs) {
+                    window.az4db_do("init", libs);
+                });
+            } else {
+                window.az4db_do("init");
+            }
         });
         
     }
