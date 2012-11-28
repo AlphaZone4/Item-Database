@@ -1,4 +1,4 @@
-define(["config", "src/nav", "src/img", "src/stars", "src/api", "src/items", "snippets"], function(_config, nav, img, stars, api, items, snippets) {
+define(["config", "src/nav", "src/img", "src/stars", "src/api", "src/items", "src/resize"], function(_config, nav, img, stars, api, items, resize) {
     // module header
     var $t = {};
     $t.module = "lists";
@@ -340,13 +340,7 @@ define(["config", "src/nav", "src/img", "src/stars", "src/api", "src/items", "sn
         return l;
     };
     
-    $t.init = function() {
-        // bind resizer to on_resize event
-        snippets.on_resize(resizer);
-        
-        // DEBUG CODE
-        //$("#database").append($t.create().body);
-    };
+    resize.add(resizer);
     
     return $t;
 });
