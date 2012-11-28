@@ -5,7 +5,7 @@ require("fs").readdir("images", function(err, images) {
         images[ ii ] = "images/"+images[ ii ];
     }
     var b = new Builder( images, res, {
-        outputImage: __dirname+'/css/sprite-' + (new Date().getTime()) + '.png',
+        outputImage: __dirname+'/css/sprite.png',
         outputCss: __dirname+'/css/sprite.css',
         selector: '.az4im'
     });
