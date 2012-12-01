@@ -3,6 +3,6 @@
     "version": "0.0.1",
     "dependencies": {
         "less": "*",
-        "node-spritesheet": "*"
+        "node-spritesheet": "0.3.0"
     }
 }
