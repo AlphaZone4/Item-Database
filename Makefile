@@ -24,7 +24,7 @@ package: default
 	@cp -r css/img $(BUILDDIR)/img
 	@cp -f php/az4db.php $(BUILDDIR)/
 	@(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db out=../$(BUILDDIR)/az4db.js >/dev/null)
-	@(cd $(BUILDDIR) && cat ../modules/jquery/dist/jquery.min.js az4db.js >> az4db-jquery.js )
+	@(cd $(BUILDDIR) && cat ../js/jquery-1.8.3.js az4db.js >> az4db-jquery.js )
 	@cp _test.html $(BUILDDIR)/index.html
 	@cp css/loader.gif $(BUILDDIR)
 	@cp css/sprite.png $(BUILDDIR)
@@ -73,7 +73,6 @@ buildcss:
 
 # build external JavaScript (jQuery)
 buildextjs:
-	@(cd modules/jquery && npm install && node_modules/grunt/bin/grunt)
-	@cat modules/requirejs/require.js modules/jquery/dist/jquery.min.js >> js/require-jquery.js
+	@cat modules/requirejs/require.js js/jquery-1.8.3.js >> js/require-jquery.js
 	@cp modules/bootstrap/docs/assets/js/bootstrap.min.js js/
 	@cp modules/imagesloaded/jquery.imagesloaded.js js/
