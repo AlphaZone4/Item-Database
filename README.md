@@ -1,7 +1,7 @@
 AlphaZone4 Item Database Client
 =========
 
-![https://build.alphazone4.com/projects/2/status?ref=master](https://build.alphazone4.com/projects/2/status?ref=master)
+![https://build.alphazone4.com/projects/1/status?ref=master](https://build.alphazone4.com/projects/1/status?ref=master)
 
 The core implementation of the AlphaZone4 Item Database Client.
 
