@@ -73,6 +73,25 @@ define(["config", "src/nav", "src/img", "src/stars", "src/api", "src/items", "sr
                 h.append($("<div>").addClass("footer").append(stars.create(l[ii].rating_id, l[ii].rating, l[ii].votes)));
             }
             
+            if ( l[ii].icons ) {
+                // force to array
+                l[ii].icons = [].concat(l[ii].icons);
+                
+                for(var jj=0; jj<l[ii].icons.length; jj++) {
+                    var j = l[ii].icons[jj];
+                    
+                    // check this is an object
+                    if (!j.image) {
+                        j = {
+                            place: 1,
+                            image: j
+                        };
+                    }
+                    
+                    h.append("<i class='az4im "+j.image+" icon"+(parseInt(j.place, 10))+"'></i>");
+                }
+            }
+            
             list.append(i);
         }
         
@@ -262,6 +281,37 @@ define(["config", "src/nav", "src/img", "src/stars", "src/api", "src/items", "sr
         if (page) {
             for(var ii=0; ii<items.length; ii++) {
                 items[ii].page = page + "/" + items[ii].id;
+            }
+        }
+        
+        // add icons
+        for(var ii=0; ii<items.length; ii++) {
+            if (!items[ii].icons) items[ii].icons = [];
+            
+            // TODO - base this on the current active region pricer
+            
+            // check for gender
+            if (items[ii].gender) {
+                items[ii].icons.push({
+                    place: 1,
+                    image: items[ii].gender
+                });
+            }
+            
+            // item gone? :(
+            if (items[ii].prices && (items[ii].prices.GBP == -3 || items[ii].prices.USD == -3) ) {
+                items[ii].icons.push({
+                    place: 0,
+                    image: "label_gone"
+                });
+            }
+            
+            // item free? :D
+            if (items[ii].prices && (items[ii].prices.GBP == -1 || items[ii].prices.USD == -1) ) {
+                items[ii].icons.push({
+                    place: 0,
+                    image: "label_free"
+                });
             }
         }
         
