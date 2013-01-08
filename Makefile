@@ -1,20 +1,20 @@
-BUILDDIR="build"
+BUILDDIR=build
 
 # default build
 default:
-	@$(MAKE) standard >/dev/null
-	@$(MAKE) build >/dev/null
+	$(MAKE) standard
+	$(MAKE) build
 
 all:
-	@$(MAKE) clean >/dev/null
-	@$(MAKE) standard >/dev/null
-	@$(MAKE) build >/dev/null
-	@$(MAKE) package >/dev/null
+	$(MAKE) clean
+	$(MAKE) standard
+	$(MAKE) build
+	$(MAKE) package
 
 # define "local" build piece here
 local:
-	@$(MAKE) standard >/dev/null
-	@$(MAKE) buildcss >/dev/null
+	$(MAKE) standard
+	$(MAKE) buildcss
 	
 # package built files together
 package: default
@@ -31,48 +31,48 @@ package: default
 	
 # remove all built files, leaving just source code
 clean:
-	@rm -f css/style.css
-	@rm -rf css/img
-	@rm -rf css/sprite.png
-	@rm -rf $(BUILDDIR)/
-	@rm -f js/scripts/require-jquery.js
-	@rm -f js/scripts/jquery.imagesloaded.js
-	@rm -f js/scripts/bootstrap.min.js
+	rm -f css/style.css
+	rm -rf css/img
+	rm -rf css/sprite.png
+	rm -rf $(BUILDDIR)/
+	rm -f js/scripts/require-jquery.js
+	rm -f js/scripts/jquery.imagesloaded.js
+	rm -f js/scripts/bootstrap.min.js
 
 ##### INTERNAL MAKE FUNCTIONS #####
 # features always employed
 standard:
-	@command -v npm >/dev/null 2>&1 || ( echo "NPM not found :( NPM is required for install! http://nodejs.org/" >&2 && exit 1 );
-	@npm install
-	@git submodule init
-	@git submodule update
+	command -v npm >/dev/null 2>&1 || ( echo "NPM not found :( NPM is required for install! http://nodejs.org/" >&2 && exit 1 );
+	npm install
+	git submodule init
+	git submodule update
 
 # basic build, build external pieces then local ones
 build:
-	@$(MAKE) buildext >/dev/null
-	@$(MAKE) local >/dev/null
+	$(MAKE) buildext
+	$(MAKE) local
 
 # build external modules together
 buildext:
-	@$(MAKE) buildextjs >/dev/null
+	$(MAKE) buildextjs
 
 # compile all CSS
 buildcss:
-	@cp -r modules/bootstrap/less css/tmp
-	@node spriteBuild.js >/dev/null
-	@cat css/custom.less css/sprite.css >> css/tmp/bootstrap.less
-	@rm -f css/sprite.css
-	@(cd css/tmp/ && echo ".az4db {" > style.css && lessc bootstrap.less >> style.css && echo "}" >> style.css)
-	@(cd css/tmp/ && ../../node_modules/less/bin/lessc style.css > ../style.css)
-	@(cd css/ && sed -i 's|.az4db body|.az4db|g' style.css)
-	@(cd css/ && cat force_scrollbars.css style.css > tmp.css && mv tmp.css style.css)
-	@rm -rf css/tmp/
-	@(cd css/ && sed -i 's|/\*.*\*/||g' style.css)
-	@rm -rf css/img
-	@cp -r modules/bootstrap/img css/img
+	cp -r modules/bootstrap/less css/tmp
+	node spriteBuild.js
+	cat css/custom.less css/sprite.css >> css/tmp/bootstrap.less
+	rm -f css/sprite.css
+	(cd css/tmp/ && echo ".az4db {" > style.css && lessc bootstrap.less >> style.css && echo "}" >> style.css)
+	(cd css/tmp/ && ../../node_modules/less/bin/lessc style.css > ../style.css)
+	(cd css/ && sed -i 's|.az4db body|.az4db|g' style.css)
+	(cd css/ && cat force_scrollbars.css style.css > tmp.css && mv tmp.css style.css)
+	rm -rf css/tmp/
+	(cd css/ && sed -i 's|/\*.*\*/||g' style.css)
+	rm -rf css/img
+	cp -r modules/bootstrap/img css/img
 
 # build external JavaScript (jQuery)
 buildextjs:
-	@cat modules/requirejs/require.js js/scripts/jquery-1.8.3.js >> js/scripts/require-jquery.js
-	@cp modules/bootstrap/docs/assets/js/bootstrap.min.js js/scripts
-	@cp modules/imagesloaded/jquery.imagesloaded.js js/scripts
+	cat modules/requirejs/require.js js/scripts/jquery-1.8.3.js >> js/scripts/require-jquery.js
+	cp modules/bootstrap/docs/assets/js/bootstrap.min.js js/scripts
+	cp modules/imagesloaded/jquery.imagesloaded.js js/scripts
