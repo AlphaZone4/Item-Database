@@ -18,16 +18,16 @@ local:
 	
 # package built files together
 package: default
-	@rm -rf $(BUILDDIR)/
-	@mkdir $(BUILDDIR)/
-	@cp -f css/style.css $(BUILDDIR)/style.css
-	@cp -r css/img $(BUILDDIR)/img
-	@cp -f php/az4db.php $(BUILDDIR)/
-	@(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db out=../$(BUILDDIR)/az4db.js >/dev/null)
-	@(cd $(BUILDDIR) && cat ../js/jquery-1.8.3.js az4db.js >> az4db-jquery.js )
-	@cp _test.html $(BUILDDIR)/index.html
-	@cp css/loader.gif $(BUILDDIR)
-	@cp css/sprite.png $(BUILDDIR)
+	rm -rf $(BUILDDIR)/
+	mkdir $(BUILDDIR)/
+	cp -f css/style.css $(BUILDDIR)/style.css
+	cp -r css/img $(BUILDDIR)/img
+	cp -f php/az4db.php $(BUILDDIR)/
+	(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db out=../$(BUILDDIR)/az4db.js)
+	(cd $(BUILDDIR) && cat ../js/scripts/jquery-1.8.3.js az4db.js >> az4db-jquery.js )
+	cp _test.html $(BUILDDIR)/index.html
+	cp css/loader.gif $(BUILDDIR)
+	cp css/sprite.png $(BUILDDIR)
 	
 # remove all built files, leaving just source code
 clean:
@@ -35,9 +35,9 @@ clean:
 	@rm -rf css/img
 	@rm -rf css/sprite.png
 	@rm -rf $(BUILDDIR)/
-	@rm -f js/require-jquery.js
-	@rm -f js/jquery.imagesloaded.js
-	@rm -f js/bootstrap.min.js
+	@rm -f js/scripts/require-jquery.js
+	@rm -f js/scripts/jquery.imagesloaded.js
+	@rm -f js/scripts/bootstrap.min.js
 
 ##### INTERNAL MAKE FUNCTIONS #####
 # features always employed
@@ -73,6 +73,6 @@ buildcss:
 
 # build external JavaScript (jQuery)
 buildextjs:
-	@cat modules/requirejs/require.js js/jquery-1.8.3.js >> js/require-jquery.js
-	@cp modules/bootstrap/docs/assets/js/bootstrap.min.js js/
-	@cp modules/imagesloaded/jquery.imagesloaded.js js/
+	@cat modules/requirejs/require.js js/scripts/jquery-1.8.3.js >> js/scripts/require-jquery.js
+	@cp modules/bootstrap/docs/assets/js/bootstrap.min.js js/scripts
+	@cp modules/imagesloaded/jquery.imagesloaded.js js/scripts

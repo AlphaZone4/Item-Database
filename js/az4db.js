@@ -39,8 +39,8 @@ window.az4db_frame = function(target, cb) {
 
 // load external resources and code
 require([
-    "jquery.imagesloaded",
-	"bootstrap.min",
+    "scripts/jquery.imagesloaded",
+	"scripts/bootstrap.min",
     "src/api",
     "config",
     "src/nav",

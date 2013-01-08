@@ -1,12 +1,16 @@
 define(function(){
+    var proto = "";
+
+    if (location.protocol == "file:") proto = "http:";
+
     // basic application settings go here (can be overridden)!
     return {
         // baseURL, where all URLs are created. No trailing slash please
         baseURL: "http://alphazone4.com/store",
         
-        apiBase: "//dev.alphazone4.com",
+        apiBase: proto+"//dev.alphazone4.com",
         
-        cdnBase: "//cdn.alphazone4.com",
+        cdnBase: proto+"//cdn.alphazone4.com",
         
         home2Dat: {
             1: {
