@@ -1,4 +1,4 @@
-define(["config", "snippets"], function(_config, snippets) {
+define(["config", "encode"], function(_config, encoder) {
     var $t = {};
     $t.module = "api";
     
@@ -47,7 +47,7 @@ define(["config", "snippets"], function(_config, snippets) {
             if (typeof data.error == "function") {
                 return cb({error: "AJAX error. Try again later or check you are using an up-to-date and correctly configured browser."});
             }
-            return cb({error: "API returned error: "+snippets.htmlEncode(data.error)});
+            return cb({error: "API returned error: "+encoder.encode(data.error)});
         }
         
         // no errors? let's pass the data through to the callback!
