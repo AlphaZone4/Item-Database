@@ -45,6 +45,7 @@ require([
     "config",
     "nav",
     "frame",
+    "page_about",
 ], function() {
     var _config = require("config");
     for(var ii in user_config) {
