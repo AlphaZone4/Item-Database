@@ -77,6 +77,10 @@ define(["config", "nav", "lists"], function(_config, nav, lists){
             for(var ii=0; ii<pages.length; ii++) {
                 var m = pages[ii].match.exec(href);
                 if (m) {
+					// clear the generic page
+					$t.page.html("");
+					
+					// call page function for rendering
                     pages[ii].func(m);
                     return;
                 }
@@ -90,7 +94,7 @@ define(["config", "nav", "lists"], function(_config, nav, lists){
         $t.nav = nav.create(nav_hook);
         $t.list = lists.create(null, null);
         $t.crumb = $("<ul>").addClass("breadcrumb");
-        $t.page = $("<div>"); // generic page element
+        $t.page = $("<div>").addClass("page"); // generic page element
         
         var setup_breadcrumb = function(data) {
             // when category has been loaded, we should update the breadcrumb
