@@ -31,6 +31,45 @@ define(["config", "nav", "lists"], function(_config, nav, lists){
 			func : func
 		});
 	};
+	
+	// create the breadcrumb
+	$t.breadcrumb = function(data) {
+		if (data) {
+			$t.crumb.html("").show();
+			// setup breadcrumb
+			if (data.length>1) {
+				for(var ii=0; ii<data.length; ii++) {
+					$t.crumb.append("<li>"+
+						((ii === 0)?"<i class='az4im "+_config.home2Dat[ data[ii].id ].flag+"'></i> ":"")+
+						((ii<(data.length-1))?
+						"<a class='crumb_click' href='"+_config.baseURL+"cat/"+data[ii].id+"'>"+
+							data[ii].name+
+						"</a><span class='divider'>/</span>":data[ii].name)+
+					"</li>");
+				}
+			} else {
+				$t.crumb.append("<li><i class='az4im "+_config.home2Dat[ data[0].id ].flag+"'></i> "+data[0].name+"</li>");
+			}
+			
+			// assign breadcrumb click handles
+			$(".crumb_click").click(function() {
+				var cat = $(this).attr("href").match(/\d+$/);
+				if (cat) {
+					$t.list.loadCat(cat[0]);
+				}
+				return false;
+			});
+		} else {
+			$t.crumb.html("").hide();
+		}
+	};
+	
+	// clear out frame (except essentials, like the nav)
+	$t.clear = function() {
+		$t.crumb.html("").hide(); // empty breadcrumb
+		$t.list.body.html(""); // empty list
+		$t.page.html("");
+	};
     
     $t.create = function(target, cb) {
         // hook for naviagation plugin
@@ -51,38 +90,11 @@ define(["config", "nav", "lists"], function(_config, nav, lists){
         $t.nav = nav.create(nav_hook);
         $t.list = lists.create(null, null);
         $t.crumb = $("<ul>").addClass("breadcrumb");
+        $t.page = $("<div>"); // generic page element
         
         var setup_breadcrumb = function(data) {
             // when category has been loaded, we should update the breadcrumb
-            $t.crumb.html("");
-            if (data.breadcrumb) {
-                // setup breadcrumb
-                if (data.breadcrumb.length>1) {
-                    for(var ii=0; ii<data.breadcrumb.length; ii++) {
-                        $t.crumb.append("<li>"+
-                            ((ii === 0)?"<i class='az4im "+_config.home2Dat[ data.breadcrumb[ii].id ].flag+"'></i> ":"")+
-                            ((ii<(data.breadcrumb.length-1))?
-                            "<a class='crumb_click' href='"+_config.baseURL+"cat/"+data.breadcrumb[ii].id+"'>"+
-                                data.breadcrumb[ii].name+
-                            "</a><span class='divider'>/</span>":data.breadcrumb[ii].name)+
-                        "</li>");
-                    }
-                } else {
-                    $t.crumb.append("<li><i class='az4im "+_config.home2Dat[ data.breadcrumb[0].id ].flag+"'></i> "+data.breadcrumb[0].name+"</li>");
-                }
-                
-                // assign breadcrumb click handles
-                $(".crumb_click").click(function() {
-                    var cat = $(this).attr("href").match(/\d+$/);
-                    if (cat) {
-                        $t.list.loadCat(cat[0]);
-                    }
-                    return false;
-                });
-            } else {
-                // no breadcrumb, hide!
-                $t.crumb.hide();
-            }
+            $t.breadcrumb(data.breadcrumb);
         };
         
         // setup event hooks
@@ -91,7 +103,7 @@ define(["config", "nav", "lists"], function(_config, nav, lists){
         $t.list.hookWhen("loadFree_complete", setup_breadcrumb);
         
         // append to target
-        target.html("").append($t.nav).append($t.crumb).append($t.list.body);
+        target.html("").append($t.nav).append($t.crumb).append($t.list.body).append($t.page);
         
         // callback with frame object
         if (cb) cb($t);
