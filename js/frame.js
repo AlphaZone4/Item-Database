@@ -24,6 +24,14 @@ define(["config", "nav", "lists"], function(_config, nav, lists){
         }
     ];
     
+    // allow the API to create new pages in the frame
+    $t.add_page = function(regex, func) {
+		pages.push({
+			match: regex,
+			func : func
+		});
+	};
+    
     $t.create = function(target, cb) {
         // hook for naviagation plugin
         var nav_hook = function(href) {
