@@ -1,4 +1,4 @@
-define(["config", "stars", "nav", "popup"], function(_config, stars, nav, popup) {
+define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, nav, popup, pricer) {
     var $t = {};
     $t.module = "items";
     
@@ -23,14 +23,16 @@ define(["config", "stars", "nav", "popup"], function(_config, stars, nav, popup)
         
         // add item price/developer etc. in pinch boxes
         if (data.prices) {
-            // TODO - fetch all prices properly
-            content.append('<p class="alert"><i class="az4im flag_eu"></i> £'+data.prices.GBP+'</p>');
+            // fetch all prices properly
+            content.append('<p class="alert">'+ pricer.print_all(data.prices) +'</p>');
         }
+        
         if (data.rating_id) {
             content.append($("<p class='alert'>"+data.rating+" / 5 ("+data.votes+" votes)</p>").append(
                 stars.create(data.rating_id, data.rating, data.votes).css("float", "right")
             ));
         }
+        
         if (data.dev) {
             for(var ii in _config.settings.devs) {
                 if (ii == data.dev) content.append("<p class='alert'>Developer: "+_config.settings.devs[ii]+"</p>");
