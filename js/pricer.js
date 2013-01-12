@@ -71,6 +71,8 @@ define([], function() {
 			}
 		}
 		
+		if (!h.length) return false;
+		
 		return h.join("<br />");
 	}
 	
@@ -136,8 +138,8 @@ define([], function() {
 	
 	// region specific printing
 	var prints = {
-		eu: function(prices) {
-			if (prices.GBP == 0) {
+		eu: function(prices, force) {
+			if (prices.GBP === 0) {
 				if (!force) return false;
 				
 				return price_texts['0'].text;

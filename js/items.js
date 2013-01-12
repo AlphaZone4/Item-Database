@@ -24,7 +24,8 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
         // add item price/developer etc. in pinch boxes
         if (data.prices) {
             // fetch all prices properly
-            content.append('<p class="alert">'+ pricer.print_all(data.prices) +'</p>');
+            var price_text = pricer.print_all(data.prices);
+            if (price_text) content.append('<p class="alert">' + price_text + '</p>');
         }
         
         if (data.rating_id) {
