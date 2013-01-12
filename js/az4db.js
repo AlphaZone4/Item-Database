@@ -33,7 +33,7 @@ window.az4db_init = function(config, cb){
 window.az4db_frame = function(target, cb) {
     // build basic ItemDB frame
     window.az4db_when("init", function() {
-        require("src/frame").create(target, cb);
+        require("frame").create(target, cb);
     });
 };
 
@@ -41,10 +41,10 @@ window.az4db_frame = function(target, cb) {
 require([
     "scripts/jquery.imagesloaded",
 	"scripts/bootstrap.min",
-    "src/api",
+    "api",
     "config",
-    "src/nav",
-    "src/frame",
+    "nav",
+    "frame",
 ], function() {
     var _config = require("config");
     for(var ii in user_config) {
@@ -58,7 +58,7 @@ require([
     
     // trigger init functions if they exist
     if (window.az4db_ifhooks("init")) {
-        var api = require("src/api");
+        var api = require("api");
         // init hooks have been created, fetch database settings and then load
         api.call("settings", null, function(data) {
             // store server supplied settings/data

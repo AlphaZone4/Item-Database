@@ -1,4 +1,4 @@
-define(["config", "src/stars", "src/nav", "src/popup"], function(_config, stars, nav, popup) {
+define(["config", "stars", "nav", "popup"], function(_config, stars, nav, popup) {
     var $t = {};
     $t.module = "items";
     

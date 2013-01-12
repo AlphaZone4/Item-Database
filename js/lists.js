@@ -1,4 +1,4 @@
-define(["config", "src/nav", "src/img", "src/stars", "src/api", "src/items", "src/resize"], function(_config, nav, img, stars, api, items, resize) {
+define(["config", "nav", "img", "stars", "api", "items", "resize"], function(_config, nav, img, stars, api, items, resize) {
     // module header
     var $t = {};
     $t.module = "lists";

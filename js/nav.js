@@ -1,4 +1,4 @@
-define(["config", "src/popup"], function(_config, popup) {
+define(["config", "popup"], function(_config, popup) {
     
     // file header
     var $t = {};

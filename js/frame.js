@@ -1,5 +1,5 @@
 // This class defines the basic AZ4 "frame" for building an essential Item DB
-define(["config", "src/nav", "src/lists"], function(_config, nav, lists){
+define(["config", "nav", "lists"], function(_config, nav, lists){
     var $t = {};
     $t.module = "frame";
     
