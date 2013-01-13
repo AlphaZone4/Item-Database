@@ -1,4 +1,5 @@
 BUILDDIR=build
+JQUERY=jquery-1.8.3.min.js
 
 # default build
 default:
@@ -24,7 +25,7 @@ package: default
 	cp -r css/img $(BUILDDIR)/img
 	cp -f php/az4db.php $(BUILDDIR)/
 	(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db out=../$(BUILDDIR)/az4db.js)
-	(cd $(BUILDDIR) && cat ../js/scripts/jquery-1.8.3.js az4db.js >> az4db-jquery.js )
+	(cd $(BUILDDIR) && cat ../js/scripts/${JQUERY} az4db.js >> az4db-jquery.js )
 	cp _test.html $(BUILDDIR)/index.html
 	cp css/loader.gif $(BUILDDIR)
 	cp css/sprite.png $(BUILDDIR)
@@ -73,6 +74,6 @@ buildcss:
 
 # build external JavaScript (jQuery)
 buildextjs:
-	cat modules/requirejs/require.js js/scripts/jquery-1.8.3.js >> js/scripts/require-jquery.js
+	cat modules/requirejs/require.js js/scripts/${JQUERY} >> js/scripts/require-jquery.js
 	cp modules/bootstrap/docs/assets/js/bootstrap.min.js js/scripts
 	cp modules/imagesloaded/jquery.imagesloaded.js js/scripts
