@@ -278,11 +278,13 @@ define(["config", "nav", "img", "stars", "api", "items", "resize"], function(_co
             }
         }
         
-        if (page) {
-            for(var ii=0; ii<items.length; ii++) {
-                items[ii].page = page + "/" + items[ii].id;
-            }
-        }
+        for(var ii=0; ii<items.length; ii++) {
+			if (page) {
+				items[ii].page = page + "/" + items[ii].id;
+			} else if (items[ii].link) {
+				items[ii].page = items[ii].link;
+			}
+		}
         
         // add icons
         for(var ii=0; ii<items.length; ii++) {
