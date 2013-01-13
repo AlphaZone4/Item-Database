@@ -56,7 +56,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
             
             // add link to list element
             var h = nav.link("<p>"+l[ii].name+"</p>", (l[ii].page) ? l[ii].page : "#", {
-                click: (l[ii].click) ? l[ii].click : function(){return false;}
+                click: (l[ii].click) ? l[ii].click : nav.clicky
             }).addClass("thumbnail");
             
             i.append(h);
@@ -218,7 +218,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
                 // check if we're a leaf node or not
                 if (data.cats.length > 0) {
                     // load categories
-                    me.setItems(data.cats, _config.cdnBase+"/c/", "cat", items.catClick, data.country);
+                    me.setItems(data.cats, _config.cdnBase+"/c/", "cat", null, data.country);
                 } else {
                     // load items
                     me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);

@@ -49,7 +49,8 @@ define(["config", "popup"], function(_config, popup) {
     
     // normalises URL back to just the page id
     $t.normaliseURL = function(page) {
-        return page.replace(/[a-z]+:/, "").replace(_config.baseURL, "").replace(/\/+$/, "").replace(/^\/+/, "");
+        if (!page) return "";
+        return page.replace(_config.baseURL, "").replace(/[a-z]+:/, "").replace(/\/+$/, "").replace(/^\/+/, "");
     };
     
     // link handler
@@ -80,25 +81,30 @@ define(["config", "popup"], function(_config, popup) {
         return false;
     };
     
-    var cur_page = "";
+    $t.cur_page = null;
     
     var handlePageChange = function(href) {
         // push URL state
         href = $t.normaliseURL(href);
-        
-        if (cur_page != href) {
-            cur_page = href;
-            
+
+        if ($t.cur_page != href) {
             // push page id into the stack
-            window.history.pushState(href, null, _config.baseURL+"/"+href);
+            if ($t.cur_page !== null) window.history.pushState(href, null, _config.baseURL+"/"+href+"/");
+
+            $t.cur_page = href;
         }
     };
     
     window.onpopstate = function(ev) {
-        var href = $t.normaliseURL(ev.state);
+        var href;
+        if (ev.state === null) {
+            href = $t.normaliseURL(document.location.href);
+        } else {
+            href = $t.normaliseURL(ev.state);
+        }
         
-        if (cur_page != href) {
-            cur_page = href;
+        if ($t.cur_page != href) {
+            $t.cur_page = href;
             
             // URL has changed! Move to new (old) page
             frame_hook(href);

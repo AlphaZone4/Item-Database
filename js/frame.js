@@ -73,7 +73,7 @@ define(["config", "nav", "lists", "version"], function(_config, nav, lists, vers
     
     $t.create = function(target, cb) {
         // hook for naviagation plugin
-        $t.go = function(href) {
+        $t.go = function(href, hide_move) {
             for(var ii=0; ii<pages.length; ii++) {
                 var m = pages[ii].match.exec(href);
                 if (m) {
@@ -84,13 +84,20 @@ define(["config", "nav", "lists", "version"], function(_config, nav, lists, vers
                     pages[ii].func(m);
                     
                     // trigger pageChange hook
-                    az4db_do("pageChange", href);
+                    if (!hide_move) az4db_do("pageChange", href);
                     return;
                 }
             }
             
             // didn't return. er...
             console.log("Unknown page "+href);
+        };
+
+        $t.start = function(href) {
+            // only use for starting a frame
+            $t.nav.cur_page = href;
+
+            $t.go(href, true);
         };
         
         // create frame object
