@@ -46,7 +46,8 @@ require([
     "nav",
     "frame",
     "page_about",
-    "psncodes"
+    "psncodes",
+    "page_home"
 ], function() {
     var _config = require("config");
     for(var ii in user_config) {

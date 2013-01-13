@@ -8,12 +8,12 @@ define(["config", "popup"], function(_config, popup) {
     var nav = {
         logo: {
             title: "",
-            page: "home"
+            page: ""
         },
         links: [
             {
                 name: 'Home',
-                page: 'home',
+                page: '',
                 type: 'link'
             },
             {
