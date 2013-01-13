@@ -49,7 +49,7 @@ define(["config", "popup"], function(_config, popup) {
     
     // normalises URL back to just the page id
     $t.normaliseURL = function(page) {
-        return page.replace(/[a-z]+:/, "").replace(_config.baseURL, "");
+        return page.replace(/[a-z]+:/, "").replace(/\/+$/, "").replace(_config.baseURL, "");
     };
     
     // link handler
