@@ -1,4 +1,4 @@
-define(["config", "nav", "img", "stars", "api", "items", "resize"], function(_config, nav, img, stars, api, items, resize) {
+define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], function(_config, nav, img, stars, api, items, resize, pricer) {
     // module header
     var $t = {};
     $t.module = "lists";
@@ -91,6 +91,11 @@ define(["config", "nav", "img", "stars", "api", "items", "resize"], function(_co
                     h.append("<i class='az4im "+j.image+" icon"+(parseInt(j.place, 10))+"'></i>");
                 }
             }
+            
+            // add hover element
+            if ( l[ii].hover ) {
+				h.append($("<div>").addClass("hover").html($("<p>").html(l[ii].hover)));
+			}
             
             list.append(i);
         }
@@ -278,7 +283,9 @@ define(["config", "nav", "img", "stars", "api", "items", "resize"], function(_co
             }
         }
         
+        // add standard additions
         for(var ii=0; ii<items.length; ii++) {
+			// check for custom link on this item
 			if (items[ii].link) {
 				items[ii].page = items[ii].link;
 				
@@ -287,10 +294,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize"], function(_co
 			} else if (page) {
 				items[ii].page = page + "/" + items[ii].id;
 			}
-		}
-        
-        // add icons
-        for(var ii=0; ii<items.length; ii++) {
+			
             if (!items[ii].icons) items[ii].icons = [];
             
             // TODO - base this on the current active region pricer
@@ -304,6 +308,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize"], function(_co
             }
             
             // item gone? :(
+            // TODO - check the current region!
             if (items[ii].prices && (items[ii].prices.GBP == -3 || items[ii].prices.USD == -3) ) {
                 items[ii].icons.push({
                     place: 0,
@@ -318,6 +323,11 @@ define(["config", "nav", "img", "stars", "api", "items", "resize"], function(_co
                     image: "label_free"
                 });
             }
+            
+            // add price hovers to items
+            if (items[ii].prices) {
+				items[ii].hover = pricer.print_all(items[ii].prices);
+			}
         }
         
         // save items in object
