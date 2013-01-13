@@ -49,7 +49,7 @@ define(["config", "popup"], function(_config, popup) {
     
     // normalises URL back to just the page id
     $t.normaliseURL = function(page) {
-        return page.replace(/[a-z]+:/, "").replace(/\/+$/, "").replace(_config.baseURL, "");
+        return page.replace(/[a-z]+:/, "").replace(_config.baseURL, "").replace(/\/+$/, "").replace(/^\/+/, "");
     };
     
     // link handler
@@ -80,10 +80,29 @@ define(["config", "popup"], function(_config, popup) {
         return false;
     };
     
+    var cur_page = "";
+    
     var handlePageChange = function(href) {
-        // update frame TODO
-        //  will only be used if have hash URLs still
-        //  configure to maybe handle backwards compatible URLs automatically?
+        // push URL state
+        href = $t.normaliseURL(href);
+        
+        if (cur_page != href) {
+            cur_page = href;
+            
+            // push page id into the stack
+            window.history.pushState(href, null, _config.baseURL+"/"+href);
+        }
+    };
+    
+    window.onpopstate = function(ev) {
+        var href = $t.normaliseURL(ev.state);
+        
+        if (cur_page != href) {
+            cur_page = href;
+            
+            // URL has changed! Move to new (old) page
+            frame_hook(href);
+        }
     };
     
     var createMenu = function(opt){
