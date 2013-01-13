@@ -34,6 +34,14 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
             ));
         }
         
+        if (data.gender) {
+			content.append("<p class='alert'>" + ((data.gender == "M") ? 
+				"<i class='az4im M'></i> Male"
+				:
+				"<i class='az4im F'></i> Female"
+			) + "</p>");
+		}
+        
         if (data.dev) {
             for(var ii in _config.settings.devs) {
                 if (ii == data.dev) content.append("<p class='alert'>Developer: "+_config.settings.devs[ii]+"</p>");
