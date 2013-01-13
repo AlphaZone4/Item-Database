@@ -120,7 +120,8 @@ define([], function() {
 	
 	// turns number into potential text
 	function format_number(price) {
-		if (!price_texts[ price ] || !price_texts[ price ].text) return price;
+		// no text alternative? ensure this number has 2 decimal places
+		if (!price_texts[ price ] || !price_texts[ price ].text) return price.toFixed(2);
 		
 		return price_texts[ price ].text;
 	}
