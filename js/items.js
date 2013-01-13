@@ -40,6 +40,12 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
             }
         }
         
+        if (data.type && data.type != "None") {
+			for(var ii in _config.settings.item_types) {
+				if (ii == data.type) content.append("<p class='alert'>"+_config.settings.item_types[ii]+"</p>");
+			}
+		}
+        
         // add description/categories etc.
         content_box.append(content);
         content_box.append("<div style='clear:both'></div>");
