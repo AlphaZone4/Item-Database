@@ -4,7 +4,7 @@ css/img/
 css/style.css
 css/sprite.png
 css/sprite-*.png
-js/bootstrap.min.js
-js/jquery.imagesloaded.js
-js/require-jquery.js
+js/scripts/bootstrap.min.js
+js/scripts/jquery.imagesloaded.js
+js/scripts/require-jquery.js
 node_modules/
