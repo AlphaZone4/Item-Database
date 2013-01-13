@@ -110,7 +110,12 @@ define([], function() {
 		if (!price_currencies[ currency ])
 			price_currencies[ currency ] = currency + " ";
 		
-		return h + price_currencies[ currency ] + format_number(prices[ currency ]);
+		// don't return currency symbol for reward/free items etc.
+		if (prices[ currency ] < 0) {
+			return h + format_number(prices[ currency ]);
+		} else {
+			return h + price_currencies[ currency ] + format_number(prices[ currency ]);
+		}
 	}
 	
 	// turns number into potential text
