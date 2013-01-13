@@ -8,25 +8,29 @@ define(function(){
 			name: "Europe",
 			desc: "European",
 			home: 1,
-			flag: "eu"
+			flag: "eu",
+			pricer: "GBP"
 		},
 		us: {
 			name: "North America",
 			desc: "North American",
 			home: 110,
-			flag: "us"
+			flag: "us",
+			pricer: "USD"
 		},
 		jp: {
 			name: "Japan",
 			desc: "Japanese",
 			home: 383,
-			flag: "jp"
+			flag: "jp",
+			pricer: "YEN"
 		},
 		hk: {
 			name: "Asia",
 			desc: "Asian",
 			home: 286,
-			flag: "hk"
+			flag: "hk",
+			pricer: "HKD"
 		}
 	};
 	

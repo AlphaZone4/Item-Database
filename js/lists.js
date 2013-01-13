@@ -218,10 +218,10 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
                 // check if we're a leaf node or not
                 if (data.cats.length > 0) {
                     // load categories
-                    me.setItems(data.cats, _config.cdnBase+"/c/", "cat", items.catClick);
+                    me.setItems(data.cats, _config.cdnBase+"/c/", "cat", items.catClick, data.country);
                 } else {
                     // load items
-                    me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick);
+                    me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);
                 }
                 
                 me.hookDo("loadCat_complete", data);
@@ -240,7 +240,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
                 me.datapage = ""; // these never have pages 
                 
                 // load items
-                me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick);
+                me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);
                 
                 me.hookDo("loadUpdate_complete", data);
                 
@@ -258,7 +258,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
                 me.datapage = ""; // these never have pages 
                 
                 // load items
-                me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick);
+                me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);
                 
                 me.hookDo("loadFree_complete", data);
                 
@@ -268,7 +268,10 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
     };
     
     // provide a list of items to display in "az4Item" format
-    var setItems = function(items, imgpre, page, clickhandle) {
+    var setItems = function(items, imgpre, page, clickhandle, cur_region) {
+		// ensure region is lower case
+		if (cur_region) cur_region = cur_region.toLowerCase();
+		
         // prepend URL to all images if presented
         if (imgpre) {
             for(var ii=0; ii<items.length; ii++) {
@@ -297,8 +300,6 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
 			
             if (!items[ii].icons) items[ii].icons = [];
             
-            // TODO - base this on the current active region pricer
-            
             // check for gender
             if (items[ii].gender) {
                 items[ii].icons.push({
@@ -307,26 +308,28 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
                 });
             }
             
-            // item gone? :(
-            // TODO - check the current region!
-            if (items[ii].prices && (items[ii].prices.GBP == -3 || items[ii].prices.USD == -3) ) {
-                items[ii].icons.push({
-                    place: 0,
-                    image: "label_gone"
-                });
-            }
-            
-            // item free? :D
-            if (items[ii].prices && (items[ii].prices.GBP == -1 || items[ii].prices.USD == -1) ) {
-                items[ii].icons.push({
-                    place: 0,
-                    image: "label_free"
-                });
+            // add special pricing labels
+            if (items[ii].prices && cur_region) {
+				// item gone? :(
+				if (items[ii].prices[ _config.regions[cur_region].pricer ] == -3) {
+					items[ii].icons.push({
+						place: 0,
+						image: "label_gone"
+					});
+				}
+				
+				// item free?
+				if (items[ii].prices[ _config.regions[cur_region].pricer ] == -1) {
+					items[ii].icons.push({
+						place: 0,
+						image: "label_free"
+					});
+				}
             }
             
             // add price hovers to items
-            if (items[ii].prices || page == "item") {
-				items[ii].hover = pricer.print_all(items[ii].prices, true);
+            if ( cur_region && (items[ii].prices || page == "item") ) {
+				items[ii].hover = pricer.print(items[ii].prices, cur_region, true);
 			}
         }
         
