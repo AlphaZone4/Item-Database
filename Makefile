@@ -35,6 +35,7 @@ clean:
 	rm -f css/style.css
 	rm -rf css/img
 	rm -rf css/sprite.png
+	rm -rf css/tmp
 	rm -rf $(BUILDDIR)/
 	rm -f js/scripts/require-jquery.js
 	rm -f js/scripts/jquery.imagesloaded.js
