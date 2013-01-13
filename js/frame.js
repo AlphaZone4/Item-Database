@@ -70,30 +70,31 @@ define(["config", "nav", "lists", "version"], function(_config, nav, lists, vers
 		$t.list.body.html(""); // empty list
 		$t.page.html("");
 	};
-	
-	$t.nav = function(href) {
-		for(var ii=0; ii<pages.length; ii++) {
-			var m = pages[ii].match.exec(href);
-			if (m) {
-				// clear the generic page
-				$t.page.html("");
-				
-				// call page function for rendering
-				pages[ii].func(m);
-				
-				// trigger pageChange hook
-				az4db_do("pageChange", href);
-				return;
-			}
-		}
-		
-		// didn't return. er...
-		console.log("Unknown page "+href);
-	};
     
     $t.create = function(target, cb) {
+        // hook for naviagation plugin
+        $t.go = function(href) {
+            for(var ii=0; ii<pages.length; ii++) {
+                var m = pages[ii].match.exec(href);
+                if (m) {
+					// clear the generic page
+					$t.page.html("");
+					
+					// call page function for rendering
+                    pages[ii].func(m);
+                    
+                    // trigger pageChange hook
+                    az4db_do("pageChange", href);
+                    return;
+                }
+            }
+            
+            // didn't return. er...
+            console.log("Unknown page "+href);
+        };
+        
         // create frame object
-        $t.nav = nav.create($t.nav);
+        $t.nav = nav.create($t.go);
         $t.list = lists.create(null, null);
         $t.crumb = $("<ul>").addClass("breadcrumb");
         $t.page = $("<div>").addClass("page"); // generic page element
