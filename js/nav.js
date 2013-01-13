@@ -151,7 +151,7 @@ define(["config", "popup"], function(_config, popup) {
         page = $t.normaliseURL(page);
         
         // set correct URL
-        a.attr("href", _config.baseURL+page);
+        a.attr("href", _config.baseURL+"/"+page);
         
         // set link text
         a.html(content);
