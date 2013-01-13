@@ -226,6 +226,9 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
                 
                 me.hookDo("loadCat_complete", data);
                 
+                // trigger pageChange hooks
+                az4db_do("pageChange", "cat/"+id);
+                
                 if (cb) cb();
             });
         },
@@ -244,6 +247,9 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
                 
                 me.hookDo("loadUpdate_complete", data);
                 
+                // trigger pageChange hooks
+                az4db_do("pageChange", "update/"+id);
+                
                 if (cb) cb();
             });
         },
@@ -261,6 +267,9 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
                 me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);
                 
                 me.hookDo("loadFree_complete", data);
+                
+                // trigger pageChange hooks
+                az4db_do("pageChange", "freebies/"+id);
                 
                 if (cb) cb();
             });

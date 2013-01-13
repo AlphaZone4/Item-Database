@@ -82,6 +82,9 @@ define(["config", "nav", "lists", "version"], function(_config, nav, lists, vers
 					
 					// call page function for rendering
                     pages[ii].func(m);
+                    
+                    // trigger pageChange hook
+                    az4db_do("pageChange", href);
                     return;
                 }
             }

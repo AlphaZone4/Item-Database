@@ -80,7 +80,7 @@ define(["config", "popup"], function(_config, popup) {
         return false;
     };
     
-    var handlePageChange = function(args) {
+    var handlePageChange = function(href) {
         // update frame TODO
         //  will only be used if have hash URLs still
         //  configure to maybe handle backwards compatible URLs automatically?
@@ -158,11 +158,8 @@ define(["config", "popup"], function(_config, popup) {
         return a;
     };
 	
-    // initialise navigation module (set hooks etc.)
-	$t.init = function() {
-        // register hook on page change (so we can update menu items)
-        az4db_when("pageChange", handlePageChange);
-	};
+	// register hook on page change (so we can update menu items)
+	az4db_when("pageChange", handlePageChange);
 	
 	return $t;
 });
