@@ -279,10 +279,13 @@ define(["config", "nav", "img", "stars", "api", "items", "resize"], function(_co
         }
         
         for(var ii=0; ii<items.length; ii++) {
-			if (page) {
-				items[ii].page = page + "/" + items[ii].id;
-			} else if (items[ii].link) {
+			if (items[ii].link) {
 				items[ii].page = items[ii].link;
+				
+				// overwrite clickhandle
+				items[ii].click = nav.clicky;
+			} else if (page) {
+				items[ii].page = page + "/" + items[ii].id;
 			}
 		}
         
