@@ -59,7 +59,7 @@ define([], function() {
 	};
 	
 	// given a price object, return all prices formatting and with imgs
-	function print_all(prices) {
+	function print_all(prices, force) {
 		var todo = ["eu", "us", "jp", "hk"];
 		
 		var h = [];
@@ -71,6 +71,7 @@ define([], function() {
 			}
 		}
 		
+		if (!h.length && force) return price_texts['0'].text;
 		if (!h.length) return false;
 		
 		return h.join("<br />");

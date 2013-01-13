@@ -325,8 +325,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
             }
             
             // add price hovers to items
-            if (items[ii].prices) {
-				items[ii].hover = pricer.print_all(items[ii].prices);
+            if (items[ii].prices || page == "item") {
+				items[ii].hover = pricer.print_all(items[ii].prices, true);
 			}
         }
         
