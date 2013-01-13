@@ -40,6 +40,7 @@ clean:
 	rm -f js/scripts/require-jquery.js
 	rm -f js/scripts/jquery.imagesloaded.js
 	rm -f js/scripts/bootstrap.min.js
+	rm -f js/version.js
 
 ##### INTERNAL MAKE FUNCTIONS #####
 # features always employed
@@ -78,3 +79,4 @@ buildextjs:
 	cat modules/requirejs/require.js js/scripts/${JQUERY} >> js/scripts/require-jquery.js
 	cp modules/bootstrap/docs/assets/js/bootstrap.min.js js/scripts
 	cp modules/imagesloaded/jquery.imagesloaded.js js/scripts
+	node versionBuild.js

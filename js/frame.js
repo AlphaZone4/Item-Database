@@ -1,5 +1,5 @@
 // This class defines the basic AZ4 "frame" for building an essential Item DB
-define(["config", "nav", "lists"], function(_config, nav, lists){
+define(["config", "nav", "lists", "version"], function(_config, nav, lists, version){
     var $t = {};
     $t.module = "frame";
     
@@ -96,6 +96,9 @@ define(["config", "nav", "lists"], function(_config, nav, lists){
         $t.crumb = $("<ul>").addClass("breadcrumb");
         $t.page = $("<div>").addClass("page"); // generic page element
         
+        // footer (version number etc.)
+        $t.footer = $("<div>").html("AlphaZone4 Item Database - version "+version.version+" (Built: "+version.time+")");
+        
         var setup_breadcrumb = function(data) {
             // when category has been loaded, we should update the breadcrumb
             $t.breadcrumb(data.breadcrumb);
@@ -107,7 +110,7 @@ define(["config", "nav", "lists"], function(_config, nav, lists){
         $t.list.hookWhen("loadFree_complete", setup_breadcrumb);
         
         // append to target
-        target.html("").append($t.nav).append($t.crumb).append($t.list.body).append($t.page);
+        target.html("").append($t.nav).append($t.crumb).append($t.list.body).append($t.page).append($t.footer);
         
         // callback with frame object
         if (cb) cb($t);
