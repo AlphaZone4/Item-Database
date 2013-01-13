@@ -13,13 +13,12 @@ Version: 1.0
 Author URI: http://alphazone4.com
 */
 
-// Copyright James Holding 2013
-
 $az4dbwp_page = "database";
 
 // validate if this is a database URL
 function az4db_isurl() {
-    global $wp, $az4dbwp_detect;
+    global $wp, $az4dbwp_detect, $az4dbwp_page;
+	
 	if (!$az4dbwp_detect && (
 		strtolower($wp->request) == $az4dbwp_page
 			||
