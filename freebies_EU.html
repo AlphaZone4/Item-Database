@@ -28,7 +28,7 @@
                 baseURL: "//" + window.location.host + window.location.pathname.replace(/\\/g,'/').replace(/\/[^\/]*$/, '') + "/",
                 regionLock: "EU",
                 categoryLinks: false,
-                loadModules: ["src/lists"],
+                loadModules: ["lists"],
                 maxRows: 4
             }, function(lists) {
                 var list = lists.create(null, null);
