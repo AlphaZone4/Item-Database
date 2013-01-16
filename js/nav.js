@@ -89,7 +89,7 @@ define(["config", "popup"], function(_config, popup) {
 
         if ($t.cur_page != href) {
             // push page id into the stack
-            if ($t.cur_page !== null) window.history.pushState(href, null, _config.baseURL+"/"+href+"/");
+            if ($t.cur_page !== null) window.history.pushState(href, null, _config.baseURL+"/"+href+((href!=="")?"/":""));
 
             $t.cur_page = href;
         }
