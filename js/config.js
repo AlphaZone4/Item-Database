@@ -60,6 +60,6 @@ define(function(){
         
         categoryLinks: true, // don't enable cat links
         
-        maxRows: 5, // number of rows of items to show
+        maxRows: 5 // number of rows of items to show
     };
 });
