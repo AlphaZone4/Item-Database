@@ -2,7 +2,10 @@ define(["config", "encode"], function(_config, encoder) {
     var $t = {};
     $t.module = "api";
     
-    var loader;
+    var loader = $('<div class="az4db">'+
+            '<div class="loader progress progress-info progress-striped active">'+
+            '<div class="bar" style="width:100%"></div></div></div>')
+            .hide().appendTo($("body"));
     
     // API wrapper for making API requests
     $t.call = function(method, args, cb) {
@@ -52,16 +55,6 @@ define(["config", "encode"], function(_config, encoder) {
         
         // no errors? let's pass the data through to the callback!
         cb(data);
-    };
-    
-    $t.init = function() {
-        // cache some essential data
-        
-        // create API loading bar
-        loader = $('<div class="az4db">'+
-            '<div class="loader progress progress-info progress-striped active">'+
-            '<div class="bar" style="width:100%"></div></div></div>')
-        .hide().appendTo($("body"));
     };
     
     return $t;
