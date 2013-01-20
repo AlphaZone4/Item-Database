@@ -20,7 +20,7 @@ define([], function() {
 		USD: "&dollar;",
 		YEN: "&yen;",
 		HKD: "HK&dollar;",
-		AUD: "A&dollar;",
+		AUD: "A&dollar;"
 	};
 	
 	var region_prices = {
@@ -34,7 +34,7 @@ define([], function() {
 		EUR: "eu",
 		USD: "us",
 		YEN: "jp",
-		HKD: "hk",
+		HKD: "hk"
 	};
 	// list of special prices to text or labels
 	var price_texts = {
