@@ -12,7 +12,8 @@ define(["frame", "api", "config"], function(frame, api, config) {
 		frame.clear(); // empty current frame
 		
 		get_codes(function(codes) {
-			var h = '';
+			var h = '<h2>How to redeem SEN codes</h2>';
+            h .= "<a href='http://uk.playstation.com/redeemvouchercode/' target='_blank'>Please follow the guide on the official PlayStation Support Website (click here)</a>";
 			
 			for(var ii in codes) {
 				// any codes here?
