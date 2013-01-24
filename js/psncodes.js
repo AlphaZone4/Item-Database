@@ -1,19 +1,13 @@
 define(["frame", "api", "config"], function(frame, api, config) {
 	var codes;
 	
-	/*frame.add_page(/^codes\/([a-z]{2})/, function(m) {
-		frame.clear(); // empty current frame
-		
-		console.log(m);
-	});*/
-	
 	// code region listings
 	frame.add_page(/^codes$/, function() {
 		frame.clear(); // empty current frame
 		
 		get_codes(function(codes) {
 			var h = '<h2>How to redeem SEN codes</h2>';
-            h .= "<a href='http://uk.playstation.com/redeemvouchercode/' target='_blank'>Please follow the guide on the official PlayStation Support Website (click here)</a>";
+            h += "<a href='http://uk.playstation.com/redeemvouchercode/' target='_blank'>Please follow the guide on the official PlayStation Support Website (click here)</a>";
 			
 			for(var ii in codes) {
 				// any codes here?
