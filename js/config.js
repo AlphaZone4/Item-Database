@@ -1,6 +1,6 @@
 define(function(){
-    var proto = "";
-
+    var proto = location.protocol;
+    
     if (location.protocol == "file:") proto = "http:";
     
     var regions = {
