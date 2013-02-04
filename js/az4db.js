@@ -47,7 +47,8 @@ require([
     "frame",
     "page_about",
     "psncodes",
-    "page_home"
+    "page_home",
+    "XDM"
 ], function() {
     var _config = require("config");
     for(var ii in user_config) {
