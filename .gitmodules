@@ -13,3 +13,6 @@
 [submodule "modules/imagesloaded"]
 	path = modules/imagesloaded
 	url = http://github.com/desandro/imagesloaded
+[submodule "modules/JSON-js"]
+	path = modules/JSON-js
+	url = https://github.com/douglascrockford/JSON-js.git
