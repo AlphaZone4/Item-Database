@@ -16,3 +16,6 @@
 [submodule "modules/JSON-js"]
 	path = modules/JSON-js
 	url = https://github.com/douglascrockford/JSON-js.git
+[submodule "modules/easyXDM"]
+	path = modules/easyXDM
+	url = https://github.com/oyvindkinsey/easyXDM.git

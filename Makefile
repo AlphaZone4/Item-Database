@@ -1,35 +1,17 @@
 BUILDDIR=build
 JQUERY=jquery-1.8.3.min.js
 
+##### Standard make functions, either just make or make all
 # default build
-default:
-	$(MAKE) standard
+default: standard
 	$(MAKE) build
 
-all:
+all: standard
 	$(MAKE) clean
-	$(MAKE) standard
 	$(MAKE) build
 	$(MAKE) package
 
-# define "local" build piece here
-local:
-	$(MAKE) standard
-	$(MAKE) buildcss
-	
-# package built files together
-package: default
-	rm -rf $(BUILDDIR)/
-	mkdir $(BUILDDIR)/
-	cp -f css/style.css $(BUILDDIR)/style.css
-	cp -r css/img $(BUILDDIR)/img
-	cp -f php/az4db.php $(BUILDDIR)/
-	(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db out=../$(BUILDDIR)/az4db.js)
-	(cd $(BUILDDIR) && cat ../js/scripts/${JQUERY} az4db.js >> az4db-jquery.js )
-	cp _test.html $(BUILDDIR)/index.html
-	cp css/loader.gif $(BUILDDIR)
-	cp css/sprite.png $(BUILDDIR)
-	
+##### Use these only if you know what you're doing #####
 # remove all built files, leaving just source code
 clean:
 	rm -f css/style.css
@@ -42,6 +24,19 @@ clean:
 	rm -f js/scripts/bootstrap.min.js
 	rm -f js/version.js
 
+# package built files together
+package:
+	rm -rf $(BUILDDIR)/
+	mkdir $(BUILDDIR)/
+	cp -f css/style.css $(BUILDDIR)/style.css
+	cp -r css/img $(BUILDDIR)/img
+	cp -f php/az4db.php $(BUILDDIR)/
+	(cd js && node ../modules/r.js/dist/r.js -o name=../modules/almond/almond wrap=true include=az4db out=../$(BUILDDIR)/az4db.js)
+	(cd $(BUILDDIR) && cat ../js/scripts/${JQUERY} az4db.js >> az4db-jquery.js )
+	cp _test.html $(BUILDDIR)/index.html
+	cp css/loader.gif $(BUILDDIR)
+	cp css/sprite.png $(BUILDDIR)
+	
 ##### INTERNAL MAKE FUNCTIONS #####
 # features always employed
 standard:
@@ -52,12 +47,8 @@ standard:
 
 # basic build, build external pieces then local ones
 build:
-	$(MAKE) buildext
-	$(MAKE) local
-
-# build external modules together
-buildext:
-	$(MAKE) buildextjs
+	$(MAKE) buildcss
+	$(MAKE) buildjs
 
 # compile all CSS
 buildcss:
@@ -75,8 +66,9 @@ buildcss:
 	cp -r modules/bootstrap/img css/img
 
 # build external JavaScript (jQuery)
-buildextjs:
+buildjs:
 	cat modules/requirejs/require.js js/scripts/${JQUERY} >> js/scripts/require-jquery.js
 	cp modules/bootstrap/docs/assets/js/bootstrap.min.js js/scripts
 	cp modules/imagesloaded/jquery.imagesloaded.js js/scripts
 	node versionBuild.js
+	(cd modules/easyXDM && ./build.sh)
