@@ -1,4 +1,4 @@
-define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], function(_config, nav, img, stars, api, items, resize, pricer) {
+define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "admin"], function(_config, nav, img, stars, api, items, resize, pricer, admin) {
     // module header
     var $t = {};
     $t.module = "lists";
@@ -155,6 +155,9 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
         if (this.datapage) {
             this.body.prepend($("<div class='page'>").html($t.az4Markup(this.datapage)));
         }
+            
+        // administration/contributor controls
+        this.body.prepend(admin.build_menus(this.fetch_data));
         
         // now we've pushed to DOM, fetch the images sexily
         img.go();
@@ -212,6 +215,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
             
             // load API call
             api.call("get/cat/"+id, {}, function(data) {
+                me.fetch_data = data;
+                
                 // save page (should be bundled with lists)
                 me.datapage = data.page;
                 
@@ -240,6 +245,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
             
             // load API call
             api.call("get/update/"+id, {}, function(data) {
+                me.fetch_data = data;
+                
                 me.datapage = ""; // these never have pages 
                 
                 // load items
@@ -261,6 +268,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer"], fu
             
             // load API call
             api.call("get/free/"+id, {}, function(data) {
+                me.fetch_data = data;
+                
                 me.datapage = ""; // these never have pages 
                 
                 // load items

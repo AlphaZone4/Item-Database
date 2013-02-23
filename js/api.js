@@ -1,4 +1,4 @@
-define(["config", "encode"], function(_config, encoder) {
+define(["config", "encode", "XDM"], function(_config, encoder, XDM) {
     var $t = {};
     $t.module = "api";
     
@@ -36,6 +36,17 @@ define(["config", "encode"], function(_config, encoder) {
             // data callbacks
             success: dd,
             error: dd
+        });
+    };
+    
+    $t.post = function(method, args, cb) {
+        // show loading bar
+        loader.show();
+        
+        XDM(method, args, function(data) {
+            loader.hide();
+            
+            cb(data);
         });
     };
     
