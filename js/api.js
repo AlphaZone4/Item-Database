@@ -30,6 +30,9 @@ define(["config", "encode", "XDM"], function(_config, encoder, XDM) {
             // build API request URI
             url: _config.apiBase+"/"+method,
             
+            // pass GET parameters
+            data: args,
+            
             // force JSONP transport
             dataType: "JSONP",
             
