@@ -7,7 +7,7 @@ define(["config", "popup", "api"], function(_config, popup, api) {
     // make generic drop down menu! (I want to have lots of these!)
     function generic_menu(name, icon, obj) {
         // don't return anything if there are no menu items
-        //if (obj.length === 0) return "";
+        if (obj.length === 0) return null;
         
         var m = $("<div>").addClass("btn-group").append('<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="az4im '+icon+'"></i> '+name+' <span class="caret"></span></a>');
         
@@ -68,7 +68,8 @@ define(["config", "popup", "api"], function(_config, popup, api) {
         var menu_div = $("<div>").addClass("admin_menus");
         
         for(var ii=0; ii<menus.length; ii++) {
-            menu_div.append(menus[ii](data));
+            var t = menus[ii](data);
+            if (t) menu_div.append(t);
         }
         
         return menu_div;
