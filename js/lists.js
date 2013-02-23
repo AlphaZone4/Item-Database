@@ -283,20 +283,20 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                 if (cb) cb();
             });
         },
-        Items: function(items, cb) {
+        Items: function(_items, cb) {
             // store reference to this
             var me = this;
             
             me.hookDo("loadItems_start");
             
             // load API call
-            api.call("get/items/", {id: items.join(",")}, function(data) {
+            api.call("get/items/", {id: _items.join(",")}, function(data) {
                 me.fetch_data = data;
                 
                 me.datapage = ""; // these never have pages 
                 
                 // load items
-                me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick);
+                me.setItems(data, _config.cdnBase+"/i/", "item", items.itemClick);
                 
                 me.hookDo("loadItems_complete", data);
                 
