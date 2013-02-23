@@ -296,7 +296,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                 me.datapage = ""; // these never have pages 
                 
                 // load items
-                me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);
+                me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick);
                 
                 me.hookDo("loadItems_complete", data);
                 
