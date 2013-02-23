@@ -14,9 +14,11 @@ window.az4db_do = function(hook, args) {
     // if hook exists, trigger all actions with passed arguments
     if (window.az4db_hooks[ hook ]) {
         for(var ii=0; ii<window.az4db_hooks[ hook ].length; ii++) {
-            window.az4db_hooks[ hook ][ ii ](args);
+            var t = window.az4db_hooks[ hook ][ ii ](args);
+            if (t) args = t;
         }
     }
+    return args;
 };
 // tests if a given hook has functions attached
 window.az4db_ifhooks = function(hook) {

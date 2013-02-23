@@ -70,7 +70,15 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             
             // if we have the stars module loaded and have been given rating data
             if ( l[ii].rating_id ) {
-                h.append($("<div>").addClass("footer").append(stars.create(l[ii].rating_id, l[ii].rating, l[ii].votes)));
+                var rating_div = {
+                    div:  stars.create(l[ii].rating_id, l[ii].rating, l[ii].votes),
+                    item: l[ii]
+                };
+                
+                // run hook
+                rating_div = window.az4db_do("starrating_div", rating_div);
+                
+                h.append($("<div>").addClass("footer").append(rating_div.div));
             }
             
             if ( l[ii].icons ) {
