@@ -84,6 +84,8 @@ define(["config", "popup"], function(_config, popup) {
     $t.cur_page = null;
     
     var handlePageChange = function(href) {
+        if (_config.linkType == "none") return;
+        
         // push URL state
         href = $t.normaliseURL(href);
 
