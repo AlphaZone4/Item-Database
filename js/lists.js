@@ -308,11 +308,18 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                 
                 me.hookDo("loadItems_complete", data);
                 
-                // trigger pageChange hooks
-                //az4db_do("pageChange", "freebies/"+id);
-                
                 if (cb) cb();
             });
+        },
+        Preload: function(_items, cb) {
+            this.fetch_data = _items;
+                
+            this.datapage = ""; // these never have pages 
+            
+            // load items
+            this.setItems(_items, _config.cdnBase+"/i/", "item", items.itemClick);
+            
+            if (cb) cb();
         }
     };
     
