@@ -107,7 +107,7 @@ define(["config", "popup"], function(_config, popup) {
             $t.cur_page = href;
             
             // URL has changed! Move to new (old) page
-            frame_hook(href);
+            if (frame_hook) frame_hook(href);
         }
     };
     

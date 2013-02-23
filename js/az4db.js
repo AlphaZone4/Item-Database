@@ -20,6 +20,7 @@ window.az4db_do = function(hook, args) {
 };
 // tests if a given hook has functions attached
 window.az4db_ifhooks = function(hook) {
+    if (!window.az4db_hooks[ hook ]) return 0;
     return window.az4db_hooks[ hook ].length;
 };
 
