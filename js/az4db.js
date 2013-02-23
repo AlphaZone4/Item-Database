@@ -74,8 +74,8 @@ require([
             // now actually call init functions to load database
             // if we have any modules to load, ensure they're fetched and returned
             if (_config.loadModules) {
-                require(_config.loadModules, function(libs) {
-                    window.az4db_do("init", libs);
+                require(_config.loadModules, function() {
+                    window.az4db_do("init", arguments);
                 });
             } else {
                 window.az4db_do("init");

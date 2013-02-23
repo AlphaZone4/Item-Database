@@ -30,7 +30,8 @@
                 categoryLinks: false,
                 loadModules: ["lists"],
                 maxRows: 4
-            }, function(lists) {
+            }, function(libs) {
+                var lists = libs[0];
                 var list = lists.create(null, null);
                 $("#database").append(list.body)
                 list.loadFree("EU");
