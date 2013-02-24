@@ -13,7 +13,7 @@ define(["config", "msg"], function(_config, msg) {
                 
                 if (result.XDMFunc && funcs[ result.XDMFunc ]) {
                     funcs[ result.XDMFunc ](result, function() {
-                        funcs.splice(funcs.indexOf(funcs[ result.XDMFunc ]), 1);
+                        delete funcs[ result.XDMFunc ];
                     });
                 }
                 
@@ -49,6 +49,8 @@ define(["config", "msg"], function(_config, msg) {
             
             // internal callback to remove this function from function array
             if (callback) callback();
+            
+            return true;
         };
         
         // stringify object and send message
