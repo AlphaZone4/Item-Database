@@ -15,6 +15,7 @@ define(["frame"], function(frame) {
 			"PHP",
 			"Bootstrap",
 			"Require.JS",
+            "easyXDM"
 		];
 		
 		h += "<strong>Developed Using:</strong><ul>";
