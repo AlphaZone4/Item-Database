@@ -5,7 +5,7 @@ define(["config", "msg"], function(_config, msg) {
     // create XDM socket
     var socket = new easyXDM.Socket({
         remote: _config.apiBase + "/XDM.html",
-        onMessage: function(message, origin){
+        onMessage: function(message) {
             // try to parse JSON
             var result;
             try {
@@ -19,7 +19,7 @@ define(["config", "msg"], function(_config, msg) {
                 
             } catch(e) {
                 // show error on bad JSON response
-                msg.error("Invalid Result Syntax: "+message)
+                msg.error("Invalid Result Syntax: "+message);
             }
         }
     });
