@@ -89,6 +89,15 @@ define(function(){
                 h.push('<label class="radio"><input type="radio" name="'+o.name+'" value="'+o.options[ii].value+'" checked>'+o.options[ii].name+'</label>');
             }
             return h.join("");
+        },
+        text: function(o) {
+            var h = "";
+            
+            if (o.label) h += "<label>"+o.label+"</label>";
+            
+            h += "<input type='text' name='"+o.name+"' />";
+            
+            return h;
         }
     };
     

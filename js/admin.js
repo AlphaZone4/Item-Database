@@ -67,6 +67,45 @@ define(["config", "popup", "api", "msg"], function(_config, popup, api, msg) {
             );
         }
         
+        // add new category to this category
+        //  note that cats usually report one item as it's top-rated item
+        if (data && data.items && !data.items[0]) {
+            menus.push(
+                {
+                    name: "Add New Category",
+                    func: function() {
+                        popup.form([
+                            {
+                                type: "text",
+                                name: "name",
+                                label: "Category Name"
+                            },
+                            {
+                                type: "text",
+                                name: "icon",
+                                label: "Icon"
+                            }
+                        ], "Add New Child Category", function(form) {
+                            api.post("admin/add/cat/"+data.id, form, function(response) {
+                                // show error/success message
+                                if (response.error) {
+                                    msg.error(response.error);
+                                } else {
+                                    msg.success(response.success);
+                                    // reload list object
+                                    if (list.reload) list.reload();
+                                }
+                                
+                                popup.hide();
+                            });
+                        });
+                        
+                        return false;
+                    }
+                }
+            );
+        }
+        
         return generic_menu("Admin Tools", "admin", menus);
     }
     
