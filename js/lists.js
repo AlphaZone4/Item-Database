@@ -157,6 +157,9 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             
             // prepend pagnation to body
             this.body.prepend(pag);
+            
+            // clone pagnation controls and append to bottom of list too
+            this.body.append(pag.clone(true));
         }
         
         // if we have a page, prepend it (do this here to render before the page controls)
