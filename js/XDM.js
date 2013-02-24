@@ -2,27 +2,32 @@
 define(["config", "msg"], function(_config, msg) {
     var funcs = {};
     
-    // create XDM socket
-    var socket = new easyXDM.Socket({
-        remote: _config.apiBase + "/XDM.html",
-        onMessage: function(message) {
-            // try to parse JSON
-            var result;
-            try {
-                result = JSON.parse(message);
-                
-                if (result.XDMFunc && funcs[ result.XDMFunc ]) {
-                    funcs[ result.XDMFunc ](result, function() {
-                        delete funcs[ result.XDMFunc ];
-                    });
+    var socket;
+    
+    var init = function() {
+        // create XDM socket
+        socket = new easyXDM.Socket({
+            remote: _config.apiBase + "/XDM.html",
+            onMessage: function(message) {
+                // try to parse JSON
+                var result;
+                try {
+                    result = JSON.parse(message);
+                    
+                    if (result.XDMFunc && funcs[ result.XDMFunc ]) {
+                        funcs[ result.XDMFunc ](result, function() {
+                            delete funcs[ result.XDMFunc ];
+                        });
+                    }
+                    
+                } catch(e) {
+                    // show error on bad JSON response
+                    msg.error("Invalid Result Syntax: "+message);
                 }
-                
-            } catch(e) {
-                // show error on bad JSON response
-                msg.error("Invalid Result Syntax: "+message);
             }
-        }
-    });
+        });
+    };
+    window.az4db_when("init", init);
     
     // send message to the AlphaZone4 API
     //  message - required
