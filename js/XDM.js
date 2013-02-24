@@ -26,13 +26,13 @@ define(["config"], function(_config) {
                 if (cb) cb(result);
             },
             onReady: function() {
-                var send = {method: method};
+                var send_data = {method: method};
                 
                 // send data if we're making a POST request
-                if (data !== null) send.data = data;
+                if (data !== null) send_data.data = data;
                 
                 // stringify object and send message
-                socket.postMessage(JSON.stringify(send));
+                socket.postMessage(JSON.stringify(send_data));
             }
         });
     }

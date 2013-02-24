@@ -168,7 +168,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
         }
             
         // administration/contributor controls
-        this.body.prepend(admin.build_menus(this.fetch_data));
+        this.body.prepend(admin.build_menus(this));
         
         // now we've pushed to DOM, fetch the images sexily
         img.go();
@@ -222,26 +222,32 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             // store reference to this
             var me = this;
             
-            me.hookDo("loadCat_start");
-            
             // load API call
-            api.call("get/cat/"+id, {}, function(data) {
-                me.fetch_data = data;
+            me.reload = function(callback) {
+                me.hookDo("loadCat_start");
                 
-                // save page (should be bundled with lists)
-                me.datapage = data.page;
-                
-                // check if we're a leaf node or not
-                if (data.cats.length > 0) {
-                    // load categories
-                    me.setItems(data.cats, _config.cdnBase+"/c/", "cat", null, data.country);
-                } else {
-                    // load items
-                    me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);
-                }
-                
-                me.hookDo("loadCat_complete", data);
-                
+                api.call("get/cat/"+id, {}, function(data) {
+                    me.fetch_data = data;
+                    
+                    // save page (should be bundled with lists)
+                    me.datapage = data.page;
+                    
+                    // check if we're a leaf node or not
+                    if (data.cats.length > 0) {
+                        // load categories
+                        me.setItems(data.cats, _config.cdnBase+"/c/", "cat", null, data.country);
+                    } else {
+                        // load items
+                        me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);
+                    }
+                    
+                    me.hookDo("loadCat_complete", data);
+                    
+                    if (callback) callback();
+                });
+            };
+            
+            me.reload(function() {
                 // trigger pageChange hooks
                 az4db_do("pageChange", "cat/"+id);
                 
@@ -252,65 +258,83 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             // store reference to this
             var me = this;
             
-            me.hookDo("loadUpdate_start");
+            me.reload = function(callback) {
+                me.hookDo("loadUpdate_start");
+                
+                // load API call
+                api.call("get/update/"+id, {}, function(data) {
+                    me.fetch_data = data;
+                    
+                    me.datapage = ""; // these never have pages 
+                    
+                    // load items
+                    me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);
+                    
+                    me.hookDo("loadUpdate_complete", data);
+                    
+                    if (callback) callback();
+                });
+            };
             
-            // load API call
-            api.call("get/update/"+id, {}, function(data) {
-                me.fetch_data = data;
-                
-                me.datapage = ""; // these never have pages 
-                
-                // load items
-                me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);
-                
-                me.hookDo("loadUpdate_complete", data);
-                
+            me.reload(function() {
                 // trigger pageChange hooks
                 az4db_do("pageChange", "update/"+id);
                 
                 if (cb) cb();
-            });
+            })
         },
         Free: function(id, cb) {
             // store reference to this
             var me = this;
             
-            me.hookDo("loadFree_start");
+            me.reload = function(callback) {
+                me.hookDo("loadFree_start");
+                
+                // load API call
+                api.call("get/free/"+id, {}, function(data) {
+                    me.fetch_data = data;
+                    
+                    me.datapage = ""; // these never have pages 
+                    
+                    // load items
+                    me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);
+                    
+                    me.hookDo("loadFree_complete", data);
+                    
+                    if (callback) callback();
+                });
+            };
             
-            // load API call
-            api.call("get/free/"+id, {}, function(data) {
-                me.fetch_data = data;
-                
-                me.datapage = ""; // these never have pages 
-                
-                // load items
-                me.setItems(data.items, _config.cdnBase+"/i/", "item", items.itemClick, data.country);
-                
-                me.hookDo("loadFree_complete", data);
-                
+            me.reload(function() {
                 // trigger pageChange hooks
                 az4db_do("pageChange", "freebies/"+id);
                 
-                if (cb) cb();
+                if (cb) cb(); 
             });
         },
         Items: function(_items, cb) {
             // store reference to this
             var me = this;
             
-            me.hookDo("loadItems_start");
+            me.reload = function(callback) {
+                me.hookDo("loadItems_start");
+                
+                // load API call
+                api.call("get/items/", {id: _items.join(",")}, function(data) {
+                    me.fetch_data = data;
+                    
+                    me.datapage = ""; // these never have pages 
+                    
+                    // load items
+                    me.setItems(data, _config.cdnBase+"/i/", "item", items.itemClick);
+                    
+                    me.hookDo("loadItems_complete", data);
+                    
+                    if (callback) callback();
+                });
+            };
             
-            // load API call
-            api.call("get/items/", {id: _items.join(",")}, function(data) {
-                me.fetch_data = data;
-                
-                me.datapage = ""; // these never have pages 
-                
-                // load items
-                me.setItems(data, _config.cdnBase+"/i/", "item", items.itemClick);
-                
-                me.hookDo("loadItems_complete", data);
-                
+            me.reload(function() {
                 if (cb) cb();
             });
         },
@@ -321,6 +345,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             
             // load items
             this.setItems(_items, _config.cdnBase+"/i/", "item", items.itemClick);
+            
+            this.reload = null;
             
             if (cb) cb();
         }
@@ -440,7 +466,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             hookDo: hookDo,
             hookWhen: hookWhen,
             makePageLink: makePageLink,
-            pageLink: pageLink
+            pageLink: pageLink,
+            reload: null
         };
         
         // add loaders

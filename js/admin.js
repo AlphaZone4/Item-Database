@@ -21,7 +21,7 @@ define(["config", "popup", "api"], function(_config, popup, api) {
     }
     
     // defines admin controls!
-    function admin_menu(data) {
+    function admin_menu(data, list) {
         // return if not admin!
         if (!_config.settings.database_admin) return;
         
@@ -48,7 +48,14 @@ define(["config", "popup", "api"], function(_config, popup, api) {
                             }
                         ], "Add Items to Category", function(form) {
                             api.post("admin/add/items/"+data.id, form, function(response) {
-                                console.log(response);
+                                // TODO - show error/success message
+                                if (response.error) {
+                                    alert(response.error);
+                                } else {
+                                    // reload list object
+                                    if (list.reload) list.reload();
+                                }
+                                
                                 popup.hide();
                             });
                         });
@@ -62,13 +69,15 @@ define(["config", "popup", "api"], function(_config, popup, api) {
         return generic_menu("Admin Tools", "admin", menus);
     }
     
-    function build_menus(data) {
+    function build_menus(list) {
+        var data = list.fetch_data;
+        
         if (!data) return "";
         
         var menu_div = $("<div>").addClass("admin_menus");
         
         for(var ii=0; ii<menus.length; ii++) {
-            var t = menus[ii](data);
+            var t = menus[ii](data, list);
             if (t) menu_div.append(t);
         }
         
