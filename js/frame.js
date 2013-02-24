@@ -1,5 +1,5 @@
 // This class defines the basic AZ4 "frame" for building an essential Item DB
-define(["config", "nav", "lists", "version"], function(_config, nav, lists, version){
+define(["config", "nav", "lists", "version", "msg"], function(_config, nav, lists, version, msg){
     var $t = {};
     $t.module = "frame";
     
@@ -120,7 +120,7 @@ define(["config", "nav", "lists", "version"], function(_config, nav, lists, vers
         $t.list.hookWhen("loadFree_complete", setup_breadcrumb);
         
         // append to target
-        target.html("").append($t.nav).append($t.crumb).append($t.list.body).append($t.page).append($t.footer);
+        target.html("").append($t.nav).append($t.crumb).append($t.list.body).append($t.page).append($t.footer).append(msg.body);
         
         // callback with frame object
         if (cb) cb($t);

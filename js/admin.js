@@ -1,4 +1,4 @@
-define(["config", "popup", "api"], function(_config, popup, api) {
+define(["config", "popup", "api", "msg"], function(_config, popup, api, msg) {
     // array of function pointers for various admin menus
     var menus = [
         admin_menu
@@ -48,10 +48,11 @@ define(["config", "popup", "api"], function(_config, popup, api) {
                             }
                         ], "Add Items to Category", function(form) {
                             api.post("admin/add/items/"+data.id, form, function(response) {
-                                // TODO - show error/success message
+                                // show error/success message
                                 if (response.error) {
-                                    alert(response.error);
+                                    msg.error(response.error);
                                 } else {
+                                    msg.success(response.success);
                                     // reload list object
                                     if (list.reload) list.reload();
                                 }
