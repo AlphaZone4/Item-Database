@@ -1,4 +1,4 @@
-define(function(){
+define(["api", "msg"], function(api, msg){
     var $t = {};
     $t.module = "stars";
     
@@ -39,12 +39,27 @@ define(function(){
     var vote = function(e){
         // stop click moving to item tile
     	e.stopPropagation();
+        
+        var vote_id = parseInt($(this).parent().attr("name"));
+        
     	// change CSS
     	$(this).parent().attr("class", "az4_stars az4im az4im.stars az4_stars_active_"+($(this).attr("name")*10));
     	// unregister hovers and clicks
     	$(this).parent().find("li").unbind("mouseenter mouseleave click");
-    	// register the vote TODO
-    	//fetch("vote", {id: Number($(this).parent().attr("name")), vote:Number($(this).attr("name"))}, function(d){console.log(d);});
+        
+        // send vote to server (via POST)
+        api.post("vote/" + vote_id, {
+            vote: parseInt($(this).attr("name"))
+        }, function(data) {
+            if (!data) return msg.error("Failed to parse vote response");
+            
+            if (data.success) {
+                msg.success(data.message);
+            } else {
+                msg.error(data.message);
+            }
+        });
+        
     	// return false to stop returning to the main screen
     	return false;
     };
