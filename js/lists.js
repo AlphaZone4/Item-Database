@@ -232,6 +232,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                 api.call("get/cat/"+id, {}, function(data) {
                     me.fetch_data = data;
                     
+                    me.type = "cat";
+                    
                     // save page (should be bundled with lists)
                     me.datapage = data.page;
                     
@@ -268,6 +270,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                 api.call("get/update/"+id, {}, function(data) {
                     me.fetch_data = data;
                     
+                    me.type = "update";
+                    
                     me.datapage = ""; // these never have pages 
                     
                     // load items
@@ -296,6 +300,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                 // load API call
                 api.call("get/free/"+id, {}, function(data) {
                     me.fetch_data = data;
+                    
+                    me.type = "free";
                     
                     me.datapage = ""; // these never have pages 
                     
@@ -326,6 +332,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                 api.call("get/items/", {id: _items.join(",")}, function(data) {
                     me.fetch_data = data;
                     
+                    me.type = "items";
+                    
                     me.datapage = ""; // these never have pages 
                     
                     // load items
@@ -345,6 +353,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             this.fetch_data = _items;
                 
             this.datapage = ""; // these never have pages 
+            
+            this.type = "items";
             
             // load items
             this.setItems(_items, _config.cdnBase+"/i/", "item", items.itemClick);
