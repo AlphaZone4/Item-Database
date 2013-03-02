@@ -51,7 +51,10 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
         var list = $("<ul>").addClass("thumbnails").addClass("az4list");
         
         var l = this.data;
-        for(var ii=this.page_item; ii<Math.min(this.data.length, this.page_item+this.page_items); ii++) {
+        
+        var this_page_limit = ( this.page_items > 0 ) ? this.page_item+this.page_items : 10000;
+        
+        for(var ii=this.page_item; ii<Math.min(this.data.length, this_page_limit); ii++) {
             var i = $("<li></li>");
             
             // add link to list element
