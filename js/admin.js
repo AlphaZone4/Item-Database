@@ -129,8 +129,19 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
                             // make list sortable
                             l.sortable({
                                 update : function () {
-                                    // TODO - send new order to server automagically
-                                    //console.log($(this).sortable("toArray"));
+                                    // send new order to server automagically upon dropping an item
+                                    api.post("admin/reorder/"+data.id, {
+                                        order: $(this).sortable("toArray")
+                                    }, function(response) {
+                                        // show error/success message
+                                        if (response.error) {
+                                            msg.error(response.error);
+                                        } else {
+                                            msg.success(response.success);
+                                        }
+                                        
+                                        // don't reload the list so we're able to sort multiple items quickly
+                                    });
                                 }
                             });
                             
@@ -143,7 +154,7 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
                             // cancel button
                             controls.html(
                                 $("<button>").addClass("btn btn-warning")
-                                .text("Cancel")
+                                .text("Stop Sorting")
                                 .click(function() {
                                     list.reload();
                                 })
