@@ -233,6 +233,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                     me.fetch_data = data;
                     
                     me.type = "cat";
+                    me.type_id = id;
                     
                     // save page (should be bundled with lists)
                     me.datapage = data.page;
@@ -271,6 +272,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                     me.fetch_data = data;
                     
                     me.type = "update";
+                    me.type_id = id;
                     
                     me.datapage = ""; // these never have pages 
                     
@@ -302,6 +304,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                     me.fetch_data = data;
                     
                     me.type = "free";
+                    me.type_id = id;
                     
                     me.datapage = ""; // these never have pages 
                     
@@ -333,6 +336,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                     me.fetch_data = data;
                     
                     me.type = "items";
+                    me.type_id = null;
                     
                     me.datapage = ""; // these never have pages 
                     
@@ -355,6 +359,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             this.datapage = ""; // these never have pages 
             
             this.type = "items";
+            this.type_id = null;
             
             // load items
             this.setItems(_items, _config.cdnBase+"/i/", "item", items.itemClick);
