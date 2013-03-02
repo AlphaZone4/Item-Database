@@ -53,6 +53,11 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
 			}
 		}
         
+        // display furniture slots
+        if (data.slots) {
+            typebox += " (" + data.slots + " furniture slot" + (data.slots > 1 ? "s" : "") + ")";
+        }
+        
         if (typebox) {
             content.append("<p class='alert'>"+typebox+"</p>");
         }
