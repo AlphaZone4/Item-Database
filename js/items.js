@@ -34,13 +34,28 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
             ));
         }
         
+        var typebox = "";
+        
         if (data.gender) {
-			content.append("<p class='alert'>" + ((data.gender == "M") ? 
+			typebox += ((data.gender == "M") ? 
 				"<i class='az4im M'></i> Male"
 				:
 				"<i class='az4im F'></i> Female"
-			) + "</p>");
+			);
 		}
+        
+        if (data.type && data.type != "None") {
+            for(var ii in _config.settings.item_types) {
+				if (ii == data.type) {
+                    typebox += ((typebox)?" / ":"") + _config.settings.item_types[ii];
+                    continue;
+				}
+			}
+		}
+        
+        if (typebox) {
+            content.append("<p class='alert'>"+typebox+"</p>");
+        }
         
         if (data.dev) {
             for(var ii in _config.settings.devs) {
@@ -48,11 +63,7 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
             }
         }
         
-        if (data.type && data.type != "None") {
-			for(var ii in _config.settings.item_types) {
-				if (ii == data.type) content.append("<p class='alert'>"+_config.settings.item_types[ii]+"</p>");
-			}
-		}
+        
         
         // add description/categories etc.
         content_box.append(content);
