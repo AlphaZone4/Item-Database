@@ -55,7 +55,9 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
         var this_page_limit = ( this.page_items > 0 ) ? this.page_item+this.page_items : 10000;
         
         for(var ii=this.page_item; ii<Math.min(this.data.length, this_page_limit); ii++) {
-            var i = $("<li></li>").attr("id", l[ii].page);
+            var i = $("<li></li>");
+            
+            if (l[ii].id) i.attr("id", l[ii].id);
             
             // add link to list element
             var h = nav.link("<p>"+l[ii].name+"</p>", (l[ii].page) ? l[ii].page : "#", {
