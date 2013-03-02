@@ -34,7 +34,7 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
         var menus = [];
         
         // only allow item adding if there are no child categories
-        if (data && data.cats && data.cats.length === 0) {
+        if (list.type == "cat" && data && data.cats && data.cats.length === 0) {
             menus.push(
                 {
                     name: "Add Items",
@@ -75,7 +75,7 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
         
         // add new category to this category
         //  note that cats usually report one item as it's top-rated item
-        if (data && data.items && !data.items[0]) {
+        if (list.type == "cat" && data && data.items && !data.items[0]) {
             menus.push(
                 {
                     name: "Add New Category",
