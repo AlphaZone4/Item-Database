@@ -1,8 +1,14 @@
-define(["config", "popup", "api", "msg"], function(_config, popup, api, msg) {
+define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], function(_config, popup, api, msg) {
     // array of function pointers for various admin menus
     var menus = [
         admin_menu
     ];
+    
+    // div for storing menus
+    var menu_div;
+    
+    // optional control panel area for admin functions
+    var controls = $("<div>").addClass("admin_controls alert");
     
     // make generic drop down menu! (I want to have lots of these!)
     function generic_menu(name, icon, obj) {
@@ -106,6 +112,52 @@ define(["config", "popup", "api", "msg"], function(_config, popup, api, msg) {
             );
         }
         
+        if (list.type=="cat" && data && data.items && data.cats && (data.items.length || data.cats.length) ) {
+            menus.push(
+                {
+                    name: "Organise Items",
+                    func: function() {
+                        // remember current list page setting
+                        var mem = list.item_pages;
+                        list.item_pages = 0;
+                        
+                        // reload the list without any pages on
+                        list.reload(function(){
+                            // grab actual list object
+                            var l = $(list.body.find(".az4list")[0]);
+                            
+                            // make list sortable
+                            l.sortable({
+                                update : function () {
+                                    // TODO - send new order to server automagically
+                                    //console.log($(this).sortable("toArray"));
+                                }
+                            });
+                            
+                            // highlight that we're doing something by colouring all items
+                            l.find("li").addClass("alert-info");
+                            
+                            // now that list is reloaded, restore item page number
+                            list.item_pages = mem;
+                            
+                            // cancel button
+                            controls.html(
+                                $("<button>").addClass("btn btn-warning")
+                                .text("Cancel")
+                                .click(function() {
+                                    list.reload();
+                                })
+                            );
+                            
+                            menu_div.append(controls);
+                        });
+                        
+                        return false;
+                    }
+                }
+            );
+        }
+        
         return generic_menu("Admin Tools", "admin", menus);
     }
     
@@ -114,7 +166,7 @@ define(["config", "popup", "api", "msg"], function(_config, popup, api, msg) {
         
         if (!data) return "";
         
-        var menu_div = $("<div>").addClass("admin_menus");
+        menu_div = $("<div>").addClass("admin_menus");
         
         for(var ii=0; ii<menus.length; ii++) {
             var t = menus[ii](data, list);
