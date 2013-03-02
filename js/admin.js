@@ -118,8 +118,8 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
                     name: "Organise Items",
                     func: function() {
                         // remember current list page setting
-                        var mem = list.item_pages;
-                        list.item_pages = 0;
+                        var mem = list.page_items;
+                        list.page_items = 0;
                         
                         // reload the list without any pages on
                         list.reload(function(){
@@ -138,7 +138,7 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
                             l.find("li").addClass("alert-info");
                             
                             // now that list is reloaded, restore item page number
-                            list.item_pages = mem;
+                            list.page_items = mem;
                             
                             // cancel button
                             controls.html(
