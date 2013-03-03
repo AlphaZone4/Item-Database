@@ -10,10 +10,9 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         var data_img = data.image;
         
         var button_edit_click = function() {
-            // edit form
-            popup.hide();
-            
             api.call("get/item/"+data.id, function(data) {
+                popup.hide();
+                
                 // restore full item image URL
                 data.image = data_img;
                 
@@ -33,11 +32,11 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         
         // cancel button clicker
         var button_cancel_click = function() {
-            // remove current popup
-            popup.hide();
-            
             // reload item data
             api.call("get/item/"+data.id, function(data) {
+                // remove current popup
+                popup.hide();
+                
                 // restore full item image URL
                 data.image = data_img;
                 
