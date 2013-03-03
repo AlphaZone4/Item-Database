@@ -1,4 +1,4 @@
-define(function(){
+define(["forms"], function(forms) {
     var $t = {};
     $t.module = "popup";
     
@@ -54,18 +54,8 @@ define(function(){
     
     // create a popup with a form! cb will be triggered with submitted form data
     $t.form = function(inputs, title, cb) {
-        // create basic form item
-        var form = $("<form>");
-        
-        // add inputs
-        for(var ii=0; ii<inputs.length; ii++) {
-            if (forms[ inputs[ii].type ]) {
-                form.append(forms[ inputs[ii].type ](inputs[ii])).append("<br />");
-            } else {
-                // generic input if we don't know about it
-                form.append("<input type='"+inputs[ii].type+"' name='"+inputs[ii].name+"' value='"+inputs[ii].value?inputs[ii]:''+"' />");
-            }
-        }
+        // build new form element
+        var form = forms(inputs);
         
         // store reference to pop-up within scope of submit function (so it can close it)
         var pop;
@@ -76,46 +66,6 @@ define(function(){
         };
         
         pop = $t.create(form, title, $("<button class='btn btn-primary'>Submit</button>").click(submit));
-    };
-    
-    // configure form-able elements!
-    var forms = {
-        textarea: function(o) {
-            return "<textarea name='"+o.name+"' rows=20></textarea>";
-        },
-        radio: function(o) {
-            var h = [];
-            for(var ii=0; ii<o.options.length; ii++) {
-                h.push('<label class="radio"><input type="radio" name="'+o.name+'" value="'+o.options[ii].value+'" checked>'+o.options[ii].name+'</label>');
-            }
-            return h.join("");
-        },
-        text: function(o) {
-            var h = "";
-            
-            if (o.label) h += "<label>"+o.label+"</label>";
-            
-            h += "<input type='text' name='"+o.name+"' />";
-            
-            return h;
-        }
-    };
-    
-    // extend jQuery to return a serialized object of a form
-    $.fn.serializeObject = function() {
-        var o = {};
-        var a = this.serializeArray();
-        $.each(a, function() {
-            if (o[this.name] !== undefined) {
-                if (!o[this.name].push) {
-                    o[this.name] = [o[this.name]];
-                }
-                o[this.name].push(this.value || '');
-            } else {
-                o[this.name] = this.value || '';
-            }
-        });
-        return o;
     };
     
     return $t;
