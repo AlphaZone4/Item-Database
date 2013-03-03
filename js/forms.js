@@ -6,11 +6,30 @@ define(["encode"], function(encoder) {
             return "<textarea name='"+o.name+"' rows=20>"+o.value+"</textarea>";
         },
         radio: function(o) {
-            var h = [];
+            var h = $("<div>")
+            
+            var buttons = $("<div class='btn-group' data-toggle='buttons-radio'>");
+            
+            // add hidden input element to store result of buttons
+            var hidden = $("<input type='hidden' name='"+o.name+"' value='"+o.value+"' />");
+            
             for(var ii=0; ii<o.options.length; ii++) {
-                h.push('<label class="radio"><input type="radio" name="'+o.name+'" value="'+o.options[ii].value+'" checked>'+o.options[ii].name+'</label>');
+                var butt = $('<button type="button" class="btn btn-primary'+((o.value==o.options[ii].value)?" active":"")+'" name="'+o.options[ii].value+'">'+o.options[ii].name+'</button>');
+                
+                // change value of hidden input when clicked
+                butt.click(function(){
+                    hidden.val($(this).attr("name"));
+                });
+                
+                buttons.append(butt);
             }
-            return h.join("");
+            
+            // enable radio buttons
+            buttons.button();
+            
+            h.append(buttons).append(hidden);
+            
+            return h;
         },
         text: function(o) {
             var h = "";
