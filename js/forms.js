@@ -1,9 +1,9 @@
 // really basic module to create a form object in jQuery
-define(function() {
+define(["encode"], function(encoder) {
     // configure form-able elements!
     var forms = {
         textarea: function(o) {
-            return "<textarea name='"+o.name+"' rows=20></textarea>";
+            return "<textarea name='"+o.name+"' rows=20>"+o.value+"</textarea>";
         },
         radio: function(o) {
             var h = [];
@@ -17,7 +17,7 @@ define(function() {
             
             if (o.label) h += "<label>"+o.label+"</label>";
             
-            h += "<input type='text' name='"+o.name+"' />";
+            h += "<input type='text' name='"+o.name+"' value='"+o.value+"' />";
             
             return h;
         }
@@ -29,11 +29,18 @@ define(function() {
         
         // add inputs
         for(var ii=0; ii<inputs.length; ii++) {
+            // ensure value parameter exists and is encoded nicely
+            if (!inputs[ii].value) {
+                inputs[ii].value = "";
+            } else {
+                inputs[ii].value = encoder.encode(inputs[ii].value);
+            }
+            
             if (forms[ inputs[ii].type ]) {
                 form.append(forms[ inputs[ii].type ](inputs[ii])).append("<br />");
             } else {
                 // generic input if we don't know about it
-                form.append("<input type='"+inputs[ii].type+"' name='"+inputs[ii].name+"' value='"+inputs[ii].value?inputs[ii]:''+"' />");
+                form.append("<input type='"+inputs[ii].type+"' name='"+inputs[ii].name+"' value='"+inputs[ii].value+"' />");
             }
         }
         
