@@ -6,7 +6,12 @@ define(["encode"], function(encoder) {
             return "<textarea name='"+o.name+"' rows=20>"+o.value+"</textarea>";
         },
         radio: function(o) {
-            var h = $("<div>")
+            var h = $("<div>").css("margin-bottom", "5px");
+            
+            // optional limit of buttons per row
+            if (!o.row_limit) o.row_limit = 1000;
+            
+            if (o.label) h.append("<label>"+o.label+"</label>");
             
             var buttons = $("<div class='btn-group' data-toggle='buttons-radio'>");
             
@@ -18,16 +23,32 @@ define(["encode"], function(encoder) {
                 
                 // change value of hidden input when clicked
                 butt.click(function(){
+                    h.find("button").removeClass("active");
+                    
+                    $(this).addClass("active");
+                    
                     hidden.val($(this).attr("name"));
                 });
+                
+                if (ii % o.row_limit === 0) {
+                    if (buttons) {
+                        h.append(buttons);
+                    }
+                    buttons = $("<div class='btn-group' data-toggle='buttons-radio'>");
+                }
                 
                 buttons.append(butt);
             }
             
+            // make sure last list of buttons were appended
+            if (ii % o.row_limit !== 0) h.append(buttons);
+            
             // enable radio buttons
             buttons.button();
             
-            h.append(buttons).append(hidden);
+            h.append(hidden);
+            
+            if (o.css) h.css(o.css);
             
             return h;
         },
@@ -37,6 +58,21 @@ define(["encode"], function(encoder) {
             if (o.label) h += "<label>"+o.label+"</label>";
             
             h += "<input type='text' name='"+o.name+"' value='"+o.value+"' "+(o.width?"style='width:"+o.width+"px' ":"")+"/>";
+            
+            return h;
+        },
+        dropdown: function(o) {
+            var h = "";
+            
+            if (o.label) h += "<label style='float:left'>"+o.label+"</label>";
+            
+            h += "<select name='"+o.name+"'>";
+            
+            for(var ii=0; ii<o.options.length; ii++) {
+                h += "<option value='"+o.options[ii].value+"'"+((o.value==o.options[ii].value)?" selected":"")+">"+o.options[ii].name+"</option>";
+            }
+            
+            h += "</select>";
             
             return h;
         }
@@ -56,7 +92,7 @@ define(["encode"], function(encoder) {
             }
             
             if (forms[ inputs[ii].type ]) {
-                form.append(forms[ inputs[ii].type ](inputs[ii])).append("<br />");
+                form.append(forms[ inputs[ii].type ](inputs[ii]));
             } else {
                 // generic input if we don't know about it
                 form.append("<input type='"+inputs[ii].type+"' name='"+inputs[ii].name+"' value='"+inputs[ii].value+"' />");
