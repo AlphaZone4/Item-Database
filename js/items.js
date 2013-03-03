@@ -9,7 +9,36 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
         // make nice pretty item detail page
         var content_box = $("<div>").addClass("item_detail");
         
+        // populate content box with item data
+        item_info(data, content_box);
+        
+        // create edit button
+        var edit = $("<button>")
+        .addClass("btn btn-success")
+        .html("<i class='icon-pencil icon-white'></i> Edit")
+        .click(function() {
+            content_box.html("[edit panel goes here]");
+        });
+        
+        // create footer element for popup
+        var footer = $("<div>").append(edit);
+        
+        // finally, create and display popup box
+        popup.create(content_box, data.name, footer);
+        
+        return false;
+    };
+    
+    function item_info(data, content_box) {
+        var ii;
+        
+        // clear out content box
+        content_box.html("");
+        
         var content = $("<div>");
+        
+        content_box.append(content);
+        content_box.append("<div style='clear:both'></div>");
         
         // add item image
         //  wrap top item detail section in div with class so we can resize
@@ -37,7 +66,7 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
         var typebox = "";
         
         if (data.gender) {
-			typebox += ((data.gender == "M") ? 
+            typebox += ((data.gender == "M") ? 
 				"<i class='az4im M'></i> Male"
 				:
 				"<i class='az4im F'></i> Female"
@@ -45,7 +74,7 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
 		}
         
         if (data.type && data.type != "None") {
-            for(var ii in _config.settings.item_types) {
+            for(ii in _config.settings.item_types) {
 				if (ii == data.type) {
                     typebox += ((typebox)?" / ":"") + _config.settings.item_types[ii];
                     continue;
@@ -63,17 +92,12 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
         }
         
         if (data.dev) {
-            for(var ii in _config.settings.devs) {
+            for(ii in _config.settings.devs) {
                 if (ii == data.dev) content.append("<p class='alert'>Developer: "+_config.settings.devs[ii]+"</p>");
             }
         }
         
-        
-        
         // add description/categories etc.
-        content_box.append(content);
-        content_box.append("<div style='clear:both'></div>");
-        
         if (data.description) {
             content_box.append("<p class='alert'>"+data.description+"</p>");
         }
@@ -82,7 +106,7 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
         }
         if (data.categories) {
             var cats = $("<p>").addClass("alert");
-            for(var ii=0; ii<data.categories.length; ii++) {
+            for(ii=0; ii<data.categories.length; ii++) {
                 if (!_config.regionLock || _config.regionLock == data.categories[ii].zone) {
                     var cat = "<i class='az4im flag_"+data.categories[ii].zone.toLowerCase()+"'></i> "+data.categories[ii].name+"<br />";
                     if (_config.categoryLinks) {
@@ -93,11 +117,7 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
             }
             content_box.append(cats);
         }
-        
-        popup.create(content_box, data.name, ":D");
-        
-        return false;
-    };
+    }
     
     // click handler for categories
     $t.catClick = function() {
