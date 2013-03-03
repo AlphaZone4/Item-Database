@@ -1,4 +1,4 @@
-define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, nav, popup, pricer) {
+define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_config, stars, nav, popup, pricer, forms, api) {
     var $t = {};
     $t.module = "items";
     
@@ -6,28 +6,72 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
     $t.itemClick = function() {
         var data = $(this).parent().data("item");
         
-        // make nice pretty item detail page
+        // list module will have set full correct image URL, so store it
+        var data_img = data.image;
+        
+        var button_edit_click = function() {
+            // edit form
+            popup.hide();
+            
+            api.call("get/item/"+data.id, function(data) {
+                // restore full item image URL
+                data.image = data_img;
+                
+                // create item editor
+                var form = item_editor(data);
+                
+                // new popup
+                popup.create(form, data.name, $("<button>")
+                    .addClass("btn btn-warning")
+                    .html("<i class='icon-pencil icon-white'></i> Cancel")
+                    .click(button_cancel_click)
+                );
+            });
+            
+            return false;
+        };
+        
+        // cancel button clicker
+        var button_cancel_click = function() {
+            // remove current popup
+            popup.hide();
+            
+            // reload item data
+            api.call("get/item/"+data.id, function(data) {
+                // restore full item image URL
+                data.image = data_img;
+                
+                load_item_popup(data, button_edit_click);
+            });
+            
+            return false;
+        };
+        
+        load_item_popup(data, button_edit_click);
+        
+        return false;
+    };
+    
+    function load_item_popup(data, edit_cb) {
         var content_box = $("<div>").addClass("item_detail");
         
         // populate content box with item data
         item_info(data, content_box);
         
         // create edit button
-        var edit = $("<button>")
+        var button_edit = $("<button>")
         .addClass("btn btn-success")
         .html("<i class='icon-pencil icon-white'></i> Edit")
-        .click(function() {
-            content_box.html("[edit panel goes here]");
-        });
+        .click(edit_cb);
         
         // create footer element for popup
-        var footer = $("<div>").append(edit);
+        var footer = $("<div>").append(button_edit);
         
         // finally, create and display popup box
         popup.create(content_box, data.name, footer);
         
         return false;
-    };
+    }
     
     function item_info(data, content_box) {
         var ii;
@@ -117,6 +161,50 @@ define(["config", "stars", "nav", "popup", "pricer"], function(_config, stars, n
             }
             content_box.append(cats);
         }
+    }
+    
+    function item_editor(data) {
+        // build item editor form
+        var inputs = [
+        {
+            type: "text",
+            name: "name",
+            label: "Item Name",
+            value: data.name,
+            width: 450
+        },
+        {
+            type: "text",
+            name: "description",
+            label: "Description",
+            value: data.description,
+            width: 450
+        },
+        {
+            type: "text",
+            name: "tutorial",
+            label: "Tutorial",
+            value: data.tutorial,
+            width: 450
+        },
+        {
+            type: "radio",
+            name: "gender",
+            label: "Gender",
+            value: data.gender,
+            options: [
+                {name: "<p style='height:18px'>None</span>", value: ""},
+                {name: "<i class='az4im M'></i> Male", value: "M"},
+                {name: "<i class='az4im F'></i> Female", value: "F"}
+            ]
+        }
+        ];
+        
+        var form = forms(inputs);
+        
+        var div = $("<div>").append("<img src='"+data.image+"' style='float:left;margin:3px;' />").append(form);
+        
+        return div;
     }
     
     // click handler for categories
