@@ -50,7 +50,8 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
                                 options: [
                                     {value: "true", name: "Top"},
                                     {value: "false", name: "Bottom"}
-                                ]
+                                ],
+                                value: "true"
                             }
                         ], "Add Items to Category", function(form) {
                             api.post("admin/add/items/"+data.id, form, function(response) {
