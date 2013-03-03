@@ -17,7 +17,7 @@ define(["encode"], function(encoder) {
             
             if (o.label) h += "<label>"+o.label+"</label>";
             
-            h += "<input type='text' name='"+o.name+"' value='"+o.value+"' />";
+            h += "<input type='text' name='"+o.name+"' value='"+o.value+"' "+(o.width?"style='width:"+o.width+"px' ":"")+"/>";
             
             return h;
         }
