@@ -164,6 +164,28 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
     }
     
     function item_editor(data) {
+        var ii;
+        
+        // get list of developers
+        var devs = [{name: "[none]", value: ''}];
+        
+        for(ii in _config.settings.devs) {
+            devs.push({
+                name: _config.settings.devs[ii],
+                value: ii
+            });
+        }
+        
+        // get list of item types
+        var types = [];
+        
+        for(ii in _config.settings.item_types) {
+            types.push({
+                name: _config.settings.item_types[ii],
+                value: ii
+            });
+        }
+        
         // build item editor form
         var inputs = [
         {
@@ -190,13 +212,34 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         {
             type: "radio",
             name: "gender",
-            label: "Gender",
             value: data.gender,
             options: [
-                {name: "<p style='height:18px'>None</span>", value: ""},
-                {name: "<i class='az4im M'></i> Male", value: "M"},
-                {name: "<i class='az4im F'></i> Female", value: "F"}
-            ]
+                {name: "None", value: ""},
+                {name: "Male", value: "M"},
+                {name: "Female", value: "F"}
+            ],
+            css: {"float": "right"}
+        },
+        {
+            type: "dropdown",
+            name: "dev",
+            label: "<p style='margin:8px'>Developer</p>",
+            value: data.dev,
+            options: devs
+        },
+        {
+            type: "radio",
+            name: "type",
+            value: data.type,
+            options: types,
+            label: "Item Type",
+            row_limit: 9
+        },
+        {
+            type: "text",
+            name: "slots",
+            value: data.slots,
+            label: "Furniture Slots"
         }
         ];
         
