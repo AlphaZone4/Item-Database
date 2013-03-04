@@ -114,8 +114,46 @@ function az4dbwp_render(){
 	$page = rtrim($page, "/");
 	
 	$base = get_bloginfo('url')."/".$az4dbwp_page;
+
+    $pushtest = "";
+    
+    // only include pushstate test if we're not at the root of the app
+    if ($page != "" && $page != "/") {
+        $pushtest = "
+if (!history || !history.pushState) {
+    do_load = false;
+    setCookie('az4db_jump', '".$page."', 1);
+    document.location.href = '/".$az4dbwp_page."#".$page."';
+}
+";
+    }
 	
 	return <<< EOD
+<script type='text/javascript'>
+var do_load = true;
+function setCookie(c_name,value,exdays)
+{
+var exdate=new Date();
+exdate.setDate(exdate.getDate() + exdays);
+var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+document.cookie=c_name + "=" + c_value + "; Path=/;";
+}
+function getCookie(c_name)
+{
+var i,x,y,ARRcookies=document.cookie.split(";");
+for (i=0;i<ARRcookies.length;i++)
+{
+  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+  x=x.replace(/^\s+|\s+$/g,"");
+  if (x==c_name)
+    {
+    return unescape(y);
+    }
+  }
+}
+{$pushtest}
+</script>
 <!--[if lte IE 8]>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
 <script type="text/javascript">
@@ -142,13 +180,24 @@ window.attachEvent("onload", update_browser);
 <div id='database' class='az4db'>Loading the AlphaZone4 PlayStation Home Item Database...</div>
 <link rel='stylesheet' type='text/css' href='//api.alphazone4.com/build/style.css' />
 <script src='//api.alphazone4.com/build/az4db-jquery.js'></script><script type='text/javascript'>
-az4db_init({
+var hash_page = "";
+if (location.hash != "" && location.hash != "#") {
+    hash_page = location.hash.replace(/\#/g, '').replace(/\/$/g, '');
+}
+if (do_load) az4db_init({
 	baseURL: "{$base}",
     basePath: "/{$az4dbwp_page}",
     apiBase: "https://api.alphazone4.com",
     linkType: "html5"
 });az4db_frame($("#database"),function(frame) {
-	frame.start("{$page}");
+    if (getCookie("az4db_jump")) {
+        frame.start(getCookie("az4db_jump"));
+        setCookie("az4db_jump", '', -1);
+    } else if (hash_page != "") {
+    	frame.start(hash_page);
+    } else {
+    	frame.start("{$page}");
+    }
 });</script>
 EOD;
 }
