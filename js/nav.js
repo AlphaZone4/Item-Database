@@ -1,4 +1,6 @@
-define(["config", "popup"], function(_config, popup) {
+define(["config", "popup", "scripts/jquery.history"], function(_config, popup) {
+    
+    var History = window.History;
     
     // file header
     var $t = {};
@@ -83,35 +85,32 @@ define(["config", "popup"], function(_config, popup) {
     
     $t.cur_page = null;
     
-    var handlePageChange = function(href) {
+    var handlePageChange = function(l) {
         if (_config.linkType == "none") return;
         
-        // push URL state
-        href = $t.normaliseURL(href);
-
-        if ($t.cur_page != href) {
-            // push page id into the stack
-            if ($t.cur_page !== null) window.history.pushState(href, null, _config.baseURL+"/"+href+((href!=="")?"/":""));
-
-            $t.cur_page = href;
-        }
+        // add base path to URL
+        var href = _config.basePath+"/"+l+((l!=="")?"/":"");
+        var full = _config.baseURL+"/"+l+((l!=="")?"/":"");
+        
+        // store current page (normalised first)
+        $t.cur_page = $t.normaliseURL(full);
+        
+        // push state using History library
+        History.pushState(null, null, href);
     };
     
-    window.onpopstate = function(ev) {
-        var href;
-        if (ev.state === null) {
-            href = $t.normaliseURL(document.location.href);
-        } else {
-            href = $t.normaliseURL(ev.state);
-        }
+    History.Adapter.bind(window, 'statechange', function() {
+        if (_config.linkType == "none") return;
         
+        // get current state and clean up
+        var State = History.getState();
+        var href = $t.normaliseURL(State.cleanUrl);
+        
+        // if page is actually different, tell frame to load new page
         if ($t.cur_page != href) {
-            $t.cur_page = href;
-            
-            // URL has changed! Move to new (old) page
             if (frame_hook) frame_hook(href);
         }
-    };
+    });
     
     var createMenu = function(opt){
         if (!opt) opt = nav;
