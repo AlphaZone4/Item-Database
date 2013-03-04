@@ -53,11 +53,23 @@ define(["encode"], function(encoder) {
             return h;
         },
         text: function(o) {
-            var h = "";
+            var h = $("<div>");
             
-            if (o.label) h += "<label>"+o.label+"</label>";
+            if (o.label) {
+                var l = $("<label>"+o.label+"</label>");
+                
+                if (o.labelcss) l.css(o.labelcss);
+                
+                h.append(l);
+            }
             
-            h += "<input type='text' name='"+o.name+"' value='"+o.value+"' "+(o.width?"style='width:"+o.width+"px' ":"")+"/>";
+            var i = $("<input type='text' name='"+o.name+"' value='"+o.value+"'/>");
+            
+            if (o.inputcss) i.css(o.inputcss);
+            
+            if (o.css) h.css(o.css);
+            
+            h.append(i);
             
             return h;
         },
@@ -75,6 +87,9 @@ define(["encode"], function(encoder) {
             h += "</select>";
             
             return h;
+        },
+        clear: function() {
+            return "<div style='clear:both'></div>";
         }
     };
     
