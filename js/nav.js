@@ -96,7 +96,7 @@ define(["config", "popup", "scripts/jquery.history"], function(_config, popup) {
         $t.cur_page = $t.normaliseURL(full);
         
         // push state using History library
-        History.pushState(null, "PlayStation Home Item Database", href);
+        History.pushState(null, null, href);
     };
     
     History.Adapter.bind(window, 'statechange', function() {
