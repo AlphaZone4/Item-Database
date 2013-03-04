@@ -88,6 +88,9 @@ define(["config", "popup", "scripts/jquery.history"], function(_config, popup) {
     var handlePageChange = function(l) {
         if (_config.linkType == "none") return;
         
+        // save page title, History.js sometimes erases it
+        var save_title = document.title;
+        
         // add base path to URL
         var href = _config.basePath+"/"+l+((l!=="")?"/":"");
         var full = _config.baseURL+"/"+l+((l!=="")?"/":"");
@@ -97,6 +100,8 @@ define(["config", "popup", "scripts/jquery.history"], function(_config, popup) {
         
         // push state using History library
         History.pushState(null, null, href);
+        
+        document.title = save_title;
     };
     
     History.Adapter.bind(window, 'statechange', function() {
