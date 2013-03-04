@@ -22,7 +22,7 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
                 // new popup
                 popup.create(form, data.name, $("<button>")
                     .addClass("btn btn-warning")
-                    .html("<i class='icon-pencil icon-white'></i> Cancel")
+                    .html("<i class='icon-remove-circle icon-white'></i> Cancel")
                     .click(button_cancel_click)
                 );
             });
@@ -192,21 +192,21 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
             name: "name",
             label: "Item Name",
             value: data.name,
-            width: 450
+            inputcss: {width: "450px"}
         },
         {
             type: "text",
             name: "description",
             label: "Description",
             value: data.description,
-            width: 450
+            inputcss: {width: "450px"}
         },
         {
             type: "text",
             name: "tutorial",
             label: "Tutorial",
             value: data.tutorial,
-            width: 450
+            inputcss: {width: "450px"}
         },
         {
             type: "radio",
@@ -227,20 +227,42 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
             options: devs
         },
         {
+            type: "clear"
+        }
+        ];
+        
+        for(ii in _config.settings.prices) {
+            inputs.push({
+                type: "text",
+                name: ii,
+                value: (data.prices[ ii ]) ? data.prices[ ii ] : "",
+                label: _config.settings.prices[ ii ].name,
+                inputcss: {width: "40px"},
+                labelcss: {float: "left", padding: "4px"},
+                css: {float: "left"}
+            });
+        }
+        
+        inputs.push({
+            type: "clear"
+        });
+        
+        inputs.push({
             type: "radio",
             name: "type",
             value: data.type,
             options: types,
             label: "Item Type",
             row_limit: 9
-        },
-        {
+        });
+        
+        inputs.push({
             type: "text",
             name: "slots",
             value: data.slots,
-            label: "Furniture Slots"
-        }
-        ];
+            label: "Furniture Slots",
+            inputcss: {width: "40px"}
+        });
         
         var form = forms(inputs);
         
@@ -262,7 +284,7 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
     $t.list = function(i) {
         // popup handler!
         i.click = function(){
-            return false; //$m.popup.create(content, i.name, "yummy!");
+            return false;
         };
         
         return i;
