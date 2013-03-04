@@ -90,6 +90,9 @@ define(["encode"], function(encoder) {
         },
         clear: function() {
             return "<div style='clear:both'></div>";
+        },
+        info: function(o) {
+            return $("<div>").html(o.text);
         }
     };
     

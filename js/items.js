@@ -231,6 +231,11 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         }
         ];
         
+        inputs.push({
+            type: "info",
+            text: "<strong>0</strong>: unknown / <strong>-1</strong>: free / <strong>-2</strong>: reward / <strong>-3</strong>: no longer available / <strong>-4</strong>: PS3 game reward"
+        });
+        
         for(ii in _config.settings.prices) {
             inputs.push({
                 type: "text",
@@ -252,7 +257,6 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
             name: "type",
             value: data.type,
             options: types,
-            label: "Item Type",
             row_limit: 9
         });
         
