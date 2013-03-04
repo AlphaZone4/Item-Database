@@ -37,9 +37,9 @@ function az4db_isurl() {
 
 // returns just the page part of the URL
 function az4db_strippage() {
-	global $wp, $az4dbwp_detect;
+	global $wp, $az4dbwp_detect, $az4dbwp_page;
 
-	return str_replace($az4dbwp_page, "_", substr($wp->request, strlen($az4dbwp_page)+1));
+	return substr($wp->request, strlen($az4dbwp_page)+1);
 }
 
 // create fake page called "database"
@@ -140,10 +140,13 @@ window.attachEvent("onload", update_browser);
 </div>
 <![endif]-->
 <div id='database' class='az4db'>Loading the AlphaZone4 PlayStation Home Item Database...</div>
-<link rel='stylesheet' type='text/css' href='http://api.alphazone4.com/build/style.css' />
-<script src='http://api.alphazone4.com/build/az4db-jquery.js'></script><script type='text/javascript'>
+<link rel='stylesheet' type='text/css' href='//api.alphazone4.com/build/style.css' />
+<script src='//api.alphazone4.com/build/az4db-jquery.js'></script><script type='text/javascript'>
 az4db_init({
-	baseURL: "{$base}"
+	baseURL: "{$base}",
+    basePath: "/{$az4dbwp_page}",
+    apiBase: "https://api.alphazone4.com",
+    linkType: "html5"
 });az4db_frame($("#database"),function(frame) {
 	frame.start("{$page}");
 });</script>
