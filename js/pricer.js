@@ -1,27 +1,27 @@
-define([], function() {
+define(["config"], function(_config) {
 	// module for displaying prices etc.
 	
 	// === Configuration ===
-	// these prices over-ride any other set prices
-	var special_prices = [
-		"LKWD", // Lockwood Tokens
-		"MDP",  // Heavy Water Modpoints
-		"JNG",	// Juggernaut Games Prices
-	];
-	// currency symbols
-	var price_currencies = {
-		// special currencies
-		LKWD: "LKWD Tokens",
-		MDP	: "ModPoints",
-		JNG : "JNG",
-		// standard currencies
-		GBP: "&pound;",
-		EUR: "&euro;",
-		USD: "&dollar;",
-		YEN: "&yen;",
-		HKD: "HK&dollar;",
-		AUD: "A&dollar;"
-	};
+    var ii;
+    // fetch price data from server-sent configuration
+    
+	// these special prices over-ride any other set prices
+	var special_prices = [];
+    // price tag -> display name
+    var price_currencies = {};
+    
+    // set up price objects once client settings have been loaded
+    window.az4db_when("init", function() {
+        for(ii in _config.settings.prices) {
+            // check for special prices
+            if (_config.settings.prices[ ii ].special) {
+                special_prices.push(ii);
+            }
+            
+            // add new known price
+            price_currencies[ ii ] = _config.settings.prices[ ii ].name;
+        }
+    });
 	
 	var region_prices = {
 		// no EUR, this is handled by a manual function
@@ -82,7 +82,7 @@ define([], function() {
 	function print(prices, region, force) {
 		// check for special prices and return them instead!
 		for(var ii=0; ii<special_prices.length; ii++) {
-			if (prices[ special_prices[ii] ] && prices[ special_prices[ii] ] != 0) {
+			if (prices[ special_prices[ii] ] && prices[ special_prices[ii] ] !== 0) {
 				return print_standard(prices, special_prices[ii]);
 			}
 		}
@@ -115,7 +115,7 @@ define([], function() {
 		if (prices[ currency ] < 0) {
 			return h + format_number(prices[ currency ]);
 		} else {
-			return h + price_currencies[ currency ] + format_number(prices[ currency ]);
+			return h + price_currencies[ currency ] + " " + format_number(prices[ currency ]);
 		}
 	}
 	
@@ -178,6 +178,6 @@ define([], function() {
 	// === Exports ===
 	return {
 		print: 		print,
-		print_all: 	print_all,
+		print_all: 	print_all
 	};
 });
