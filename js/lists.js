@@ -73,6 +73,11 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             // add image (using image loader)
             h.prepend(img.create(l[ii].image));
             
+            // if this item is hidden, highlight it
+            if ( l[ii].hidden ) {
+                i.addClass("alert alert-error");
+            }
+            
             // if we have the stars module loaded and have been given rating data
             if ( l[ii].rating_id ) {
                 var rating_div = {
