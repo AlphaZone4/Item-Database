@@ -75,7 +75,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             
             // if this item is hidden, highlight it
             if ( l[ii].hidden ) {
-                i.addClass("alert alert-error");
+                i.addClass("hidden");
             }
             
             // if we have the stars module loaded and have been given rating data
