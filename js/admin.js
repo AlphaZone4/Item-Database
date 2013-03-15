@@ -29,12 +29,12 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
     // defines admin controls!
     function admin_menu(data, list) {
         // return if not admin!
-        if (!_config.settings.database_admin) return;
+        if (!_config.settings.database_edit) return;
         
         var menus = [];
         
         // only allow item adding if there are no child categories
-        if (list.type == "cat" && data && data.cats && data.cats.length === 0) {
+        if (_config.settings.database_admin && list.type == "cat" && data && data.cats && data.cats.length === 0) {
             menus.push(
                 {
                     name: "Add Items",
@@ -76,7 +76,7 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
         
         // add new category to this category
         //  note that cats usually report one item as it's top-rated item
-        if (list.type == "cat" && data && data.items && !data.items[0]) {
+        if (_config.settings.database_admin && list.type == "cat" && data && data.items && !data.items[0]) {
             menus.push(
                 {
                     name: "Add New Category",
@@ -113,7 +113,7 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
             );
         }
         
-        if (list.type=="cat" && data && data.items && data.cats && (data.items.length || data.cats.length) ) {
+        if (_config.settings.database_edit && list.type=="cat" && data && data.items && data.cats && (data.items.length || data.cats.length) ) {
             menus.push(
                 {
                     name: "Organise Items",
