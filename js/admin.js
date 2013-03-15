@@ -34,7 +34,7 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
         var menus = [];
         
         // only allow item adding if there are no child categories
-        if (_config.settings.database_admin && list.type == "cat" && data && data.cats && data.cats.length === 0) {
+        if (_config.settings.database_edit && list.type == "cat" && data && data.cats && data.cats.length === 0) {
             menus.push(
                 {
                     name: "Add Items",
