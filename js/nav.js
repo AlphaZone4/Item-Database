@@ -39,7 +39,12 @@ define(["config", "popup", "scripts/jquery.history"], function(_config, popup) {
                 type: 'link'
             },
             {
-                name: "About",
+                name: "<i class='icon-search icon-white'></i> Search",
+                page: "search",
+                type: "rlink"
+            },
+            {
+                name: "<i class='icon-info-sign icon-white'></i> About",
                 page: "about",
                 type: "rlink"
             }
