@@ -50,7 +50,9 @@ require([
     "frame",
     "page_about",
     "psncodes",
+    "page_devs",
     "page_home",
+    "page_search",
     "XDM"
 ], function() {
     var _config = require("config");

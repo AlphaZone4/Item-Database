@@ -52,6 +52,14 @@ define(["encode"], function(encoder) {
             
             return h;
         },
+        checkbox: function(o) {
+            var h = $("<div>").css("margin-bottom", "5px");
+            for(var ii=0; ii<o.options.length; ii++) {
+                h.append("<input type='checkbox' class='btn btn-primary' name='"+o.name+"' value='"+o.options[ii].value+"'> "+o.options[ii].name);
+            }
+            
+            return h;
+        },
         text: function(o) {
             var h = $("<div>");
             
@@ -113,7 +121,13 @@ define(["encode"], function(encoder) {
                 form.append(forms[ inputs[ii].type ](inputs[ii]));
             } else {
                 // generic input if we don't know about it
-                form.append("<input type='"+inputs[ii].type+"' name='"+inputs[ii].name+"' value='"+inputs[ii].value+"' />");
+                var gen = $("<input type='"+inputs[ii].type+"' name='"+inputs[ii].name+"' value='"+inputs[ii].value+"' />");
+                
+                if (inputs[ii].css) gen.css(inputs[ii].css);
+                
+                if (inputs[ii].cssclass) gen.addClass(inputs[ii].cssclass);
+                
+                form.append(gen);
             }
         }
         

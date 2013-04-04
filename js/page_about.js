@@ -25,5 +25,8 @@ define(["frame"], function(frame) {
 		h += "</ul>";
 		
 		frame.page.html(h);
+        
+        // return true to change URL
+        return true;
 	});
 });
