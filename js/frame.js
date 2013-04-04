@@ -8,18 +8,21 @@ define(["config", "nav", "lists", "version", "msg"], function(_config, nav, list
             match: /cat\/([0-9]+)/,
             func : function(m) {
                 $t.list.loadCat(m[1]);
+                return true;
             }
         },
         {
             match: /update\/([0-9]+)/,
             func : function(m) {
                 $t.list.loadUpdate(m[1]);
+                return true;
             }
         },
         {
             match: /freebies\/([A-Z]{2})/,
             func : function(m) {
                 $t.list.loadFree(m[1]);
+                return true;
             }
         }
     ];
@@ -81,10 +84,10 @@ define(["config", "nav", "lists", "version", "msg"], function(_config, nav, list
 					$t.page.html("");
 					
 					// call page function for rendering
-                    pages[ii].func(m);
-                    
-                    // trigger pageChange hook
-                    if (!hide_move) az4db_do("pageChange", href);
+                    if (pages[ii].func(m)) {
+                        // trigger pageChange hook
+                        if (!hide_move) az4db_do("pageChange", href);
+                    }
                     return;
                 }
             }
