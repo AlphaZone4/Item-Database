@@ -71,7 +71,9 @@ define(["encode"], function(encoder) {
                 h.append(l);
             }
             
-            var i = $("<input type='text' name='"+o.name+"' value='"+o.value+"'/>");
+            var i = $("<input type='text' name='"+o.name+"' />");
+            
+            i.attr("value", o.value);
             
             if (o.inputcss) i.css(o.inputcss);
             
