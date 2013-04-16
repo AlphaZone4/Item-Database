@@ -19,12 +19,35 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
                 // create item editor
                 var form = item_editor(data);
                 
-                // new popup
-                popup.create(form, data.name, $("<button>")
+                var footer = $("<div>");
+                
+                footer.append($("<button>")
                     .addClass("btn btn-warning")
                     .html("<i class='icon-remove-circle icon-white'></i> Cancel")
-                    .click(button_cancel_click)
+                    .click(button_cancel_click));
+                    
+                    
+                footer.append($("<button>")
+                    .addClass("btn btn-success")
+                    .html("<i class='icon-remove-circle icon-white'></i> Save")
+                    .click(function() {
+                        api.post("edit/item/"+data.id, form.serializeObject(), function(res) {
+                            if (res.item) {
+                                // remove current popup
+                                popup.hide();
+                                
+                                res.item.image = data_img;
+                                
+                                load_item_popup(res.item, button_edit_click);
+                            } else if (res.error) {
+                                console.log(res.error);
+                            }
+                        });
+                    })
                 );
+                
+                // new popup
+                popup.create(form, data.name, footer);
             });
             
             return false;
@@ -65,6 +88,8 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         
         // create footer element for popup
         var footer = $("<div>").append(button_edit);
+        
+        footer.append("<div style='float:left'>Item ID: "+data.id+"</div>");
         
         // finally, create and display popup box
         popup.create(content_box, data.name, footer);
@@ -270,9 +295,9 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         
         var form = forms(inputs);
         
-        var div = $("<div>").append("<img src='"+data.image+"' style='float:left;margin:3px;' />").append(form);
+        form.prepend("<img src='"+data.image+"' style='float:left;margin:3px;' />");
         
-        return div;
+        return form;
     }
     
     // click handler for categories
