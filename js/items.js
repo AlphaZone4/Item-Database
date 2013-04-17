@@ -16,8 +16,23 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
                 // restore full item image URL
                 data.image = data_img;
                 
+                var save_form = function() {
+                    api.post("edit/item/"+data.id, form.serializeObject(), function(res) {
+                        if (res.item) {
+                            // remove current popup
+                            popup.hide();
+                            
+                            res.item.image = data_img;
+                            
+                            load_item_popup(res.item, button_edit_click);
+                        } else if (res.error) {
+                            console.log(res.error);
+                        }
+                    });
+                };
+                
                 // create item editor
-                var form = item_editor(data);
+                var form = item_editor(data, save_form);
                 
                 var footer = $("<div>");
                 
@@ -30,20 +45,7 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
                 footer.append($("<button>")
                     .addClass("btn btn-success")
                     .html("<i class='icon-remove-circle icon-white'></i> Save")
-                    .click(function() {
-                        api.post("edit/item/"+data.id, form.serializeObject(), function(res) {
-                            if (res.item) {
-                                // remove current popup
-                                popup.hide();
-                                
-                                res.item.image = data_img;
-                                
-                                load_item_popup(res.item, button_edit_click);
-                            } else if (res.error) {
-                                console.log(res.error);
-                            }
-                        });
-                    })
+                    .click(save_form)
                 );
                 
                 // new popup
@@ -187,7 +189,7 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         }
     }
     
-    function item_editor(data) {
+    function item_editor(data, cb) {
         var ii;
         
         // get list of developers
@@ -214,17 +216,19 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         var inputs = [
         {
             type: "text",
-            name: "name",
+            name: "name_",
             label: "Item Name",
             value: data.name,
-            inputcss: {width: "450px"}
+            inputcss: {width: "450px"},
+            disable: true
         },
         {
             type: "text",
-            name: "description",
+            name: "description_",
             label: "Description",
             value: data.description,
-            inputcss: {width: "450px"}
+            inputcss: {width: "450px"},
+            disable: true
         },
         {
             type: "text",
@@ -293,7 +297,7 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
             inputcss: {width: "40px"}
         });
         
-        var form = forms(inputs);
+        var form = forms(inputs, cb);
         
         form.prepend("<img src='"+data.image+"' style='float:left;margin:3px;' />");
         

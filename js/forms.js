@@ -3,7 +3,7 @@ define(["encode"], function(encoder) {
     // configure form-able elements!
     var forms = {
         textarea: function(o) {
-            return "<textarea name='"+o.name+"' rows=20>"+o.value+"</textarea>";
+            return $("<textarea name='"+o.name+"' rows=20>"+o.value+"</textarea>");
         },
         radio: function(o) {
             var h = $("<div>").css("margin-bottom", "5px");
@@ -75,6 +75,8 @@ define(["encode"], function(encoder) {
             
             i.attr("value", o.value);
             
+            if (o.disable) i.attr("disabled", true);
+            
             if (o.inputcss) i.css(o.inputcss);
             
             if (o.css) h.css(o.css);
@@ -96,10 +98,10 @@ define(["encode"], function(encoder) {
             
             h += "</select>";
             
-            return h;
+            return $(h);
         },
         clear: function() {
-            return "<div style='clear:both'></div>";
+            return $("<div style='clear:both'></div>");
         },
         info: function(o) {
             return $("<div>").html(o.text);
@@ -107,8 +109,21 @@ define(["encode"], function(encoder) {
     };
     
     // main create form function
-    function create(inputs) {
+    function create(inputs, cb) {
         var form = $("<form>");
+        
+        var called = false;
+        
+        if (cb) form.submit(function() {
+            // make sure the form is never sent twice (cross-browser chaos)
+            if (!called) {
+                called = true;
+                // callback with form data
+                cb(form.serializeObject());
+            }
+            
+            return false;
+        });
         
         // add inputs
         for(var ii=0; ii<inputs.length; ii++) {
@@ -119,18 +134,28 @@ define(["encode"], function(encoder) {
                 inputs[ii].value = encoder.encode(inputs[ii].value);
             }
             
+            var gen;
             if (forms[ inputs[ii].type ]) {
-                form.append(forms[ inputs[ii].type ](inputs[ii]));
+                gen = forms[ inputs[ii].type ](inputs[ii]);
             } else {
                 // generic input if we don't know about it
-                var gen = $("<input type='"+inputs[ii].type+"' name='"+inputs[ii].name+"' value='"+inputs[ii].value+"' />");
+                gen = $("<input type='"+inputs[ii].type+"' name='"+inputs[ii].name+"' value='"+inputs[ii].value+"' />");
                 
                 if (inputs[ii].css) gen.css(inputs[ii].css);
                 
                 if (inputs[ii].cssclass) gen.addClass(inputs[ii].cssclass);
-                
-                form.append(gen);
             }
+            
+            // assign enter keypress to each form element to make sure it gets sent
+            gen.keypress(function(e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                    form.submit();
+                }
+            });
+
+            
+            form.append(gen);
         }
         
         return form;
