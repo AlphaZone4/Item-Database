@@ -36,6 +36,8 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
                 
                 var footer = $("<div>");
                 
+                footer.append("<div style='float:left'>Item ID: "+data.id+"</div>");
+                
                 footer.append($("<button>")
                     .addClass("btn btn-warning")
                     .html("<i class='icon-remove-circle icon-white'></i> Cancel")
