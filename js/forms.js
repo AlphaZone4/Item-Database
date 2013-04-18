@@ -3,7 +3,11 @@ define(["encode"], function(encoder) {
     // configure form-able elements!
     var forms = {
         textarea: function(o) {
-            return $("<textarea name='"+o.name+"' rows=20>"+o.value+"</textarea>");
+            var h = $("<textarea name='"+o.name+"' rows=20>"+o.value+"</textarea>");
+            
+            if (o.width) h.css("width", o.width);
+            
+            return h;
         },
         radio: function(o) {
             var h = $("<div>").css("margin-bottom", "5px");
@@ -147,12 +151,14 @@ define(["encode"], function(encoder) {
             }
             
             // assign enter keypress to each form element to make sure it gets sent
-            gen.keypress(function(e) {
-                if (e.which == 13) {
-                    e.preventDefault();
-                    form.submit();
-                }
-            });
+            if (cb && inputs[ii].type != "textarea") {
+                gen.keypress(function(e) {
+                    if (e.which == 13) {
+                        e.preventDefault();
+                        form.submit();
+                    }
+                });
+            }
 
             
             form.append(gen);
