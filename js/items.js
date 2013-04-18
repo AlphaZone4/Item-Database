@@ -268,7 +268,7 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         for(ii in _config.settings.prices) {
             inputs.push({
                 type: "text",
-                name: ii,
+                name: _config.settings.prices[ ii ].field,
                 value: (data.prices[ ii ]) ? data.prices[ ii ] : "",
                 label: _config.settings.prices[ ii ].name,
                 inputcss: {width: "40px"},
