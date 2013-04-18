@@ -113,6 +113,42 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
             );
         }
         
+        // edit page
+        if (_config.settings.database_admin && list.type == "cat" && data) {
+            menus.push(
+                {
+                    name: "Edit Page",
+                    func: function() {
+                        popup.form([
+                            {
+                                type: "textarea",
+                                name: "page",
+                                label: "Page Content",
+                                value: data.page,
+                                width: "600px"
+                            }
+                        ], "Edit Category Page", function(form) {
+                            console.log(form);
+                            api.post("edit/page/"+data.id, form, function(response) {
+                                // show error/success message
+                                if (response.error) {
+                                    msg.error(response.error);
+                                } else {
+                                    msg.success(response.success);
+                                    // reload list object
+                                    if (list.reload) list.reload();
+                                }
+                                
+                                popup.hide();
+                            });
+                        });
+                        
+                        return false;
+                    }
+                }
+            );
+        }
+        
         if (_config.settings.database_edit && list.type=="cat" && data && data.items && data.cats && (data.items.length || data.cats.length) ) {
             menus.push(
                 {
