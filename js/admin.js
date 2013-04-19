@@ -125,7 +125,7 @@ define(["config", "popup", "api", "msg", "items", "jquery", "jqueryui/sortable"]
         }
         
         // edit all items
-        if (_config.settings.database_edit && list.type == "cat" && data && data.items && data.items.length > 0) {
+        if (_config.settings.database_edit && data && data.items && data.items.length > 0) {
             menus.push(
                 {
                     name: "Edit All Items",
