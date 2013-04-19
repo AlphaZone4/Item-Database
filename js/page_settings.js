@@ -1,6 +1,6 @@
 // configuration page
 
-define(["frame", "forms", "config", "cookies", "resize"], function(frame, forms, _config, cookies, resizer) {
+define(["frame", "forms", "config", "cookies", "resize", "msg"], function(frame, forms, _config, cookies, resizer, msg) {
     frame.add_page(/^settings$/, function(m) {
         // check this developer slug exists
         var h = $("<div>");
@@ -23,6 +23,8 @@ define(["frame", "forms", "config", "cookies", "resize"], function(frame, forms,
             
             // make list resize itself to get latest configuration
             resizer.run();
+            
+            msg.success("Updated settings!");
         };
         
         var form = forms([{
