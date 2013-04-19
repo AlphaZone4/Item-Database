@@ -4,6 +4,8 @@ define(function() {
     var body = $("<div>").addClass("messages");
     
     var show_message = function(header, message, type) {
+        console.log("[msg] "+type+": "+message);
+        
         var msg = $("<div>").addClass("alert alert-"+type).
         html("<strong>"+header+"</strong>").append(
             $("<p>").text(message)
