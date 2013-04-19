@@ -36,6 +36,8 @@ define(["frame", "api", "config"], function(frame, api, config) {
 			
 			frame.page.html(h);
 		});
+        
+        return true;
 	});
 	
 	function get_codes(cb) {
