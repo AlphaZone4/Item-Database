@@ -70,6 +70,7 @@ define(["config", "nav", "lists", "version", "msg"], function(_config, nav, list
 	// clear out frame (except essentials, like the nav)
 	$t.clear = function() {
 		$t.crumb.html("").hide(); // empty breadcrumb
+        $t.list.loadPreload([]); // stop list regenerating itself!!!
 		$t.list.body.html(""); // empty list
 		$t.page.html("");
 	};
