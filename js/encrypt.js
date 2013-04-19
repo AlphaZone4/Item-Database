@@ -378,7 +378,16 @@ define(function(){
       return (num << cnt) | (num >>> (32 - cnt));
     }
     
-    /*
+    // just export the ones we want...
+    return {
+        md5: hex_md5,
+        base64_encode: B64.encode,
+        base64_decode: B64.decode
+    };
+});
+
+
+/*
     Copyright Vassilis Petroulias [DRDigit]
     
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -495,11 +504,3 @@ define(function(){
             return buffer;
         }
     };
-    
-    // just export the ones we want...
-    return {
-        md5: hex_md5,
-        base64_encode: B64.encode,
-        base64_decode: B64.decode
-    };
-});
