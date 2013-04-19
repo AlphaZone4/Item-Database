@@ -183,6 +183,22 @@ window.attachEvent("onload", update_browser);
 var hash_page = "";
 if (location.hash != "" && location.hash != "#") {
     hash_page = location.hash.replace(/\#/g, '').replace(/\/$/g, '');
+
+    // backwards compatible links!
+    var res;    
+    var search;
+    if (res = /^cat([0-9]*)$/.exec(hash_page)) {
+        hash_page = "cat/"+res[ 1 ];
+    }
+    if (res = /^update([0-9]*)$/.exec(hash_page)) {
+        hash_page = "update/"+res[ 1 ];
+    }
+    if (res = /^freebies([A-Z]{2})$/.exec(hash_page)) {
+        hash_page = "freebies/"+res[ 1 ];
+    }
+    if (res = /^search(.*)$/.exec(hash_page)) {
+        search = res[ 1 ];
+    }
 }
 if (do_load) az4db_init({
 	baseURL: "{$base}",
@@ -193,6 +209,11 @@ if (do_load) az4db_init({
     if (getCookie("az4db_jump")) {
         frame.start(getCookie("az4db_jump"));
         setCookie("az4db_jump", '', -1);
+    } else if (search) {
+        // make base64 of a search object
+        frame.start("search/"+B64.encode(JSON.stringify({
+            query: search
+        })));
     } else if (hash_page != "") {
     	frame.start(hash_page);
     } else {
