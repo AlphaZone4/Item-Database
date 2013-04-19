@@ -217,6 +217,11 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         // build item editor form
         var inputs = [
         {
+            type: "hidden",
+            name: "id",
+            value: data.id
+        },
+        {
             type: "text",
             name: "name_",
             label: "Item Name",
@@ -305,6 +310,8 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         
         return form;
     }
+    
+    $t.editor = item_editor;
     
     // click handler for categories
     $t.catClick = function() {
