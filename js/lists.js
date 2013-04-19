@@ -50,6 +50,9 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
         // create list object
         var list = $("<ul>").addClass("thumbnails").addClass("az4list");
         
+        // store this list object
+        this.list = list;
+        
         var l = this.data;
         
         var this_page_limit = ( this.page_items > 0 ) ? this.page_item+this.page_items : 10000;
@@ -492,7 +495,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             hookWhen: hookWhen,
             makePageLink: makePageLink,
             pageLink: pageLink,
-            reload: null
+            reload: null,
+            list: null
         };
         
         // add loaders
