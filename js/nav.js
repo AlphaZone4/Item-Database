@@ -44,6 +44,11 @@ define(["config", "popup", "scripts/jquery.history"], function(_config, popup) {
                 type: "rlink"
             },
             {
+                name: "<i class='icon-cog icon-white'></i>",
+                page: "settings",
+                type: "rlink"
+            },
+            {
                 name: "<i class='icon-info-sign icon-white'></i> About",
                 page: "about",
                 type: "rlink"

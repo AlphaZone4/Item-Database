@@ -53,6 +53,7 @@ require([
     "page_devs",
     "page_home",
     "page_search",
+    "page_settings",
     "XDM"
 ], function() {
     var _config = require("config");

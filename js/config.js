@@ -1,4 +1,4 @@
-define(function(){
+define(["cookies"], function(cookies){
     var proto = location.protocol;
     
     if (location.protocol == "file:") proto = "http:";
@@ -42,6 +42,10 @@ define(function(){
 			flag: "flag_"+regions[ ii ].flag
 		};
 	}
+    
+    // look for saved settings
+    var maxRows = cookies.get("az4config_maxRows") || 5;
+    var itemTitle = cookies.get("az4config_itemTitle") || "name";
 
     // basic application settings go here (can be overridden)!
     return {
@@ -60,7 +64,9 @@ define(function(){
         
         categoryLinks: true, // don't enable cat links
         
-        maxRows: 5, // number of rows of items to show
+        maxRows: maxRows, // number of rows of items to show
+        
+        itemTitle: itemTitle, // what to display on tile list
         
         linkType: "none"
     };
