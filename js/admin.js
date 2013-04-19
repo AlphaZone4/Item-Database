@@ -1,4 +1,4 @@
-define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], function(_config, popup, api, msg) {
+define(["config", "popup", "api", "msg", "items", "jquery", "jqueryui/sortable"], function(_config, popup, api, msg, items) {
     // array of function pointers for various admin menus
     var menus = [
         admin_menu
@@ -113,6 +113,78 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
             );
         }
         
+        // edit all items
+        if (_config.settings.database_edit && list.type == "cat" && data && data.items && data.items.length > 0) {
+            menus.push(
+                {
+                    name: "Edit All Items",
+                    func: function() {
+                        if (!list.reload) return false;
+                        
+                        list.reload(function(){
+                            // get refreshed item data
+                            data.items = list.data;
+                            
+                            var h = $("<div>");
+                            
+                            var edit_item = function(new_data) {
+                                // find image to save
+                                var data_img;
+                                for(var ii=0; ii<data.items.length; ii++) {
+                                    if (data.items[ii].id == new_data.id)
+                                        data_img = data.items[ii].image;
+                                }
+                                
+                                api.post("edit/item/"+new_data.id, new_data, function(res) {
+                                    if (res.item) {
+                                        msg.success("Successfully edited item "+res.item.id);
+                                        
+                                        // restore item image
+                                        res.item.image = data_img;
+                                        
+                                        // update this editor div
+                                        update_editor(res.item);
+                                    } else if (res.error) {
+                                        msg.error(res.error);
+                                    }
+                                });
+                            };
+                            
+                            var update_editor = function(item) {
+                                $("#item_edit_"+item.id).html(
+                                    items.editor(item, edit_item)
+                                );
+                            };
+                            
+                            for(var ii=0; ii<data.items.length; ii++) {
+                                h.append($("<div>")
+                                    .attr("id", "item_edit_"+data.items[ ii ].id)
+                                    .html(
+                                        items.editor(data.items[ ii ], edit_item)
+                                    )
+                                );
+                                
+                                h.append("<hr />");
+                            }
+                            
+                            list.list.html(h);
+                                
+                            controls.html(
+                                $("<button>").addClass("btn btn-warning")
+                                .text("Stop Editing")
+                                .click(function() {
+                                    list.reload();
+                                })
+                            );
+                            menu_div.append(controls);
+                        });
+                        
+                        return false;
+                    }
+                }
+            );
+        }
+        
         // edit page
         if (_config.settings.database_admin && list.type == "cat" && data) {
             menus.push(
@@ -149,6 +221,7 @@ define(["config", "popup", "api", "msg", "jquery", "jqueryui/sortable"], functio
             );
         }
         
+        // reorder items
         if (_config.settings.database_edit && list.type=="cat" && data && data.items && data.cats && (data.items.length || data.cats.length) ) {
             menus.push(
                 {
