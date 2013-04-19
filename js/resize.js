@@ -22,6 +22,7 @@ define(function() {
     };
     
     return {
-        add: add
+        add: add,
+        run: resize
     };
 });

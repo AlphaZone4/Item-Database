@@ -16,7 +16,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
                 lists[ii].cols = Math.floor( lists[ ii ].body.innerWidth() / item_width );
                 
                 // only redraw if the number of colums has changed
-                if (lists[ii].cols != lists[ii].prev_cols) {
+                if (lists[ii].cols != lists[ii].prev_cols || lists[ii].page_items != lists[ii].cols * _config.maxRows) {
                     lists[ii].page_items = lists[ii].cols * _config.maxRows;
                     lists[ii].prev_cols = lists[ii].cols;
                     lists[ii].redraw();

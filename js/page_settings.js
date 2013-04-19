@@ -1,6 +1,6 @@
 // configuration page
 
-define(["frame", "forms", "config", "cookies"], function(frame, forms, _config, cookies) {
+define(["frame", "forms", "config", "cookies", "resize"], function(frame, forms, _config, cookies, resizer) {
     frame.add_page(/^settings$/, function(m) {
         // check this developer slug exists
         var h = $("<div>");
@@ -20,6 +20,9 @@ define(["frame", "forms", "config", "cookies"], function(frame, forms, _config, 
                 cookies.set("az4config_"+ii, settings[ ii ]);
                 _config[ ii ] = settings[ ii ];
             }
+            
+            // make list resize itself to get latest configuration
+            resizer.run();
         };
         
         var form = forms([{
