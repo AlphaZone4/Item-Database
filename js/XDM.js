@@ -22,7 +22,7 @@ define(["config", "msg"], function(_config, msg) {
                     
                 } catch(e) {
                     // show error on bad JSON response
-                    msg.error("Invalid Result Syntax: "+message);
+                    msg.error("Invalid Result Syntax: "+e+"("+message+")");
                 }
             }
         });
