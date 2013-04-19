@@ -239,7 +239,7 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         },
         {
             type: "text",
-            name: "howto",
+            name: "tutorial",
             label: "Tutorial",
             value: data.tutorial,
             inputcss: {width: "450px"}
