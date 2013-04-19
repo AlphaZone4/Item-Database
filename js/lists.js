@@ -62,8 +62,21 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             
             if (l[ii].id) i.attr("id", l[ii].id);
             
+            // work out what the tile's title is
+            var title = "";
+            var hover = false;
+            if (_config.itemTitle == "price" && l[ii].prices) {
+                title = l[ii].nice_price;
+                hover = l[ii].name;
+            } else {
+                title = l[ii].name;
+                if (l[ii].nice_price) {
+                    hover = l[ii].nice_price;
+                }
+            }
+            
             // add link to list element
-            var h = nav.link("<p>"+l[ii].name+"</p>", (l[ii].page) ? l[ii].page : "#", {
+            var h = nav.link("<p>"+title+"</p>", (l[ii].page) ? l[ii].page : "#", {
                 click: (l[ii].click) ? l[ii].click : nav.clicky
             }).addClass("thumbnail");
             
@@ -116,6 +129,8 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             // add hover element
             if ( l[ii].hover ) {
 				h.append($("<div>").addClass("hover").html($("<p>").html(l[ii].hover)));
+			} else if (hover) {
+    		    h.append($("<div>").addClass("hover").html($("<p>").html(hover))); 
 			}
             
             list.append(i);
@@ -442,7 +457,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             
             // add price hovers to items
             if ( cur_region && (items[ii].prices || page == "item") ) {
-				items[ii].hover = pricer.print(items[ii].prices, cur_region, true);
+				items[ii].nice_price = pricer.print(items[ii].prices, cur_region, true);
 			}
         }
         

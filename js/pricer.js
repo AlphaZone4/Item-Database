@@ -80,6 +80,8 @@ define(["config"], function(_config) {
 	// given a price object and a region, print price (with imgs)
 	//  force forces the display, even if unknown
 	function print(prices, region, force) {
+        region = region.toLowerCase();
+        
 		// check for special prices and return them instead!
 		for(var ii=0; ii<special_prices.length; ii++) {
 			if (prices[ special_prices[ii] ] && prices[ special_prices[ii] ] !== 0) {
