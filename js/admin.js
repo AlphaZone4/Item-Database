@@ -33,16 +33,18 @@ define(["config", "popup", "api", "msg", "items", "jquery", "jqueryui/sortable"]
         
         var menus = [];
         
-        // force page refresh
-        menus.push(
-            {
-                name: "Force Refresh",
-                func: function() {
-                    list.reload();
-                    return false;
+        if (data && (data.cats || data.items) ) {
+            // force page refresh
+            menus.push(
+                {
+                    name: "Force Refresh",
+                    func: function() {
+                        list.reload();
+                        return false;
+                    }
                 }
-            }
-        );
+            );
+        }
         
         // only allow item adding if there are no child categories
         if (_config.settings.database_edit && list.type == "cat" && data && data.cats && data.cats.length === 0) {
