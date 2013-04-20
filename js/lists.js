@@ -231,7 +231,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
     		page = page.replace(/\[free=([^\]]+)\]([A-Z]+)\[\/free\]/g, "<a href='"+_config.baseURL+"freebies/$2' class='loader'>$1</a>");
             
             // jQueryify
-            page = $(page);
+            page = $("<div>").html(page);
             
             // add category loaders
             page.find(".loader").replaceWith(function() {
