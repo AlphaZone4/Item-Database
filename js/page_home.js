@@ -117,7 +117,7 @@ define(["frame", "config", "nav"], function(frame, _config, nav) {
             return h;
         };
         
-        var page = $("<div>").addClass("row");
+        var page = $("<div>").addClass("row").css("margin-left", "0");
         
         // set up region overviews
         for (var ii in _config.regions) {
