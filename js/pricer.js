@@ -67,7 +67,14 @@ define(["config"], function(_config) {
 		for(var ii=0; ii<todo.length; ii++) {
 			var t = print(prices, todo[ii]);
 			if (t) {
-				h.push(t);
+                var found = false;
+                // check it's not the same as existing listed prices
+                //  (generally for tokens etc.)
+                for(var jj=0; jj<h.length; jj++) {
+                    if (h[jj] == t) found = true;
+                }
+                
+				if (!found) h.push(t);
 			}
 		}
 		
