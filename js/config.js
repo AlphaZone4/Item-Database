@@ -1,4 +1,4 @@
-define(["cookies", "api"], function(cookies, api){
+define(["cookies"], function(cookies){
     var ret = {};
     
     var proto = location.protocol;
