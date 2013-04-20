@@ -135,6 +135,8 @@ define(["frame", "config", "nav"], function(frame, _config, nav) {
         
         stats.append("<p><strong>"+count+"</strong> Home developers/publishers<br />");
         
+        stats.append("<p><strong>"+_config.settings.update_count+"</strong> tracked Home content updates</p>");
+        
         page.append(stats);
         
         // push page to frame
