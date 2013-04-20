@@ -71,5 +71,13 @@ define(["config", "encode", "XDM"], function(_config, encoder, XDM) {
         cb(data);
     };
     
+    // occasionally refetch database settings (every 5 minutes)
+    setInterval(function() {
+        $t.call("settings", null, function(data) {
+            // store server supplied settings/data
+            _config.settings = data;
+        });
+    }, 1000 * 60 * 5);
+    
     return $t;
 });

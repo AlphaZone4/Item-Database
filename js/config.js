@@ -1,4 +1,6 @@
-define(["cookies"], function(cookies){
+define(["cookies", "api"], function(cookies, api){
+    var ret = {};
+    
     var proto = location.protocol;
     
     if (location.protocol == "file:") proto = "http:";
@@ -48,26 +50,26 @@ define(["cookies"], function(cookies){
     var itemTitle = cookies.get("az4config_itemTitle") || "name";
 
     // basic application settings go here (can be overridden)!
-    return {
-        // baseURL, where all URLs are created. No trailing slash please
-        baseURL: "http://alphazone4.com/store",
-        
-        apiBase: proto+"//dev.alphazone4.com",
-        
-        cdnBase: proto+"//cdn.alphazone4.com",
-        
-        home2Dat: h2d,
-        
-        regions: regions,
-        
-        regionLock: false, // only show specified region
-        
-        categoryLinks: true, // don't enable cat links
-        
-        maxRows: maxRows, // number of rows of items to show
-        
-        itemTitle: itemTitle, // what to display on tile list
-        
-        linkType: "none"
-    };
+    // baseURL, where all URLs are created. No trailing slash please
+    ret.baseURL = "http://alphazone4.com/store";
+    
+    ret.apiBase = proto+"//dev.alphazone4.com";
+    
+    ret.cdnBase = proto+"//cdn.alphazone4.com";
+    
+    ret.home2Dat = h2d;
+    
+    ret.regions = regions;
+    
+    ret.regionLock = false; // only show specified region
+    
+    ret.categoryLinks = true; // don't enable cat links
+    
+    ret.maxRows = maxRows; // number of rows of items to show
+    
+    ret.itemTitle = itemTitle; // what to display on tile list
+    
+    ret.linkType = "none";
+    
+    return ret;
 });
