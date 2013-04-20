@@ -6,6 +6,20 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
     $t.itemClick = function() {
         var data = $(this).parent().data("item");
         
+        // check if this was cold loaded (search page etc.)
+        if (data.cold_load) {
+            api.call("get/item/"+data.id, function(data) {
+                data.image = _config.cdnBase+"/i/"+data.image;
+                item_click_do(data);
+            });
+        } else {
+            item_click_do(data);
+        }
+        
+        return false;
+    }
+    
+    function item_click_do(data) {
         // list module will have set full correct image URL, so store it
         var data_img = data.image;
         
