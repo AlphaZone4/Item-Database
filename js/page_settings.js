@@ -81,7 +81,7 @@ define(["frame", "forms", "config", "cookies", "resize", "msg"], function(frame,
         // add settings save button
         var save = $("<button>")
         .addClass("btn btn-success")
-        .html("<i class='icon-pencil icon-white'></i> Edit")
+        .html("<i class='icon-ok icon-white'></i> Save Settings")
         .click(save_settings);
         
         h.append(save);
