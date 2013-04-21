@@ -1,4 +1,4 @@
-define(["config", "stars", "nav", "popup", "pricer", "forms", "api", "msg"], function(_config, stars, nav, popup, pricer, forms, api, msg) {
+define(["config", "stars", "nav", "popup", "pricer", "forms", "api", "msg", "encode"], function(_config, stars, nav, popup, pricer, forms, api, msg, encoder) {
     var $t = {};
     $t.module = "items";
     
@@ -120,7 +120,7 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api", "msg"], fun
         footer.append("<div style='float:left'>Item ID: "+data.id+"</div>");
         
         // finally, create and display popup box
-        popup.create(content_box, data.name, footer);
+        popup.create(content_box, encoder.encode(data.name), footer);
         
         return false;
     }
@@ -195,10 +195,10 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api", "msg"], fun
         
         // add description/categories etc.
         if (data.description) {
-            content_box.append("<p class='alert'>"+data.description+"</p>");
+            content_box.append("<p class='alert'>"+encoder.encode(data.description)+"</p>");
         }
         if (data.tutorial) {
-            content_box.append("<p class='alert'><i>How to get</i>: "+data.tutorial+"</p>");
+            content_box.append("<p class='alert'><i>How to get</i>: "+encoder.encode(data.tutorial)+"</p>");
         }
         
         // add updates list
@@ -268,19 +268,19 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api", "msg"], fun
         },
         {
             type: "text",
-            name: "name_",
+            name: "name",
             label: "Item Name",
             value: data.name,
-            inputcss: {width: "450px"},
-            disable: true
+            inputcss: {width: "450px"}
+            //disable: true
         },
         {
             type: "text",
-            name: "description_",
+            name: "description",
             label: "Description",
             value: data.description,
-            inputcss: {width: "450px"},
-            disable: true
+            inputcss: {width: "450px"}
+            //disable: true
         },
         {
             type: "text",
