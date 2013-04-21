@@ -137,7 +137,7 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
             }
             
             // strip equals signs from URL, they're just padding anyway.
-            var URL = encrypt.base64_encode(JSON.stringify(opts)).replace(/\=/g, '');
+            var URL = encrypt.base64_encode(JSON.stringify(opts)).replace(/\=/g, '_');
             
             az4db_do("pageChange", "search/"+URL);
             
@@ -153,12 +153,14 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
         return holder;
     };
     
-    frame.add_page(/^search(?:$|\/([0-9a-zA-Z+\/=]+)?$)/, function(m) {
+    frame.add_page(/^search(?:$|\/([0-9a-zA-Z+\/=\_]+)?$)/, function(m) {
         var obj;
         
         // we have a stored search query!
         if (m[1]) {
             // stored search result
+            m[1] = m[1].replace(/\_/g, '=');
+            
             try {
                 var data = encrypt.base64_decode(m[1]);
                 
