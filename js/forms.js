@@ -73,9 +73,7 @@ define(["encode"], function(encoder) {
                 h.append(l);
             }
             
-            var i = $("<input type='text' name='"+o.name+"' />");
-            
-            i.attr("value", encoder.decode(o.value));
+            var i = $("<input type='text' name='"+o.name+"' value='"+encoder.encode(o.value)+"' />");
             
             if (o.disable) i.attr("disabled", true);
             

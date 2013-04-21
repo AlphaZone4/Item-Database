@@ -3,7 +3,8 @@ define(function() {
     return {
         // jQuery-ised HTML encoding/decoding
         encode: function(value) {
-          return $('<div/>').text(value).html();
+            // only allow <br /> tags through
+            return $('<div/>').text(value).html().replace(/\&lt\;br \/\&gt\;/g, "<br />");
         },
         
         decode: function(value) {
