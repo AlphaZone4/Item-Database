@@ -126,7 +126,9 @@ define(["encode"], function(encoder) {
             if (!called) {
                 called = true;
                 // callback with form data
-                cb(form.serializeObject());
+                cb(form.serializeObject(), function() {
+                    called = false;
+                });
             }
             
             return false;
