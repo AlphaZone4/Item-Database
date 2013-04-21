@@ -352,6 +352,14 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
                                 value: "slots"
                             });
                             
+                            // work out if we have a default value for the dropdown
+                            if (data.country) {
+                                var default_func = "";
+                                if (_config.regions[ data.country.toLowerCase() ]) {
+                                    default_func = _config.settings.prices[ _config.regions[ data.country.toLowerCase() ].pricer ].field;
+                                }
+                            }
+                            
                             var inputs = [
                                 {
                                     type: "dropdown",
@@ -378,7 +386,8 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
                                             $(".massedit_text").show();
                                             $(".massedit_dropdown").hide();
                                         }
-                                    }
+                                    },
+                                    value: default_func
                                 },
                                 {
                                     type: "text",
