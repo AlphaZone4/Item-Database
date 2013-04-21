@@ -52,8 +52,6 @@ define(["encode"], function(encoder) {
             
             h.append(hidden);
             
-            if (o.css) h.css(o.css);
-            
             return h;
         },
         checkbox: function(o) {
@@ -82,8 +80,6 @@ define(["encode"], function(encoder) {
             if (o.disable) i.attr("disabled", true);
             
             if (o.inputcss) i.css(o.inputcss);
-            
-            if (o.css) h.css(o.css);
             
             h.append(i);
             
@@ -149,10 +145,15 @@ define(["encode"], function(encoder) {
             } else {
                 // generic input if we don't know about it
                 gen = $("<input type='"+inputs[ii].type+"' name='"+inputs[ii].name+"' value='"+inputs[ii].value+"' />");
-                
-                if (inputs[ii].css) gen.css(inputs[ii].css);
-                
-                if (inputs[ii].cssclass) gen.addClass(inputs[ii].cssclass);
+            }
+            
+            if (inputs[ii].css) gen.css(inputs[ii].css);
+            
+            if (inputs[ii].cssclass) gen.addClass(inputs[ii].cssclass);
+            
+            // optional on change callback
+            if (inputs[ ii ].change) {
+                gen.change(inputs[ii].change);
             }
             
             // assign enter keypress to each form element to make sure it gets sent
