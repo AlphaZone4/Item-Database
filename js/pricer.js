@@ -79,7 +79,7 @@ define(["config"], function(_config) {
 		}
 		
 		if (!h.length && force) return price_texts['0'].text;
-		if (!h.length) return false;
+		if (!h.length) return "";
 		
 		return h.join("<br />");
 	}
@@ -120,6 +120,8 @@ define(["config"], function(_config) {
 		if (!price_currencies[ currency ])
 			price_currencies[ currency ] = currency + " ";
 		
+        if (typeof(prices[ currency ])=="undefined") return false;
+        
 		// don't return currency symbol for reward/free items etc.
 		if (prices[ currency ] < 0) {
 			return h + format_number(prices[ currency ]);

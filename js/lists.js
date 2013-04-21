@@ -387,7 +387,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             this.type_id = null;
             
             // load items
-            this.setItems(_items, _config.cdnBase+"/i/", "item", items.itemClick);
+            this.setItems(_items, _config.cdnBase+"/i/", "item", items.itemClick, "ALL");
             
             this.reload = null;
             
@@ -437,7 +437,7 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             }
             
             // add special pricing labels
-            if (items[ii].prices && cur_region) {
+            if (items[ii].prices && cur_region && _config.regions[cur_region]) {
 				// item gone? :(
 				if (items[ii].prices[ _config.regions[cur_region].pricer ] == -3) {
 					items[ii].icons.push({
@@ -457,7 +457,11 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
             
             // add price hovers to items
             if ( cur_region && (items[ii].prices || page == "item") ) {
-				items[ii].nice_price = pricer.print(items[ii].prices, cur_region, true);
+                if (cur_region == "all") {
+                    items[ii].nice_price = pricer.print_all(items[ii].prices);
+                } else {
+                    items[ii].nice_price = pricer.print(items[ii].prices, cur_region, true);
+                }
 			}
         }
         

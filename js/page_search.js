@@ -18,6 +18,18 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
                 // show basic stats
                 stats.html("<strong>"+data.results+"</strong> results in "+((data.data_time + data.search_time) / 1000) + " seconds");
                 
+                // interfere with data result to get neater prices
+                //  do not fear! these items are hot loaded on popup anyway
+                for(var ii=0; ii<data.items.length; ii++) {
+                    data.items[ii].prices = {
+                        GBP: data.items[ii].prices.GBP,
+                        EUR: data.items[ii].prices.EUR,
+                        USD: data.items[ii].prices.USD,
+                        YEN: data.items[ii].prices.YEN,
+                        HKD: data.items[ii].prices.HKD
+                    };
+                }
+                
                 item_list.loadPreload(data.items);
             }
         });
