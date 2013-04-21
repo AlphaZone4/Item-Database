@@ -23,6 +23,10 @@ define(["frame"], function(frame) {
 			h += "<li>"+techs[ii]+"</li>";
 		}
 		h += "</ul>";
+        
+        h += "<p>Developed by Jamie Holding (AKA Cubehouse) of AlphaZone4. <a href='https://twitter.com/cube' target='_blank'>@cube</a></p>";
+        
+        h += "<p>Source code available on GitHub at <a target='_blank' href='https://github.com/AlphaZone4/Item-Database'>https://github.com/AlphaZone4/Item-Database</a></p>";
 		
 		frame.page.html(h);
         
