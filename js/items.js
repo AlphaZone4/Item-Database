@@ -1,4 +1,4 @@
-define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_config, stars, nav, popup, pricer, forms, api) {
+define(["config", "stars", "nav", "popup", "pricer", "forms", "api", "msg"], function(_config, stars, nav, popup, pricer, forms, api, msg) {
     var $t = {};
     $t.module = "items";
     
@@ -36,11 +36,15 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
                             // remove current popup
                             popup.hide();
                             
+                            msg.success(res.success);
+                            
                             res.item.image = data_img;
                             
                             load_item_popup(res.item, button_edit_click);
                         } else if (res.error) {
                             popup.hide();
+                            
+                            msg.success(res.error);
                             
                             console.log(res.error);
                         }
