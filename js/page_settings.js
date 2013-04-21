@@ -52,6 +52,22 @@ define(["frame", "forms", "config", "cookies", "resize", "msg"], function(frame,
                 {
                     value: 6,
                     name: "6 Rows"
+                },
+                {
+                    value: 7,
+                    name: "7 Rows"
+                },
+                {
+                    value: 8,
+                    name: "8 Rows"
+                },
+                {
+                    value: 9,
+                    name: "9 Rows"
+                },
+                {
+                    value: 10,
+                    name: "10 Rows"
                 }
             ]
         },
