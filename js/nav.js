@@ -109,7 +109,7 @@ define(["config", "popup", "scripts/jquery.history"], function(_config, popup) {
         $t.cur_page = $t.normaliseURL(full);
         
         // push state using History library
-        History.pushState(null, null, href);
+        History.pushState(null, "PlayStation Home Item Database | AlphaZone4 - Your home away from PlayStation Home", href);
         
         document.title = save_title;
     };
