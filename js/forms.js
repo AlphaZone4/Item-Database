@@ -23,13 +23,13 @@ define(["encode"], function(encoder) {
             var hidden = $("<input type='hidden' name='"+o.name+"' value='"+o.value+"' />");
             
             for(var ii=0; ii<o.options.length; ii++) {
-                var butt = $('<button type="button" class="btn btn-primary'+((o.value==o.options[ii].value)?" active":"")+'" name="'+o.options[ii].value+'">'+o.options[ii].name+'</button>');
+                var butt = $('<button type="button" class="btn btn-primary'+((o.value==o.options[ii].value)?" active btn-warning":"")+'" name="'+o.options[ii].value+'">'+o.options[ii].name+'</button>');
                 
                 // change value of hidden input when clicked
                 butt.click(function(){
-                    h.find("button").removeClass("active");
+                    h.find("button").removeClass("active btn-warning");
                     
-                    $(this).addClass("active");
+                    $(this).addClass("active btn-warning");
                     
                     hidden.val($(this).attr("name"));
                 });
