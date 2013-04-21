@@ -16,7 +16,7 @@ all: standard
 clean:
 	rm -f css/style.css
 	rm -rf css/img
-	rm -rf css/sprite.png
+	rm -rf css/sprite_*.png
 	rm -rf css/tmp
 	rm -rf $(BUILDDIR)/
 	rm -f js/scripts/require-jquery.js
@@ -36,7 +36,7 @@ package:
 	(cd $(BUILDDIR) && cat ../modules/easyXDM/work/easyXDM.js ../js/scripts/${JQUERY} az4db.js >> az4db-jquery.js )
 	cp _test.html $(BUILDDIR)/index.html
 	cp css/loader.gif $(BUILDDIR)
-	cp css/sprite.png $(BUILDDIR)
+	cp css/sprite_*.png $(BUILDDIR)
 	
 ##### INTERNAL MAKE FUNCTIONS #####
 # features always employed
@@ -54,6 +54,7 @@ build:
 # compile all CSS
 buildcss:
 	cp -r modules/bootstrap/less css/tmp
+	rm -f css/sprite_*.png
 	node spriteBuild.js
 	cat css/custom.less css/sprite.css >> css/tmp/bootstrap.less
 	rm -f css/sprite.css
