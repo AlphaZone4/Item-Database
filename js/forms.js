@@ -109,6 +109,9 @@ define(["encode"], function(encoder) {
         },
         info: function(o) {
             return $("<div>").html(o.text);
+        },
+        submit: function(o) {
+            return $("<input type='submit' class='btn btn-success' />").attr("value", o.value);
         }
     };
     
