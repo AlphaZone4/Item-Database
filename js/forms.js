@@ -75,7 +75,7 @@ define(["encode"], function(encoder) {
             
             var i = $("<input type='text' name='"+o.name+"' />");
             
-            i.attr("value", o.value);
+            i.attr("value", encoder.decode(o.value));
             
             if (o.disable) i.attr("disabled", true);
             
