@@ -106,6 +106,18 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api", "msg", "enc
         
         var footer = $("<div>");
         
+        var button_close = $("<button>")
+            .addClass("btn btn-info")
+            .html("<i class='icon-remove icon-white'></i> Close")
+            .click(function() {
+                popup.hide();
+                
+                return false;
+            });
+            
+            // create footer element for popup
+            footer.append(button_close);
+        
         // create edit button
         if (_config.settings.database_submit) {
             var button_edit = $("<button>")
