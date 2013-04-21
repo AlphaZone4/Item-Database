@@ -200,8 +200,29 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api", "msg"], fun
         if (data.tutorial) {
             content_box.append("<p class='alert'><i>How to get</i>: "+data.tutorial+"</p>");
         }
-        if (data.categories) {
+        
+        // add updates list
+        if (data.updates) {
+            var updates = $("<p class='alert'>");
+            var isupdates = false;
+            for(ii in data.updates) {
+                if (!_config.regionLock || _config.regionLock == ii) {
+                    var cat = "<i class='az4im flag_"+ii.toLowerCase()+"'></i> "+data.updates[ii].name+"<br />";
+                    if (_config.categoryLinks) {
+                        cat = nav.link(cat, "update/"+data.updates[ii].id);
+                    }
+                    updates.append(cat);
+                    isupdates = true;
+                }
+            }
+            if (isupdates) {
+                content.append(updates);
+            }
+        }
+        
+        if (data.categories || data.updates) {
             var cats = $("<p>").addClass("alert");
+            
             for(ii=0; ii<data.categories.length; ii++) {
                 if (!_config.regionLock || _config.regionLock == data.categories[ii].zone) {
                     var cat = "<i class='az4im flag_"+data.categories[ii].zone.toLowerCase()+"'></i> "+data.categories[ii].name+"<br />";
