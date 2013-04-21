@@ -40,6 +40,8 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
                             
                             load_item_popup(res.item, button_edit_click);
                         } else if (res.error) {
+                            popup.hide();
+                            
                             console.log(res.error);
                         }
                     });
@@ -98,14 +100,18 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api"], function(_
         // populate content box with item data
         item_info(data, content_box);
         
-        // create edit button
-        var button_edit = $("<button>")
-        .addClass("btn btn-success")
-        .html("<i class='icon-pencil icon-white'></i> Edit")
-        .click(edit_cb);
+        var footer = $("<div>");
         
-        // create footer element for popup
-        var footer = $("<div>").append(button_edit);
+        // create edit button
+        if (_config.settings.database_submit) {
+            var button_edit = $("<button>")
+            .addClass("btn btn-success")
+            .html("<i class='icon-pencil icon-white'></i> Edit")
+            .click(edit_cb);
+            
+            // create footer element for popup
+            footer.append(button_edit);
+        }
         
         footer.append("<div style='float:left'>Item ID: "+data.id+"</div>");
         
