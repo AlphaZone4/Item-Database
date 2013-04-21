@@ -150,6 +150,12 @@ define(["frame", "config", "nav"], function(frame, _config, nav) {
         heya.append("<p><strong>Note: </strong>this version of the Item Database drops support for Internet Explorer 8 or lower.</p>");
         page.append(heya);
         
+        var forum = $("<div>").addClass("span3 home_box thumbnail");
+        forum.append("<p><strong>Forums</strong></p>");
+        forum.append("<p style='text-align:center'><i class='az4im comment'></i></p>");
+        forum.append("<p><a href='http://alphazone4.com/forum/site-feedback-suggestions/new-item-database-feedback/' target='_blank'>Feel free to leave feedback and discuss our new changes on our forum</a></p>")
+        page.append(forum);
+        
         // push page to frame
         frame.page.html("<h2>AlphaZone4 Item Database</h2>");
         
