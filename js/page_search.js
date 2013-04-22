@@ -12,7 +12,7 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
         // load search results!
         api.call("search/items", opt, function(data) {
             if (data.error) {
-                msg.error(data.error);
+                stats.html('<div class="alert alert-error">'+data.error+'</div>');
                 item_list.loadPreload([]);
             } else {
                 // show basic stats
