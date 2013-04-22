@@ -122,7 +122,7 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
             }
             
             current_dev_filters.push(dev);
-            var label = $("<span class='label label-info'>"+_config.settings.devs[dev]+"</span>");
+            var label = $("<span class='label label-info'>"+_config.settings.devs[dev]+" <small>x</small></span>");
             label.click(function() {
                 for(var ii=0; ii<current_dev_filters.length; ii++) {
                     if (current_dev_filters[ii] == dev) {
@@ -132,10 +132,13 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
                     $(this).remove();
                 }
             });
+            
+            // make label look like it's clickable with nice mouse pointer
+            label.css("cursor", "pointer");
+            
             dev_filter_box.append(label);
         });
-        // disable for now
-        //opts.append("Filter by Developer: ").append(dev_choose).append(add_dev_filter).append(dev_filter_box);
+        opts.append("Filter by Developer: ").append(dev_choose).append(add_dev_filter).append(dev_filter_box);
         
         // called when form is submitted
         f.submit(function() {
@@ -144,8 +147,8 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
             // add developer filters
             //console.log(current_dev_filters);
             // TODO - do properly
-            if (current_dev_filters[0]) {
-                opts.dev = current_dev_filters[0];
+            if (current_dev_filters && current_dev_filters.length) {
+                opts.dev = current_dev_filters.join(",");
             }
             
             // strip equals signs from URL, they're just padding anyway.
