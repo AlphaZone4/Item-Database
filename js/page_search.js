@@ -167,7 +167,7 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
         return holder;
     };
     
-    frame.add_page(/^search\/?(?:$|([0-9a-zA-Z\_]+)\/?$)/, function(m) {
+    frame.add_page(/^search\/?(?:$|([0-9a-zA-Z\_\+\=]+)\/?$)/, function(m) {
         var obj;
         
         // we have a stored search query!
