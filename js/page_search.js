@@ -1,7 +1,10 @@
 define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(frame, encrypt, api, lists, form, msg, _config) {
     // valid search parameters
     var valid = [
-        "query"
+        "query",
+        "dev",
+        "gender",
+        "regions"
     ];
     
     var item_list;
@@ -92,7 +95,8 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
                             value: "jp",
                             name: "Japan"
                         }
-                    ]
+                    ],
+                    value: (opts.regions) ? opts.regions : null
                 },
                 {
                     type: "submit",
@@ -103,18 +107,14 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
         );
         
         // add some custom search parameters
-        var opts = $("<div>").css("width", "400px").css("float", "left");
+        var search_options = $("<div>").css("width", "400px").css("float", "left");
         
         // add developer filter
         var current_dev_filters = [];
         var dev_filter_box = $("<div>");
         var dev_choose = $("<select id='dev_filter_list'>");
-        for(var ii in _config.settings.devs) {
-            dev_choose.append("<option value='"+ii+"'>"+_config.settings.devs[ ii ]+"</option>");
-        }
-        var add_dev_filter = $("<button class='btn btn-primary'>Add</button>").click(function() {
-            var dev = $("#dev_filter_list").val();
-            
+        
+        var add_new_dev_filter = function(dev) {
             for(var ii=0; ii<current_dev_filters.length; ii++) {
                 if (current_dev_filters[ii] == dev) {
                     return;
@@ -137,16 +137,29 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
             label.css("cursor", "pointer");
             
             dev_filter_box.append(label);
+        };
+        
+        for(var ii in _config.settings.devs) {
+            dev_choose.append("<option value='"+ii+"'>"+_config.settings.devs[ ii ]+"</option>");
+        }
+        var add_dev_filter = $("<button class='btn btn-primary'>Add</button>").click(function() {
+            add_new_dev_filter($("#dev_filter_list").val());
         });
-        opts.append("Filter by Developer: ").append(dev_choose).append(add_dev_filter).append(dev_filter_box);
+        search_options.append("Filter by Developer: ").append(dev_choose).append(add_dev_filter).append(dev_filter_box);
+        
+        // if saved data structure has devs stored, restore them to the interface
+        if (opts.dev) {
+            var devs = opts.dev.split(",");
+            for(var ii=0; ii<devs.length; ii++) {
+                add_new_dev_filter(devs[ii]);
+            }
+        }
         
         // called when form is submitted
         f.submit(function() {
             var opts = f.serializeObject();
             
             // add developer filters
-            //console.log(current_dev_filters);
-            // TODO - do properly
             if (current_dev_filters && current_dev_filters.length) {
                 opts.dev = current_dev_filters.join(",");
             }
@@ -165,7 +178,7 @@ define(["frame", "encrypt", "api", "lists", "forms", "msg", "config"], function(
         
         f.css("width", "320px").css("float", "left");
         
-        holder.append(f).append(opts);
+        holder.append(f).append(search_options);
         
         return holder;
     };
