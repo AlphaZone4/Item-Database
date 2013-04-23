@@ -53,7 +53,7 @@ define(["cookies"], function(cookies){
     // baseURL, where all URLs are created. No trailing slash please
     ret.baseURL = "http://alphazone4.com/store";
     
-    ret.apiBase = proto+"//dev.alphazone4.com";
+    ret.apiBase = proto+"//api.alphazone4.com";
     
     ret.cdnBase = proto+"//cdn.alphazone4.com";
     
