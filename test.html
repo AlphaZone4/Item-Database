@@ -36,14 +36,16 @@
             az4db_init({
                 baseURL: "//" + window.location.host + window.location.pathname.replace(/\\/g,'/').replace(/\/[^\/]*$/, ''),
                 basePath: window.location.pathname.replace(/\\/g,'/').replace(/\/[^\/]*$/, ''),
-                linkType: "html5"
+                apiBase: "https://dev.alphazone4.com"
+                //linkType: "html5"
             });
             // load basic database layout
             az4db_frame(
                 $("#database"),
                 function(frame) {
                     // load a category to start us off
-                    frame.start("");
+                    //frame.start("search/eyJxdWVyeSI6IiIsImdlbmRlciI6Ik0iLCJyZWdpb25zIjoianAiLCJkZXYiOiJkaWdpdGFsLWxlaXN1cmUifQ");
+                    frame.start("cat/1337");
                 }
             );
         </script>
