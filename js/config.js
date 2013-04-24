@@ -46,7 +46,7 @@ define(["cookies"], function(cookies){
 	}
     
     // look for saved settings
-    var maxRows = cookies.get("az4config_maxRows") || 5;
+    var maxRows = cookies.get("az4config_maxRows") || 1000;
     var itemTitle = cookies.get("az4config_itemTitle") || "name";
 
     // basic application settings go here (can be overridden)!
