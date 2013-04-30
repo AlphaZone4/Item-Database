@@ -1,4 +1,4 @@
-define(["config", "popup", "scripts/jquery.history"], function(_config, popup) {
+define(["config", "popup", "page_track", "scripts/jquery.history"], function(_config, popup, page_track) {
     
     var History = window.History;
     
@@ -104,6 +104,9 @@ define(["config", "popup", "scripts/jquery.history"], function(_config, popup) {
         // add base path to URL
         var href = _config.basePath+"/"+l+((l!=="")?"/":"");
         var full = _config.baseURL+"/"+l+((l!=="")?"/":"");
+        
+        // track page change
+        page_track(href);
         
         // store current page (normalised first)
         $t.cur_page = $t.normaliseURL(full);
