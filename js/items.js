@@ -119,7 +119,7 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api", "msg", "enc
             footer.append(button_close);
         
         // create edit button
-        if (_config.settings.database_submit) {
+        if (_config.settings.database_submit && _config.editTools) {
             var button_edit = $("<button>")
             .addClass("btn btn-success")
             .html("<i class='icon-pencil icon-white'></i> Edit")

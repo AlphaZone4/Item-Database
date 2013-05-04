@@ -71,5 +71,7 @@ define(["cookies"], function(cookies){
     
     ret.linkType = "none";
     
+    ret.editTools = true;
+    
     return ret;
 });

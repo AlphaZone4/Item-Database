@@ -31,6 +31,9 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
         // return if not admin!
         if (!_config.settings.database_edit) return;
         
+        // return if we're not showing edit tools
+        if (!_config.editTools) return;
+        
         var menus = [];
         
         if (data && (data.cats || data.items) ) {

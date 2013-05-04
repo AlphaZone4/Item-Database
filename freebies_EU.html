@@ -20,8 +20,8 @@
 		<![endif]-->
 	</head>
 	<body>
-		<div id='database' class='az4db' style='max-width:600px'></div>
         <a href='http://alphazone4.com' target='_blank'>Powered by AlphaZone4</a>
+		<div id='database' class='az4db' style='max-width:600px'></div>
         <script type='text/javascript'>
             /* define page specific loading here */
             az4db_init({
@@ -30,6 +30,7 @@
                 regionLock: "EU",
                 categoryLinks: false,
                 loadModules: ["lists"],
+                editTools: false,
                 maxRows: 4
             }, function(libs) {
                 var lists = libs[0];
