@@ -19,3 +19,6 @@
 [submodule "modules/easyXDM"]
 	path = modules/easyXDM
 	url = https://github.com/oyvindkinsey/easyXDM.git
+[submodule "modules/d3"]
+	path = modules/d3
+	url = https://github.com/mbostock/d3.git

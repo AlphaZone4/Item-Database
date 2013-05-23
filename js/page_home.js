@@ -83,8 +83,15 @@ define(["frame", "config", "nav"], function(frame, _config, nav) {
                 
                 // set up special pages list
                 if (special_pages[ region ]) {
-                    h.append("<p><strong>Special Pages</strong></p>");
+                    h.append("<p><strong>Database Pages</strong></p>");
                     var special = $("<ul>");
+                    
+                    special.append($("<li>").html(
+                        nav.link(
+                            "PlayStation Home Stores",
+                            "cat/"+_config.regions[ region ].home
+                        )
+                    ));
                     
                     special_pages[ region ](special);
                     
