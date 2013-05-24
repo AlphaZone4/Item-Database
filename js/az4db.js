@@ -40,50 +40,53 @@ window.az4db_frame = function(target, cb) {
     });
 };
 
-// load external resources and code
-require([
-    "scripts/jquery.imagesloaded",
-	"scripts/bootstrap.min",
-    "api",
-    "config",
-    "nav",
-    "frame",
-    "page_about",
-    "psncodes",
-    "page_devs",
-    "page_home",
-    "page_search",
-    "page_settings",
-    "XDM"
-], function() {
-    var _config = require("config");
-    for(var ii in user_config) {
-        _config[ ii ] = user_config[ ii ];
-    }
-	
-	// initialise each module in turn (init order, NOT alphabetical)
-	for(var ii in arguments) {
-		if (arguments[ ii ] && arguments[ ii ].init) arguments[ ii ].init();
-	}
-    
-    // trigger init functions if they exist
-    if (window.az4db_ifhooks("init")) {
-        var api = require("api");
-        // init hooks have been created, fetch database settings and then load
-        api.call("settings", null, function(data) {
-            // store server supplied settings/data
-            _config.settings = data;
-            
-            // now actually call init functions to load database
-            // if we have any modules to load, ensure they're fetched and returned
-            if (_config.loadModules) {
-                require(_config.loadModules, function() {
-                    window.az4db_do("init", arguments);
-                });
-            } else {
-                window.az4db_do("init");
-            }
-        });
+// make sure we let the entire page load before booting up the ItemDB!
+window.onload = function() {
+    // load external resources and code
+    require([
+        "scripts/jquery.imagesloaded",
+        "scripts/bootstrap.min",
+        "api",
+        "config",
+        "nav",
+        "frame",
+        "page_about",
+        "psncodes",
+        "page_devs",
+        "page_home",
+        "page_search",
+        "page_settings",
+        "XDM"
+    ], function() {
+        var _config = require("config");
+        for(var ii in user_config) {
+            _config[ ii ] = user_config[ ii ];
+        }
+    	
+    	// initialise each module in turn (init order, NOT alphabetical)
+    	for(var ii in arguments) {
+    		if (arguments[ ii ] && arguments[ ii ].init) arguments[ ii ].init();
+    	}
         
-    }
-});
+        // trigger init functions if they exist
+        if (window.az4db_ifhooks("init")) {
+            var api = require("api");
+            // init hooks have been created, fetch database settings and then load
+            api.call("settings", null, function(data) {
+                // store server supplied settings/data
+                _config.settings = data;
+                // now actually call init functions to load database
+                // if we have any modules to load, ensure they're fetched and returned
+                if (_config.loadModules) {
+                    require(_config.loadModules, function() {
+                        window.az4db_do("init", arguments);
+                    });
+                } else {
+                    window.az4db_do("init");
+                }
+            });
+            
+        }
+    });
+
+};
