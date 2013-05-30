@@ -19,3 +19,6 @@
 [submodule "modules/easyXDM"]
 	path = modules/easyXDM
 	url = https://github.com/oyvindkinsey/easyXDM.git
+[submodule "modules/flot"]
+	path = modules/flot
+	url = https://github.com/flot/flot.git

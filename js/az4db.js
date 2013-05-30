@@ -48,6 +48,7 @@ window.onload = function() {
         "scripts/bootstrap.min",
         "api",
         "config",
+        "XDM",
         "nav",
         "frame",
         "page_about",
@@ -56,7 +57,7 @@ window.onload = function() {
         "page_home",
         "page_search",
         "page_settings",
-        "XDM"
+        "page_hats"
     ], function() {
         var _config = require("config");
         for(var ii in user_config) {

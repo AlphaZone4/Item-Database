@@ -7,5 +7,6 @@ css/sprite_*.png
 js/scripts/bootstrap.min.js
 js/scripts/jquery.imagesloaded.js
 js/scripts/require-jquery.js
+js/scripts/*.flot.*
 js/version.js
 node_modules/
