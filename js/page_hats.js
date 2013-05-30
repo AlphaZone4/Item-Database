@@ -14,7 +14,7 @@ define(["jquery", "frame", "api"], function($, frame, api) {
         h += "Redeem Male and Female hats with code <strong>M64H-KKN2-GJR9</strong>";
         
         h += "<h2>America</h2>";
-        h += "<p>Our US hat codes are <strong>one-time redeem</strong>. Each code will <strong>only work once</strong>. If other people use your computer need codes, they can login to AlphaZone4 to generate a new one.</p>";
+        h += "<p>Our US hat codes are <strong>one-time redeem</strong>. Each code will <strong>only work once</strong>. If other that people use your computer need codes, they can login to AlphaZone4 to generate a new one.</p>";
         h += "<p>You will need cookies enabled to continue.</p>";
 		frame.page.html(h);
         
