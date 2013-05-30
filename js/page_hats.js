@@ -4,7 +4,7 @@ define(["jquery", "frame", "api"], function($, frame, api) {
 		
 		var h = "<h2>AlphaZone4 Hats</h2>";
         
-        h += "<img src='http://alphazone4.com/wp-content/uploads/2013/05/AZ4-cakehat-300x236.jpg' style='float:right' />";
+        h += "<p style='text-align:center'><img src='http://alphazone4.com/wp-content/uploads/2013/05/AZ4-cakehat-300x236.jpg' /></p>";
 		
 		h += "<p>To celebrate <strong>4 years of AlphaZone4</strong>, you can get your very own AlphaZone4 cake hat for PlayStation Home!</p>";
         
