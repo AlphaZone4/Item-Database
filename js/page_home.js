@@ -166,6 +166,8 @@ define(["frame", "config", "nav"], function(frame, _config, nav) {
         // push page to frame
         frame.page.html("<h2>AlphaZone4 Item Database</h2>");
         
+        frame.page.append('<div class="alert alert-success"><strong>Database Updates for 5th June - 12th June</strong> - Update lists will be created as per normal, however for these two weeks the full Item Database updates (matching items to each and every store) will not be processed. Normal full updates will resume on June 16th, after E3.</div>')
+        
         frame.page.append(page);
         
         return true;
