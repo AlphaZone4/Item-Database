@@ -66,7 +66,11 @@ define(["frame", "config", "nav"], function(frame, _config, nav) {
             
             // list latest region updates
             if (_config.settings[region+"updates"] && _config.settings[region+"updates"].length) {
-                h.append("<p><strong><i class='az4im flag_"+_config.regions[ region ].flag+"'></i> "+_config.regions[ region ].name+"</strong></p><p><strong>Latest Updates</strong></p>");
+                h.append("<p><strong><i class='az4im flag_"+_config.regions[ region ].flag+"'></i> "+_config.regions[ region ].name+"</strong></p>");
+                
+                h.append($("<p>").html(nav.link("Browse region database...", "cat/"+_config.regions[ region ].home)));
+                
+                h.append("<p><strong>Latest Updates</strong></p>");
                 
                 var list = $("<ul>");
                 
