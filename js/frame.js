@@ -45,7 +45,7 @@ define(["config", "nav", "lists", "version", "msg"], function(_config, nav, list
 					$t.crumb.append("<li>"+
 						((ii === 0)?"<i class='az4im "+_config.home2Dat[ data[ii].id ].flag+"'></i> ":"")+
 						((ii<(data.length-1))?
-						"<a class='crumb_click' href='"+_config.baseURL+"cat/"+data[ii].id+"'>"+
+						"<a class='crumb_click' href='"+_config.baseURL+"/cat/"+data[ii].id+"'>"+
 							data[ii].name+
 						"</a><span class='divider'>/</span>":data[ii].name)+
 					"</li>");
