@@ -29,7 +29,7 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
     // defines admin controls!
     function admin_menu(data, list) {
         // return if not admin!
-        if (!_config.settings.database_edit) return;
+        if (!_config.settings.database_scan) return;
         
         // return if we're not showing edit tools
         if (!_config.editTools) return;
