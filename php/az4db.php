@@ -13,7 +13,7 @@ Version: 1.0
 Author URI: http://alphazone4.com
 */
 
-$az4dbwp_page = "database";
+$az4dbwp_page = "store";
 
 // validate if this is a database URL
 function az4db_isurl() {
@@ -128,6 +128,21 @@ if (!history || !history.pushState) {
 ";
     }
 	
+    // generate noscript version of page (very basic version)
+    $noscript = "";
+    
+    if (substr($page, 0, 3) == "cat") {
+        require_once(dirname(__FILE__)."/az4HTML.php");
+        $noscript = az4HTML_cat(substr($page, 4));
+    }
+    else if (substr($page, 0, 6) == "update") {
+        require_once(dirname(__FILE__)."/az4HTML.php");
+        $noscript = az4HTML_update(substr($page, 7));
+    } else if ($page == "" || $page == "home" || $page == "/") {
+        require_once(dirname(__FILE__)."/az4HTML.php");
+        $noscript = az4HTML_home();
+    }
+    
 	return <<< EOD
 <script type='text/javascript'>
 var do_load = true;
@@ -155,29 +170,20 @@ for (i=0;i<ARRcookies.length;i++)
 {$pushtest}
 </script>
 <!--[if lte IE 8]>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
-<script type="text/javascript">
-function update_browser() {
-   CFInstall.check({
-     mode: "overlay"
-   });
-}
-window.attachEvent("onload", update_browser);
-</script>
 <div class='az4db'>
 <div class='alert alert-error'>
 <strong>You are using an out-of-date browser.</strong>
 <p>Internet Explorer 8 and below are no longer supported and are considered 'out-of-date' browsers. Not only that, they also account for less than 2% of our users.</p>
 <p>Please upgrade to a newer version of Internet Explorer, of if you can't, you can do one of the following:</p>
 <ul>
-<li><a href="http://www.google.com/chromeframe?quickenable=true" target="_blank">Add Google Frame to your browser (instantly makes Internet Explorer display more advanced websites) - even works in schools/offices!</a></li>
-<li><a href="http://www.google.co.uk/chrome" target="_blank">Try Google Chrome</a></li>
+<li><a href="http://www.google.co.uk/chrome/" target="_blank">Try Google Chrome</a></li>
 <li><a href="http://www.mozilla.org/firefox/" target="_blank">Try Firefox</a></li>
 </ul>
 </div>
 </div>
 <![endif]-->
-<div id='database' class='az4db'>Loading the AlphaZone4 PlayStation Home Item Database...</div>
+<div id='database' class='az4db' style='display:none'>Loading the AlphaZone4 PlayStation Home Item Database...</div>
+<div id='disabled_js_friendly' class='az4db'>{$noscript}</div>
 <link rel='stylesheet' type='text/css' href='//api.alphazone4.com/build/style.css' />
 <script src='//api.alphazone4.com/build/az4db-jquery.js'></script><script type='text/javascript'>
 var hash_page = "";
@@ -200,10 +206,12 @@ if (location.hash != "" && location.hash != "#") {
         search = res[ 1 ];
     }
 }
-if (do_load) az4db_init({
+$("#disabled_js_friendly").hide();
+$("#database").show();
+if (do_load)az4db_init({
 	baseURL: "{$base}",
     basePath: "/{$az4dbwp_page}",
-    apiBase: "https://api.alphazone4.com",
+    apiBase: "http://api.alphazone4.com",
     linkType: "html5"
 });az4db_frame($("#database"),function(frame) {
     if (getCookie("az4db_jump")) {
