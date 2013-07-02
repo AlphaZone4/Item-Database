@@ -13,7 +13,7 @@ define(["frame", "config", "api", "nav"], function(frame, _config, api, nav) {
         
         h.append("<img src='"+_config.cdnBase+"/d/"+dev_slug+".png' style='float:right;' />")
         
-        h.append("<h2>"+dev+" Developer Page</h2>");
+        h.append("<h2 style='clear:none'>"+dev+" Developer Page</h2>");
         
         var devdata = $("<div>Loading developer data...</div>");
         
