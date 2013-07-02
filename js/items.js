@@ -201,7 +201,12 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api", "msg", "enc
         
         if (data.dev) {
             for(ii in _config.settings.devs) {
-                if (ii == data.dev) content.append("<p class='alert'>Developer: "+_config.settings.devs[ii]+"</p>");
+                if (ii == data.dev) {
+                    var p = $("<p>").addClass("alert");
+                    p.append("Developer: ");
+                    p.append(nav.link(_config.settings.devs[ii], "dev/"+data.dev));
+                    content.append(p);
+                }
             }
         }
         
