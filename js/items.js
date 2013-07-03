@@ -8,16 +8,20 @@ define(["config", "stars", "nav", "popup", "pricer", "forms", "api", "msg", "enc
         
         // check if this was cold loaded (search page etc.)
         if (data.cold_load) {
-            api.call("get/item/"+data.id, function(data) {
-                data.image = _config.cdnBase+"/i/"+data.image;
-                item_click_do(data);
-            });
+            $t.itemLoad(data.id);
         } else {
             item_click_do(data);
         }
         
         return false;
-    }
+    };
+    
+    $t.itemLoad = function(id) {
+        api.call("get/item/"+id, function(data) {
+            data.image = _config.cdnBase+"/i/"+data.image;
+            item_click_do(data);
+        });
+    };
     
     function item_click_do(data) {
         // list module will have set full correct image URL, so store it
