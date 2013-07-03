@@ -237,6 +237,30 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
             );
         }
         
+        // get cat IDs
+        if (_config.settings.database_admin && list.type == "cat" && data) {
+            menus.push(
+                {
+                    name: "Get Item IDs",
+                    func: function() {
+                        api.post("admin/get/cat/"+data.id, {}, function(d) {
+                            popup.form([
+                                {
+                                    type: "textarea",
+                                    name: "page",
+                                    label: "ID List",
+                                    value: d.data,
+                                    width: "600px"
+                                }
+                            ], "Whee");
+                        });
+                        
+                        return false;
+                    }
+                }
+            );
+        }
+        
         // reorder items
         if (_config.settings.database_edit && list.type=="cat" && data && data.items && data.cats && (data.items.length || data.cats.length) ) {
             menus.push(
