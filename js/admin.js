@@ -130,7 +130,7 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
         }
         
         // edit all items
-        if (_config.settings.database_edit && data && data.items && data.items.length > 0) {
+        if ((_config.settings.database_edit || _config.settings.database_pricer) && data && data.items && data.items.length > 0) {
             menus.push(
                 {
                     name: "Edit All Items",
