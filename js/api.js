@@ -1,4 +1,4 @@
-define(["config", "encode", "XDM"], function(_config, encoder, XDM) {
+define(["config", "encode", "XDM", "nprogress"], function(_config, encoder, XDM, nprogress) {
     var $t = {};
     $t.module = "api";
     
@@ -6,6 +6,16 @@ define(["config", "encode", "XDM"], function(_config, encoder, XDM) {
             '<div class="loader progress progress-info progress-striped active">'+
             '<div class="bar" style="width:100%"></div></div></div>')
             .hide().appendTo($("body"));
+            
+    function startLoad() {
+        loader.show();
+        NProgress.start();
+    }
+    
+    function hideLoad() {
+        loader.hide();
+        NProgress.done();
+    }
     
     // API wrapper for making API requests
     $t.call = function(method, args, cb) {
@@ -17,13 +27,13 @@ define(["config", "encode", "XDM"], function(_config, encoder, XDM) {
         
         // data callback variable, basically just passes to handle but with cb too
         var dd = function(data) {
-            loader.hide();
+            hideLoad();
             
             handle(data, cb);
         };
         
         // show loader
-        loader.show();
+        startLoad();
         
         // basic AJAX request
         $.ajax({
@@ -44,10 +54,10 @@ define(["config", "encode", "XDM"], function(_config, encoder, XDM) {
     
     $t.post = function(method, args, cb) {
         // show loading bar
-        loader.show();
+        startLoad();
         
         XDM(method, args, function(data) {
-            loader.hide();
+            hideLoad();
             
             cb(data);
         });

@@ -61,7 +61,7 @@ buildcss:
 	(cd css/tmp/ && echo ".az4db {" > style.css && lessc bootstrap.less >> style.css && echo "}" >> style.css)
 	(cd css/tmp/ && ../../node_modules/less/bin/lessc style.css > ../style.css)
 	(cd css/ && sed -i 's|.az4db body|.az4db|g' style.css)
-	(cd css/ && cat force_scrollbars.css style.css > tmp.css && mv tmp.css style.css)
+	(cd css/ && cat force_scrollbars.css nprogress.css style.css > tmp.css && mv tmp.css style.css)
 	rm -rf css/tmp/
 	(cd css/ && sed -i 's|/\*.*\*/||g' style.css)
 	rm -rf css/img
