@@ -50,7 +50,7 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
         }
         
         // only allow item adding if there are no child categories
-        if (_config.settings.database_edit && list.type == "cat" && data && data.cats && data.cats.length === 0) {
+        if (_config.settings.database_scan && list.type == "cat" && data && data.cats && data.cats.length === 0) {
             menus.push(
                 {
                     name: "Add Items",
