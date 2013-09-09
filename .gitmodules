@@ -1,6 +1,6 @@
 [submodule "modules/bootstrap"]
 	path = modules/bootstrap
-	url = https://github.com/twitter/bootstrap.git
+	url = https://github.com/twbs/bootstrap.git
 [submodule "modules/requirejs"]
 	path = modules/requirejs
 	url = https://github.com/jrburke/requirejs.git
