@@ -262,7 +262,7 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
         }
         
         // reorder items
-        if (_config.settings.database_edit && list.type=="cat" && data && data.items && data.cats && (data.items.length || data.cats.length) ) {
+        if (_config.settings.database_scan && list.type=="cat" && data && data.items && data.cats && (data.items.length || data.cats.length) ) {
             menus.push(
                 {
                     name: "Organise Items",
