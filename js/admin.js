@@ -238,7 +238,7 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
         }
         
         // get cat IDs
-        if (_config.settings.database_admin && list.type == "cat" && data) {
+        if (_config.settings.database_scan && list.type == "cat" && data) {
             menus.push(
                 {
                     name: "Get Item IDs",
