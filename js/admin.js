@@ -92,7 +92,26 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
         
         // add new category to this category
         //  note that cats usually report one item as it's top-rated item
-        if (_config.settings.database_admin && list.type == "cat" && data && data.items && !data.items[0]) {
+        if (_config.settings.database_scan && list.type == "cat" && data && data.items && !data.items[0]) {
+            var dropdownOpts = [
+                {
+                    name: "Space ID",
+                    value: "space_id"
+                },
+                {
+                    name: "Item ID",
+                    value: "item_id"
+                }
+            ];
+            
+            // only admins can do this one
+            if (_config.settings.database_admin) {
+                dropdownOpts.push({
+                    name: "AZ4 CDN Filename",
+                    value: "file"
+                });
+            }
+            
             menus.push(
                 {
                     name: "Add New Category",
@@ -104,12 +123,31 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
                                 label: "Category Name"
                             },
                             {
+                                type: "dropdown",
+                                name: "iconsrc",
+                                label: "<p style='margin:8px'>Icon Source</p>",
+                                options: dropdownOpts
+                            },
+                            {
                                 type: "text",
-                                name: "icon",
-                                label: "Icon"
+                                name: "datainput",
+                                label: "Icon Value (space ID, item ID etc.)"
                             }
                         ], "Add New Child Category", function(form) {
-                            api.post("admin/add/cat/"+data.id, form, function(response) {
+                            // sort out correct URL/postdata
+                            var url = "add/cat";
+                            
+                            // use a space icon
+                            if (form.iconsrc == "space_id") {
+                                url = "add/cat_space";
+                                form.space_id = form.datainput;
+                            } else if (form.iconsrc == "item_id") {
+                                // use an item icon
+                                url = "add/cat_item";
+                                form.item_id = form.datainput;
+                            }
+                            
+                            api.post("admin/"+url+"/"+data.id, form, function(response) {
                                 // show error/success message
                                 if (response.error) {
                                     msg.error(response.error);

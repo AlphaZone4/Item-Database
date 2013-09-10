@@ -230,6 +230,9 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
     		// render freebie links
     		page = page.replace(/\[free=([^\]]+)\]([A-Z]+)\[\/free\]/g, "<a href='"+_config.baseURL+"freebies/$2' class='loader'>$1</a>");
             
+            // search links!
+            page = page.replace(/\[search=([^\]]+)\]([a-zA-Z0-9 \'"_\-]+)\[\/search\]/g, "<a href='"+_config.baseURL+"search/$2' class='loader'>$1</a>");
+            
             // jQueryify
             page = $("<div>").html(page);
             
