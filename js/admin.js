@@ -101,6 +101,10 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
                 {
                     name: "Item ID",
                     value: "item_id"
+                },
+                {
+                    name: "Category ID",
+                    value: "cat_id"
                 }
             ];
             
@@ -145,6 +149,9 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
                                 // use an item icon
                                 url = "add/cat_item";
                                 form.item_id = form.datainput;
+                            } else if (form.iconsrc == "cat_id") {
+                                url = "add/cat_cat";
+                                form.cat_id = form.datainput;
                             }
                             
                             api.post("admin/"+url+"/"+data.id, form, function(response) {
