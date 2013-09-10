@@ -261,6 +261,38 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
             );
         }
         
+        // moderate add items
+        if (_config.settings.database_admin && list.type=="cat" && data && data.items && data.items.length) {
+            var isMods = false;
+            for(var ij=0; ij<data.items.length; ij++) {
+                if (data.items[ij].hidden) isMods = true;
+            }
+            if (isMods) {
+                menus.push(
+                    {
+                        name: "Approve new items",
+                        func: function() {
+                            // send new order to server automagically upon dropping an item
+                            api.post("admin/moderate/add_items", {
+                                cat_id: data.id
+                            }, function(response) {
+                                // show error/success message
+                                if (response.error) {
+                                    msg.error(response.error);
+                                } else {
+                                    msg.success(response.success);
+                                }
+                                
+                                // reload list
+                                if (list.reload) list.reload();
+                            });
+                            return false;
+                        }
+                    }
+                );
+            }
+        }
+        
         // reorder items
         if (_config.settings.database_scan && list.type=="cat" && data && data.items && data.cats && (data.items.length || data.cats.length) ) {
             menus.push(
