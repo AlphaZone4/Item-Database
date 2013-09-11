@@ -152,6 +152,8 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
                             } else if (form.iconsrc == "cat_id") {
                                 url = "add/cat_cat";
                                 form.cat_id = form.datainput;
+                            } else if (form.iconsrc == "file") {
+                                form.icon = form.datainput;
                             }
                             
                             api.post("admin/"+url+"/"+data.id, form, function(response) {
