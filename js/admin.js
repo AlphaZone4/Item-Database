@@ -170,6 +170,45 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
                             });
                         });
                         
+                        // add a preview button (HAX.)
+                        var preview_area = $("<div class='item-hidden'>");
+                        popup.popup.find(".modal-body").append(preview_area);
+                        
+                        var preview_button = $("<input type='submit' class='btn btn-warning' value='Preview' />");
+                        preview_button.click(function() {
+                            // preview the category icon and location
+                            var formdata = popup.popup.find(".modal-body > form").serializeObject();
+                            
+                            var icon_getter;
+                            
+                            if (formdata.iconsrc == "space_id") {
+                                icon_getter = function(cb) {
+                                    api.call("get/space/"+formdata.datainput, function(res) {
+                                        cb("//cdn.alphazone4.com/s/"+res.image);
+                                    });
+                                };
+                            } else if (formdata.iconsrc == "item_id") {
+                                icon_getter = function(cb) {
+                                    api.call("get/item/"+formdata.datainput, function(res) {
+                                        cb("//cdn.alphazone4.com/i/"+res.image);
+                                    });
+                                };
+                            } else if (formdata.iconsrc == "cat_id") {
+                                icon_getter = function(cb) {
+                                    api.call("get/cat/"+formdata.datainput, function(res) {
+                                        cb("//cdn.alphazone4.com/c/"+res.image);
+                                    });
+                                };
+                            }
+                            
+                            if (icon_getter) {
+                                icon_getter(function(img) {
+                                    preview_area.html('<a href="#" onclick="return false;" class="thumbnail" style="width: 128px;"><div class="imgsml" style="width: 128px; height: 128px;"><img width="128" height="128" src="'+img+'"></div><p style="text-align: center">'+formdata.name+'</p></a>');
+                                });
+                            }
+                        });
+                        popup.popup.find(".modal-footer").prepend(preview_button);
+                        
                         return false;
                     }
                 }
