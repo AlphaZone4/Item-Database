@@ -142,6 +142,8 @@ if (!history || !history.pushState) {
         require_once(dirname(__FILE__)."/az4HTML.php");
         $noscript = az4HTML_home();
     }
+
+    $wp_base = parse_url(get_bloginfo('url'))['path'];
     
 	return <<< EOD
 <script type='text/javascript'>
@@ -210,7 +212,7 @@ $("#disabled_js_friendly").hide();
 $("#database").show();
 if (do_load)az4db_init({
 	baseURL: "{$base}",
-    basePath: "/{$az4dbwp_page}",
+    basePath: "{$wp_base}/{$az4dbwp_page}",
     apiBase: "http://api.alphazone4.com",
     linkType: "html5"
 });az4db_frame($("#database"),function(frame) {
