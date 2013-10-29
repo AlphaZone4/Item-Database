@@ -437,6 +437,44 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
             );
         }
         
+        // copy category
+        if (_config.settings.database_admin && list.type == "cat" && data) {
+            menus.push(
+                {
+                    name: "Copy this category to...",
+                    func: function() {
+                        popup.form([
+                            {
+                                type: "text",
+                                name: "to",
+                                label: "Target Parent",
+                            },
+                            {
+                                type: "hidden",
+                                name: "from",
+                                value: data.id,
+                            }
+                        ], "Copy", function(form) {
+                            api.post("admin/add/cat_copy", form, function(response) {
+                                // show error/success message
+                                if (response.error) {
+                                    msg.error(response.error);
+                                } else {
+                                    msg.success(response.success);
+                                    // reload list object
+                                    if (list.reload) list.reload();
+                                }
+                                
+                                popup.hide();
+                            });
+                        });
+                        
+                        return false;
+                    }
+                }
+            );
+        }
+        
         // mass editor
         if (_config.settings.database_edit && (list.type=="cat" || list.type=="update") && data && data.items && data.items.length ) {
             menus.push(
