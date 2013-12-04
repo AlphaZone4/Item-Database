@@ -78,6 +78,14 @@ define(["config", "nav", "lists", "version", "msg"], function(_config, nav, list
     $t.create = function(target, cb) {
         // hook for naviagation plugin
         $t.go = function(href, hide_move) {
+            // remove query string
+            href = href.split("?")[0];
+            
+            // remove trailing slashes
+            if (href.substr(-1) == '/') {
+                href = href.substr(0, href.length - 1);
+            }
+            
             for(var ii=0; ii<pages.length; ii++) {
                 var m = pages[ii].match.exec(href);
                 if (m) {
@@ -124,7 +132,7 @@ define(["config", "nav", "lists", "version", "msg"], function(_config, nav, list
         $t.list.hookWhen("loadFree_complete", setup_breadcrumb);
         
         // append to target
-        target.html("").append($t.nav).append($t.crumb).append($t.list.body).append($t.page).append($t.footer).append(msg.body);
+        target.html("").append($t.nav).append($t.crumb).append($t.page).append($t.list.body).append($t.footer).append(msg.body);
         
         // callback with frame object
         if (cb) cb($t);
