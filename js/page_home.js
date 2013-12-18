@@ -152,13 +152,31 @@ define(["frame", "config", "nav"], function(frame, _config, nav) {
         
         // hiya! box
         var heya = $("<div>").addClass("span3 home_box thumbnail").css("width", "340px");
-        heya.append("<p><strong>Welcome to the new AlphaZone4 Item Database</strong></p>");
+        heya.append("<p><strong>Welcome to the AlphaZone4 Item Database</strong></p>");
         heya.append("<p style='text-align:center'><i class='az4im minilogo'></i></p>");
-        heya.append("<p>Check out our new look!</p>");
-        heya.append("<p>To make things load faster, the entire Item Database server has been re-written from scratch.</p>");
-        heya.append("<p>Large pages of items are now split into separate pages. Don't like this? Change it! There is a settings page, just click the cog icon.</p>");
-        heya.append("<p>The new Item Database is a major step for AlphaZone4, as we now have a much neater code base to continually expand and improve the database quickly and effectively.</p>");
-        heya.append("<p><strong>Note: </strong>this version of the Item Database drops support for Internet Explorer 8 or lower.</p>");
+        
+        if (_config.settings.changes && _config.settings.changes.length > 0) {
+            heya.append("AlphaZone4 Reward Hunter Change Log:");
+            var changelist = $("<ul>");
+            var dateheader = "";
+            for(var ii=0; ii<_config.settings.changes.length; ii++) {
+                var i = _config.settings.changes[ii];
+                
+                if (dateheader != i.day) {
+                    dateheader = i.day;
+                    changelist.append("<h5>"+i.day+"</h5>");
+                }
+                
+                changelist.append($("<li>").html(
+                    nav.link(
+                        "<i class='az4im flag_"+i.region.toLowerCase()+"'></i> <strong>"+i.username+"</strong> added "+i.items+" item"+((i.items > 0)?"s":"")+" to "+i.cat_name,
+                        "cat/"+i.cat_id
+                    )
+                ));
+            }
+            heya.append(changelist);
+        }
+        
         page.append(heya);
         
         var forum = $("<div>").addClass("span3 home_box thumbnail");
