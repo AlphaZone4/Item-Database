@@ -105,16 +105,12 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
                 {
                     name: "Category ID",
                     value: "cat_id"
+                },
+                {
+                    name: "AZ4 Filename",
+                    value: "file"
                 }
             ];
-            
-            // only admins can do this one
-            if (_config.settings.database_admin) {
-                dropdownOpts.push({
-                    name: "AZ4 CDN Filename",
-                    value: "file"
-                });
-            }
             
             menus.push(
                 {
@@ -198,6 +194,10 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
                                     api.call("get/cat/"+formdata.datainput, function(res) {
                                         cb("//cdn.alphazone4.com/c/"+res.image);
                                     });
+                                };
+                            } else if (formdata.iconsrc == "file") {
+                                icon_getter = function(cb) {
+                                    cb("//cdn.alphazone4.com/c/"+formdata.datainput);
                                 };
                             }
                             
