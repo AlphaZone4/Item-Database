@@ -288,7 +288,7 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
         }
         
         // edit page
-        if (_config.settings.database_admin && list.type == "cat" && data) {
+        if (_config.settings.database_edit && list.type == "cat" && data) {
             menus.push(
                 {
                     name: "Edit Page",
