@@ -51,6 +51,9 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
         
         // only allow item adding if there are no child categories
         if (_config.settings.database_scan && list.type == "cat" && data && data.cats && data.cats.length === 0) {
+            var users = [];
+            users.push({name: "[ myself ]", value: -1});
+            for(var i=0; i<_config.settings.edit_users.length; i++) users.push(_config.settings.edit_users[i]);
             menus.push(
                 {
                     name: "Add Items",
@@ -68,6 +71,12 @@ define(["config", "popup", "api", "msg", "items", "forms", "jquery", "jqueryui/s
                                     {value: "false", name: "Bottom"}
                                 ],
                                 value: "true"
+                            },
+                            {
+                                type: "dropdown",
+                                name: "user_id",
+                                label: "Add as user",
+                                options: users
                             }
                         ], "Add Items to Category", function(form) {
                             api.post("admin/add/items/"+data.id, form, function(response) {
