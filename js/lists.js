@@ -205,9 +205,28 @@ define(["config", "nav", "img", "stars", "api", "items", "resize", "pricer", "ad
     $t.az4Markup = function(page, navhook) {
         if (page) {
             
+            page = page.replace(/\[rewards\]([A-Z]{2})\[\/rewards\]/g, function(t, $1){
+                // check if this region exists
+                var u = $1.toUpperCase();
+                
+                // build a single upload list, to be passed again momentarily
+    			var h = "<ul>";
+                var m = 0;
+                for(var i=0; i<_config.settings.changes.length; i++) {
+                    if (m < 11 && _config.settings.changes[i].region == u) {
+                        var j = _config.settings.changes[i];
+                        h += "<li>[cat="+j.day+" - "+j.trail+"]"+j.cat_id+"[/cat] "+j.items+" item"+(j.items > 1 ? "s": "")+" added by "+j.username+" ("+j.reward_type+")</li>";
+                        m += 1;
+                    }
+                }
+    			h += "</ul>";
+                
+    			return h;
+            });
+
         	// render category links
     		page = page.replace(/\[cat=([^\]]+)\]([0-9]+)\[\/cat\]/g, "<a href='"+_config.baseURL+"cat/$2' class='loader'>$1</a>");
-            
+
     		// render recent update links
     		page = page.replace(/\[updates\]([A-Z]{2})\[\/updates\]/g, function(t, $1){
                 // check if this region exists
